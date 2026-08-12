@@ -96,7 +96,8 @@ export function ShoppingClient({
       <div className="no-print mb-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-3xl text-ink">🛒 Liste de courses</h1>
+            <p className="eyebrow mb-1">Prêt pour le magasin</p>
+            <h1 className="text-4xl text-ink">Liste de courses</h1>
             <p className="mt-1 text-sm text-ink-soft">
               <span className="num">{recipeCount}</span> repas ·{" "}
               <span className="num">{list.itemCount}</span> articles

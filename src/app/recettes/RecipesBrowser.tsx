@@ -59,11 +59,12 @@ export function RecipesBrowser({ recipes }: { recipes: RecipeRow[] }) {
         <p className="py-12 text-center text-ink-soft">Aucune recette trouvée.</p>
       ) : (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((r) => (
+          {filtered.map((r, i) => (
             <Link key={r.id} href={`/recettes/${r.id}`}>
               <div
+                style={{ animationDelay: `${Math.min(i, 14) * 35}ms` }}
                 className={cn(
-                  "flex h-full flex-col gap-3 rounded-[14px] border border-l-4 border-line p-4 shadow-[0_1px_0_rgba(30,43,35,0.04),0_8px_24px_rgba(30,43,35,0.05)] transition-transform hover:-translate-y-0.5",
+                  "rise flex h-full flex-col gap-3 rounded-[14px] border border-l-4 border-line p-4 shadow-[0_1px_0_rgba(30,43,35,0.04),0_8px_24px_rgba(30,43,35,0.05)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(30,43,35,0.13)]",
                   CATEGORY_STYLE[r.category].accent,
                   CATEGORY_STYLE[r.category].tint,
                 )}

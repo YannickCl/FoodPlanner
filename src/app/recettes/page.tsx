@@ -21,9 +21,10 @@ export default async function RecettesPage() {
     <div>
       <div className="mb-6 flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl text-ink">📖 Recettes</h1>
+          <p className="eyebrow mb-1">Le carnet de la famille</p>
+          <h1 className="text-4xl text-ink">Recettes</h1>
           <p className="mt-1 text-sm text-ink-soft">
-            <span className="num">{data.length}</span> recettes dans le carnet
+            <span className="num">{data.length}</span> recettes à portée de main
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

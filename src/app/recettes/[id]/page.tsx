@@ -44,7 +44,8 @@ export default async function RecipeDetailPage({
 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl text-ink">{recipe.name}</h1>
+          <p className="eyebrow mb-1">Recette</p>
+          <h1 className="text-4xl leading-tight text-ink">{recipe.name}</h1>
           <div className="mt-3 flex flex-wrap items-center gap-1.5">
             <CategoryBadge category={recipe.category} />
             <StarchBadge contains={recipe.containsStarch} />
