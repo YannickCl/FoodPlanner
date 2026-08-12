@@ -9,6 +9,8 @@ const hexColor = z
   .regex(/^#[0-9a-fA-F]{6}$/)
   .nullish();
 
+const time = z.string().regex(/^\d{2}:\d{2}$/);
+
 const settingsSchema = z.object({
   servings: z.coerce.number().int().min(1).max(50),
   allergies: z.array(z.string().trim().min(1)),
@@ -16,6 +18,10 @@ const settingsSchema = z.object({
   bgColor: hexColor,
   cardColor: hexColor,
   accentColor: hexColor,
+  lunchTime: time,
+  lunchEnabled: z.boolean(),
+  dinnerTime: time,
+  dinnerEnabled: z.boolean(),
 });
 
 export async function saveSettings(input: unknown) {
@@ -27,6 +33,10 @@ export async function saveSettings(input: unknown) {
     bgColor: data.bgColor ?? null,
     cardColor: data.cardColor ?? null,
     accentColor: data.accentColor ?? null,
+    lunchTime: data.lunchTime,
+    lunchEnabled: data.lunchEnabled,
+    dinnerTime: data.dinnerTime,
+    dinnerEnabled: data.dinnerEnabled,
   };
   await prisma.settings.upsert({
     where: { id: "household" },

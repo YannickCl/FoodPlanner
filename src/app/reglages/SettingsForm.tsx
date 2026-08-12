@@ -13,6 +13,10 @@ interface Initial {
   bgColor: string;
   cardColor: string;
   accentColor: string;
+  lunchTime: string;
+  lunchEnabled: boolean;
+  dinnerTime: string;
+  dinnerEnabled: boolean;
 }
 
 // Thèmes prédéfinis (fond / cartes / accent).
@@ -39,6 +43,10 @@ export function SettingsForm({ initial }: { initial: Initial }) {
   const [accentColor, setAccentColor] = useState(
     initial.accentColor || DEFAULTS.accent,
   );
+  const [lunchTime, setLunchTime] = useState(initial.lunchTime);
+  const [lunchEnabled, setLunchEnabled] = useState(initial.lunchEnabled);
+  const [dinnerTime, setDinnerTime] = useState(initial.dinnerTime);
+  const [dinnerEnabled, setDinnerEnabled] = useState(initial.dinnerEnabled);
 
   function applyPreset(p: (typeof PRESETS)[number]) {
     setBgColor(p.bg);
@@ -56,6 +64,10 @@ export function SettingsForm({ initial }: { initial: Initial }) {
         bgColor,
         cardColor,
         accentColor,
+        lunchTime,
+        lunchEnabled,
+        dinnerTime,
+        dinnerEnabled,
       });
       setSaved(true);
       router.refresh();
@@ -79,6 +91,32 @@ export function SettingsForm({ initial }: { initial: Initial }) {
           onChange={(e) => setServings(e.target.value)}
           className="num w-28 rounded-lg border border-line bg-parchment px-3 py-2 text-ink outline-none focus:border-gold focus:ring-2 focus:ring-gold/30"
         />
+      </Card>
+
+      <Card className="p-5">
+        <label className="mb-1 block text-sm font-medium text-ink">
+          🕒 Heures des repas
+        </label>
+        <p className="mb-3 text-xs text-ink-soft">
+          Coche pour activer, et choisis l’heure. (Servira bientôt à te rappeler
+          quand commencer à cuisiner.)
+        </p>
+        <div className="space-y-2">
+          <MealTimeRow
+            label="🌞 Déjeuner"
+            enabled={lunchEnabled}
+            onToggle={setLunchEnabled}
+            time={lunchTime}
+            onTime={setLunchTime}
+          />
+          <MealTimeRow
+            label="🌙 Dîner"
+            enabled={dinnerEnabled}
+            onToggle={setDinnerEnabled}
+            time={dinnerTime}
+            onTime={setDinnerTime}
+          />
+        </div>
       </Card>
 
       <Card className="p-5">
@@ -262,6 +300,41 @@ function ColorField({
         />
         <span className="num text-xs uppercase text-ink-soft">{value}</span>
       </div>
+    </div>
+  );
+}
+
+function MealTimeRow({
+  label,
+  enabled,
+  onToggle,
+  time,
+  onTime,
+}: {
+  label: string;
+  enabled: boolean;
+  onToggle: (v: boolean) => void;
+  time: string;
+  onTime: (v: string) => void;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-lg border border-line bg-parchment px-3 py-2">
+      <label className="flex flex-1 cursor-pointer items-center gap-2 text-sm text-ink">
+        <input
+          type="checkbox"
+          checked={enabled}
+          onChange={(e) => onToggle(e.target.checked)}
+          className="h-4 w-4 accent-gold"
+        />
+        {label}
+      </label>
+      <input
+        type="time"
+        value={time}
+        onChange={(e) => onTime(e.target.value)}
+        disabled={!enabled}
+        className="num rounded-lg border border-line bg-parchment-card px-2 py-1 text-sm text-ink outline-none focus:border-gold disabled:opacity-40"
+      />
     </div>
   );
 }

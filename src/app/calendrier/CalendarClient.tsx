@@ -305,20 +305,23 @@ export function CalendarClient({
               key={day.iso}
               ref={day.isToday ? todayRef : undefined}
               className={cn(
-                "rounded-xl border bg-parchment-card p-2.5",
-                day.isToday ? "border-gold ring-1 ring-gold" : "border-line",
+                "rounded-3xl p-3.5 transition-colors",
+                day.isToday
+                  ? "bg-gold-soft/40 ring-2 ring-gold"
+                  : "bg-parchment-card shadow-[0_2px_16px_rgba(30,43,35,0.05)]",
               )}
             >
-              <div
-                className={cn(
-                  "mb-1.5 text-sm font-medium capitalize",
-                  day.isToday ? "text-gold" : "text-ink",
+              <div className="mb-2 flex items-center gap-2">
+                <span className="font-display text-lg capitalize text-ink">
+                  {formatShortDay(day.iso)}
+                </span>
+                {day.isToday && (
+                  <span className="rounded-full bg-gold px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-ink">
+                    Aujourd’hui
+                  </span>
                 )}
-              >
-                {formatShortDay(day.iso)}
-                {day.isToday && " · aujourd’hui"}
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <Slot
                   day={day}
                   mealTime="MIDI"
@@ -347,7 +350,7 @@ export function CalendarClient({
       </div>
 
       {/* Vue bureau : grille mensuelle 7 colonnes */}
-      <div className="hidden grid-cols-7 gap-1.5 sm:grid">
+      <div className="hidden grid-cols-7 gap-2 sm:grid">
         {WEEKDAY_LABELS.map((d) => (
           <div
             key={d}
@@ -360,23 +363,24 @@ export function CalendarClient({
           <div
             key={day.iso}
             className={cn(
-              "min-h-[104px] rounded-lg border p-1.5",
-              day.inMonth
-                ? "border-line bg-parchment-card"
-                : "border-line/40 bg-parchment-card/40",
-              day.isToday && "ring-2 ring-gold",
+              "min-h-[116px] rounded-2xl p-2 transition-colors",
+              day.isToday
+                ? "bg-gold-soft/40 ring-2 ring-gold"
+                : day.inMonth
+                  ? "bg-parchment-card shadow-[0_1px_10px_rgba(30,43,35,0.04)]"
+                  : "bg-parchment-card/40",
             )}
           >
             <div
               className={cn(
-                "num mb-1 px-0.5 text-xs",
+                "num mb-1.5 px-0.5 text-xs",
                 day.inMonth ? "text-ink-soft" : "text-ink-soft/40",
                 day.isToday && "font-bold text-gold",
               )}
             >
               {parseInt(day.iso.slice(-2), 10)}
             </div>
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               <Slot
                 day={day}
                 mealTime="MIDI"
@@ -692,13 +696,15 @@ function Slot({
   onClick: () => void;
   big?: boolean;
 }) {
+  const icon = mealTime === "MIDI" ? "🌞" : "🌙";
+  const labelTxt = mealTime === "MIDI" ? "Midi" : "Soir";
   if (cell) {
     return (
       <button
         onClick={onClick}
         className={cn(
-          "block w-full rounded border-l-[3px] px-1.5 text-left leading-tight text-ink hover:brightness-95",
-          big ? "min-h-[52px] py-1.5 text-[13px]" : "py-1 text-[11px]",
+          "block w-full rounded-2xl border-l-[3px] px-2.5 text-left leading-tight text-ink transition-all hover:brightness-[.97]",
+          big ? "min-h-[56px] py-2 text-[13px]" : "py-1.5 text-[11px]",
           CATEGORY_STYLE[cell.category].accent,
           CATEGORY_STYLE[cell.category].tint,
           selecting && isSelected && "ring-2 ring-brick",
@@ -707,8 +713,8 @@ function Slot({
         title={cell.name}
       >
         <span className="block text-[9px] uppercase tracking-wide text-ink-soft">
-          {selecting && (isSelected ? "☑ " : "☐ ")}
-          {mealTime === "MIDI" ? "Midi" : "Soir"}
+          {selecting ? (isSelected ? "☑ " : "☐ ") : `${icon} `}
+          {labelTxt}
         </span>
         <span className={big ? "line-clamp-3" : "line-clamp-2"}>{cell.name}</span>
       </button>
@@ -719,13 +725,13 @@ function Slot({
       onClick={onClick}
       disabled={selecting}
       className={cn(
-        "block w-full rounded border border-dashed border-line px-1.5 text-left text-ink-soft/70 hover:border-ink/40 hover:text-ink",
-        big ? "min-h-[52px] py-1.5 text-xs" : "py-1 text-[10px]",
+        "block w-full rounded-2xl border border-dashed border-line/80 px-2.5 text-left text-ink-soft/70 transition-colors hover:border-gold hover:text-ink",
+        big ? "min-h-[56px] py-2 text-xs" : "py-1.5 text-[10px]",
         (!day.inMonth || selecting) && "opacity-50",
       )}
     >
       <span className="text-[9px] uppercase tracking-wide">
-        {mealTime === "MIDI" ? "Midi" : "Soir"}
+        {icon} {labelTxt}
       </span>
       <span className="block">+ choisir</span>
     </button>

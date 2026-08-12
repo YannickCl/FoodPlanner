@@ -21,6 +21,10 @@ export default async function ReglagesPage() {
           bgColor: settings.bgColor ?? "",
           cardColor: settings.cardColor ?? "",
           accentColor: settings.accentColor ?? "",
+          lunchTime: settings.lunchTime,
+          lunchEnabled: settings.lunchEnabled,
+          dinnerTime: settings.dinnerTime,
+          dinnerEnabled: settings.dinnerEnabled,
         }}
       />
     </div>

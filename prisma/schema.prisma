@@ -79,6 +79,11 @@ model Settings {
   bgColor     String? // couleur de fond personnalisée (hex)
   cardColor   String? // couleur des cartes / vignettes (hex)
   accentColor String? // couleur d'accent (hex)
+  // Heures des repas (pour les futurs rappels de cuisine — V2)
+  lunchTime     String  @default("12:30")
+  lunchEnabled  Boolean @default(false)
+  dinnerTime    String  @default("19:30")
+  dinnerEnabled Boolean @default(false)
   updatedAt   DateTime @updatedAt
 }
 
