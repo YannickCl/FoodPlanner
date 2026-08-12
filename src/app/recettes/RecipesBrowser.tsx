@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { Category, Season } from "@/generated/prisma/enums";
 import { CATEGORY_LABELS } from "@/lib/labels";
 import { stripAccents } from "@/lib/normalize";
-import { CategoryBadge, StarchBadge, SeasonBadge, Card } from "@/components/ui";
+import { CategoryBadge, StarchBadge, SeasonBadge } from "@/components/ui";
 import { CATEGORY_STYLE } from "@/lib/category-style";
 import { cn } from "@/lib/cn";
 
@@ -61,14 +61,20 @@ export function RecipesBrowser({ recipes }: { recipes: RecipeRow[] }) {
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((r) => (
             <Link key={r.id} href={`/recettes/${r.id}`}>
-              <Card
+              <div
                 className={cn(
-                  "flex h-full flex-col gap-3 border-l-4 p-4 transition-transform hover:-translate-y-0.5",
+                  "flex h-full flex-col gap-3 rounded-[14px] border border-l-4 border-line p-4 shadow-[0_1px_0_rgba(30,43,35,0.04),0_8px_24px_rgba(30,43,35,0.05)] transition-transform hover:-translate-y-0.5",
                   CATEGORY_STYLE[r.category].accent,
+                  CATEGORY_STYLE[r.category].tint,
                 )}
               >
                 <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-lg leading-tight text-ink">{r.name}</h3>
+                  <span className="text-2xl leading-none" aria-hidden>
+                    {CATEGORY_STYLE[r.category].emoji}
+                  </span>
+                  <h3 className="flex-1 text-lg leading-tight text-ink">
+                    {r.name}
+                  </h3>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   <CategoryBadge category={r.category} />
@@ -82,7 +88,7 @@ export function RecipesBrowser({ recipes }: { recipes: RecipeRow[] }) {
                     <span className="num">{r.ingredientCount}</span> ingrédients
                   </span>
                 </div>
-              </Card>
+              </div>
             </Link>
           ))}
         </div>

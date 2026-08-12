@@ -85,10 +85,17 @@ export function CalendarClient({
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
-  // Sur mobile (vue agenda), défiler jusqu'au jour courant à l'ouverture.
+  // Sur mobile (vue agenda), défiler jusqu'au jour courant à l'ouverture,
+  // en tenant compte de la hauteur réelle du menu + barre d'outils collants.
   const todayRef = useRef<HTMLDivElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    todayRef.current?.scrollIntoView({ block: "start" });
+    const el = todayRef.current;
+    if (!el || !el.offsetParent) return; // caché (vue bureau) -> ne rien faire
+    const header = document.querySelector("header");
+    const offset =
+      (header?.offsetHeight ?? 0) + (toolbarRef.current?.offsetHeight ?? 0) + 8;
+    window.scrollBy({ top: el.getBoundingClientRect().top - offset });
   }, [year, month0]);
 
   const offset = monthsFromNow(year, month0);
@@ -212,7 +219,10 @@ export function CalendarClient({
 
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+      <div
+        ref={toolbarRef}
+        className="sticky top-14 z-20 -mx-4 mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-line bg-parchment/95 px-4 py-2.5 backdrop-blur sm:-mx-6 sm:px-6"
+      >
         <div className="flex items-center gap-2">
           <button
             onClick={() => go(-1)}
@@ -295,7 +305,7 @@ export function CalendarClient({
               key={day.iso}
               ref={day.isToday ? todayRef : undefined}
               className={cn(
-                "scroll-mt-20 rounded-xl border bg-parchment-card p-2.5",
+                "rounded-xl border bg-parchment-card p-2.5",
                 day.isToday ? "border-gold ring-1 ring-gold" : "border-line",
               )}
             >
