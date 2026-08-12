@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/NavBar";
@@ -26,6 +26,21 @@ export const metadata: Metadata = {
   title: "Food Planner",
   description: "Planification des repas de la famille",
   robots: { index: false, follow: false },
+  manifest: "/manifest.webmanifest",
+  applicationName: "Food Planner",
+  appleWebApp: {
+    capable: true,
+    title: "Food Planner",
+    statusBarStyle: "default",
+  },
+  icons: {
+    icon: "/icon-192.png",
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#c9a227",
 };
 
 export default async function RootLayout({

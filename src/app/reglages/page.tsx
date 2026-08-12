@@ -1,5 +1,6 @@
 import { getSettings } from "@/lib/queries";
 import { SettingsForm } from "./SettingsForm";
+import { RemindersCard } from "./RemindersCard";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +28,9 @@ export default async function ReglagesPage() {
           dinnerEnabled: settings.dinnerEnabled,
         }}
       />
+      <div className="mt-4">
+        <RemindersCard />
+      </div>
     </div>
   );
 }

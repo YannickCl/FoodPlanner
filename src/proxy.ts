@@ -17,6 +17,9 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  // Tout sauf : login, assets Next, favicon, fichiers statiques.
-  matcher: ["/((?!login|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|ico)$).*)"],
+  // Tout sauf : login, assets Next, favicon, PWA (manifeste + service worker),
+  // le cron des rappels (protégé par son propre secret) et fichiers statiques.
+  matcher: [
+    "/((?!login|_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|api/cron|.*\\.(?:svg|png|jpg|jpeg|ico)$).*)",
+  ],
 };

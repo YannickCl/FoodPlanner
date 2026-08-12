@@ -53,9 +53,19 @@ model PlannedMeal {
   recipe   Recipe?  @relation(fields: [recipeId], references: [id], onDelete: SetNull)
   servings Int      @default(6)
   choices  Json? // { [ingredientId]: "option choisie" } pour les garnitures au choix
+  remindedAt DateTime? // rappel "à vos fourneaux" déjà envoyé pour ce repas
 
   @@unique([date, mealTime])
   @@index([date])
+}
+
+// Abonnements Web Push (un par appareil/navigateur).
+model PushSub {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
 }
 
 // Articles ajoutés à la main sur la liste de courses (piles, gel douche…).
