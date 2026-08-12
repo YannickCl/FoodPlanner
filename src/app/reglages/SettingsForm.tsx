@@ -10,7 +10,22 @@ interface Initial {
   servings: number;
   allergies: string[];
   forbidden: string[];
+  bgColor: string;
+  cardColor: string;
+  accentColor: string;
 }
+
+// Thèmes prédéfinis (fond / cartes / accent).
+const PRESETS: { name: string; bg: string; card: string; accent: string }[] = [
+  { name: "Parchemin", bg: "#f3efe4", card: "#faf7ef", accent: "#c9a227" },
+  { name: "Menthe", bg: "#eaf2ec", card: "#f7fbf7", accent: "#4f6f52" },
+  { name: "Ciel", bg: "#e9eff4", card: "#f6f9fc", accent: "#3f6f94" },
+  { name: "Rosé", bg: "#f7ece9", card: "#fdf6f4", accent: "#b4502a" },
+  { name: "Lavande", bg: "#efecf5", card: "#f9f7fc", accent: "#6b5b95" },
+  { name: "Nuit", bg: "#26302c", card: "#33403a", accent: "#e7d9a6" },
+];
+
+const DEFAULTS = { bg: "#f3efe4", card: "#faf7ef", accent: "#c9a227" };
 
 export function SettingsForm({ initial }: { initial: Initial }) {
   const router = useRouter();
@@ -19,6 +34,17 @@ export function SettingsForm({ initial }: { initial: Initial }) {
   const [servings, setServings] = useState(String(initial.servings));
   const [allergies, setAllergies] = useState<string[]>(initial.allergies);
   const [forbidden, setForbidden] = useState<string[]>(initial.forbidden);
+  const [bgColor, setBgColor] = useState(initial.bgColor || DEFAULTS.bg);
+  const [cardColor, setCardColor] = useState(initial.cardColor || DEFAULTS.card);
+  const [accentColor, setAccentColor] = useState(
+    initial.accentColor || DEFAULTS.accent,
+  );
+
+  function applyPreset(p: (typeof PRESETS)[number]) {
+    setBgColor(p.bg);
+    setCardColor(p.card);
+    setAccentColor(p.accent);
+  }
 
   function save() {
     setSaved(false);
@@ -27,6 +53,9 @@ export function SettingsForm({ initial }: { initial: Initial }) {
         servings,
         allergies,
         forbidden,
+        bgColor,
+        cardColor,
+        accentColor,
       });
       setSaved(true);
       router.refresh();
@@ -72,6 +101,49 @@ export function SettingsForm({ initial }: { initial: Initial }) {
           tags={forbidden}
           onChange={setForbidden}
         />
+      </Card>
+
+      <Card className="p-5">
+        <label className="mb-1 block text-sm font-medium text-ink">
+          🎨 Couleurs de l’application
+        </label>
+        <p className="mb-3 text-xs text-ink-soft">
+          Choisis une ambiance prête à l’emploi, ou personnalise chaque couleur.
+        </p>
+        <div className="mb-4 flex flex-wrap gap-2">
+          {PRESETS.map((p) => (
+            <button
+              key={p.name}
+              type="button"
+              onClick={() => applyPreset(p)}
+              className="flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-sm text-ink hover:bg-parchment-deep"
+            >
+              <span className="flex">
+                <span
+                  className="h-4 w-4 rounded-l-full border border-line"
+                  style={{ background: p.bg }}
+                />
+                <span
+                  className="h-4 w-4 rounded-r-full border border-l-0 border-line"
+                  style={{ background: p.accent }}
+                />
+              </span>
+              {p.name}
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <ColorField label="Fond" value={bgColor} onChange={setBgColor} />
+          <ColorField label="Cartes / vignettes" value={cardColor} onChange={setCardColor} />
+          <ColorField label="Accent (boutons)" value={accentColor} onChange={setAccentColor} />
+        </div>
+        <button
+          type="button"
+          onClick={() => applyPreset({ name: "", ...DEFAULTS })}
+          className="mt-3 text-xs text-ink-soft underline hover:text-ink"
+        >
+          Réinitialiser les couleurs
+        </button>
       </Card>
 
       <div className="flex items-center gap-3">
@@ -161,6 +233,34 @@ function TagEditor({
         >
           Ajouter
         </button>
+      </div>
+    </div>
+  );
+}
+
+function ColorField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="mb-1 block text-xs font-medium text-ink-soft">
+        {label}
+      </label>
+      <div className="flex items-center gap-2 rounded-lg border border-line bg-parchment px-2 py-1.5">
+        <input
+          type="color"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="h-8 w-10 cursor-pointer rounded border border-line bg-transparent"
+          aria-label={label}
+        />
+        <span className="num text-xs uppercase text-ink-soft">{value}</span>
       </div>
     </div>
   );

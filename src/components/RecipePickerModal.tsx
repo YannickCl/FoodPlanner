@@ -22,6 +22,7 @@ export interface PickerRecipe {
   season: Season;
   mealTime: MealTime;
   prepTime: string;
+  servingsBase: number;
   choiceGroups: ChoiceGroup[];
 }
 

@@ -50,6 +50,7 @@ export async function getRecipesForPicker() {
       dayType: true,
       minGapDays: true,
       prepTime: true,
+      servingsBase: true,
       ingredients: {
         where: { isChoice: true },
         select: { id: true, name: true, choiceOptions: true },

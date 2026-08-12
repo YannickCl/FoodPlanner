@@ -2,6 +2,8 @@ import Link from "next/link";
 import { createRecipe } from "@/app/actions/recipes";
 import { RecipeForm } from "../RecipeForm";
 
+export const dynamic = "force-dynamic";
+
 export default function NouvelleRecettePage() {
   return (
     <div>

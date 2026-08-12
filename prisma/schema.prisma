@@ -72,11 +72,14 @@ model ShoppingExtra {
 
 // Réglages du foyer (ligne unique, id = "household").
 model Settings {
-  id        String   @id @default("household")
-  servings  Int      @default(6) // nombre de personnes par défaut
-  allergies String[] // ingrédients allergènes -> jamais planifiés
-  forbidden String[] // aliments interdits -> jamais planifiés
-  updatedAt DateTime @updatedAt
+  id          String   @id @default("household")
+  servings    Int      @default(6) // nombre de personnes par défaut
+  allergies   String[] // ingrédients allergènes -> jamais planifiés
+  forbidden   String[] // aliments interdits -> jamais planifiés
+  bgColor     String? // couleur de fond personnalisée (hex)
+  cardColor   String? // couleur des cartes / vignettes (hex)
+  accentColor String? // couleur d'accent (hex)
+  updatedAt   DateTime @updatedAt
 }
 
 model ShoppingListCheck {

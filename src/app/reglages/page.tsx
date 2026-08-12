@@ -17,6 +17,9 @@ export default async function ReglagesPage() {
           servings: settings.servings,
           allergies: settings.allergies,
           forbidden: settings.forbidden,
+          bgColor: settings.bgColor ?? "",
+          cardColor: settings.cardColor ?? "",
+          accentColor: settings.accentColor ?? "",
         }}
       />
     </div>

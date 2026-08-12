@@ -6,6 +6,7 @@ import type { Category } from "@/generated/prisma/enums";
 import {
   WEEKDAY_LABELS,
   formatLong,
+  formatShortDay,
   shiftMonth,
   buildMonthGrid,
   addDays,
@@ -278,7 +279,58 @@ export function CalendarClient({
         )}
       </div>
 
-      <div className="grid grid-cols-7 gap-1.5">
+      {/* Vue mobile : agenda vertical lisible (une carte par jour du mois) */}
+      <div className="space-y-2 sm:hidden">
+        {weeks
+          .flat()
+          .filter((day) => day.inMonth)
+          .map((day) => (
+            <div
+              key={day.iso}
+              className={cn(
+                "rounded-xl border bg-parchment-card p-2.5",
+                day.isToday ? "border-gold ring-1 ring-gold" : "border-line",
+              )}
+            >
+              <div
+                className={cn(
+                  "mb-1.5 text-sm font-medium capitalize",
+                  day.isToday ? "text-gold" : "text-ink",
+                )}
+              >
+                {formatShortDay(day.iso)}
+                {day.isToday && " · aujourd’hui"}
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Slot
+                  day={day}
+                  mealTime="MIDI"
+                  cell={mealMap[`${day.iso}#MIDI`]}
+                  selecting={selecting}
+                  isSelected={selected.has(`${day.iso}#MIDI`)}
+                  onClick={() =>
+                    onSlotClick(day.iso, "MIDI", mealMap[`${day.iso}#MIDI`])
+                  }
+                  big
+                />
+                <Slot
+                  day={day}
+                  mealTime="SOIR"
+                  cell={mealMap[`${day.iso}#SOIR`]}
+                  selecting={selecting}
+                  isSelected={selected.has(`${day.iso}#SOIR`)}
+                  onClick={() =>
+                    onSlotClick(day.iso, "SOIR", mealMap[`${day.iso}#SOIR`])
+                  }
+                  big
+                />
+              </div>
+            </div>
+          ))}
+      </div>
+
+      {/* Vue bureau : grille mensuelle 7 colonnes */}
+      <div className="hidden grid-cols-7 gap-1.5 sm:grid">
         {WEEKDAY_LABELS.map((d) => (
           <div
             key={d}
@@ -381,7 +433,6 @@ export function CalendarClient({
         <GarnishModal
           recipe={garnish.recipe}
           subtitle={formatLong(garnish.date)}
-          defaultServings={defaultServings}
           onCancel={() => setGarnish(null)}
           onConfirm={(choices, servings) => {
             const ctx = { date: garnish.date, mealTime: garnish.mealTime };
@@ -448,13 +499,11 @@ function SlotActionModal({
 function GarnishModal({
   recipe,
   subtitle,
-  defaultServings,
   onConfirm,
   onCancel,
 }: {
   recipe: PickerRecipe;
   subtitle: string;
-  defaultServings: number;
   onConfirm: (choices: Record<string, string[]>, servings: number) => void;
   onCancel: () => void;
 }) {
@@ -468,7 +517,7 @@ function GarnishModal({
   const [custom, setCustom] = useState<Record<string, string>>(
     Object.fromEntries(recipe.choiceGroups.map((g) => [g.id, ""])),
   );
-  const [servings, setServings] = useState(String(defaultServings));
+  const [servings, setServings] = useState(String(recipe.servingsBase));
 
   function toggle(gid: string, opt: string) {
     setSelected((s) => {
@@ -596,7 +645,7 @@ function GarnishModal({
               }
               onConfirm(
                 finalChoices,
-                Math.max(1, parseInt(servings, 10) || defaultServings),
+                Math.max(1, parseInt(servings, 10) || recipe.servingsBase),
               );
             }}
             className="rounded-full bg-ink px-5 py-2 text-sm font-medium text-parchment hover:opacity-90"
@@ -616,6 +665,7 @@ function Slot({
   selecting,
   isSelected,
   onClick,
+  big,
 }: {
   day: Week;
   mealTime: "MIDI" | "SOIR";
@@ -623,13 +673,15 @@ function Slot({
   selecting: boolean;
   isSelected: boolean;
   onClick: () => void;
+  big?: boolean;
 }) {
   if (cell) {
     return (
       <button
         onClick={onClick}
         className={cn(
-          "block w-full rounded border-l-[3px] px-1.5 py-1 text-left text-[11px] leading-tight text-ink hover:brightness-95",
+          "block w-full rounded border-l-[3px] px-1.5 text-left leading-tight text-ink hover:brightness-95",
+          big ? "min-h-[52px] py-1.5 text-[13px]" : "py-1 text-[11px]",
           CATEGORY_STYLE[cell.category].accent,
           CATEGORY_STYLE[cell.category].tint,
           selecting && isSelected && "ring-2 ring-brick",
@@ -641,7 +693,7 @@ function Slot({
           {selecting && (isSelected ? "☑ " : "☐ ")}
           {mealTime === "MIDI" ? "Midi" : "Soir"}
         </span>
-        <span className="line-clamp-2">{cell.name}</span>
+        <span className={big ? "line-clamp-3" : "line-clamp-2"}>{cell.name}</span>
       </button>
     );
   }
@@ -650,7 +702,8 @@ function Slot({
       onClick={onClick}
       disabled={selecting}
       className={cn(
-        "block w-full rounded border border-dashed border-line px-1.5 py-1 text-left text-[10px] text-ink-soft/70 hover:border-ink/40 hover:text-ink",
+        "block w-full rounded border border-dashed border-line px-1.5 text-left text-ink-soft/70 hover:border-ink/40 hover:text-ink",
+        big ? "min-h-[52px] py-1.5 text-xs" : "py-1 text-[10px]",
         (!day.inMonth || selecting) && "opacity-50",
       )}
     >
@@ -735,7 +788,7 @@ function GenerateModal({
                 onClick={() => setScope("custom")}
                 className="num rounded-lg border border-line bg-parchment px-2 py-1 text-sm text-ink outline-none focus:border-gold"
               />
-              <span className="text-xs text-ink-soft">(Ã  partir d’aujourd’hui)</span>
+              <span className="text-xs text-ink-soft">(à partir d’aujourd’hui)</span>
             </label>
           </div>
         </fieldset>
