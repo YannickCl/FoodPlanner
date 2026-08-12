@@ -21,7 +21,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Le Garde-manger",
+  title: "Food Planner",
   description: "Planification des repas de la famille",
   robots: { index: false, follow: false },
 };

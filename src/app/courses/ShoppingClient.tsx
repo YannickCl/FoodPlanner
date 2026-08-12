@@ -102,7 +102,7 @@ export function ShoppingClient({
         <div className="ticket-edge" />
         <div className="ticket px-5 py-4">
           <div className="mb-3 border-b border-dashed border-ink/20 pb-3 text-center">
-            <p className="font-display text-lg text-ink">Le Garde-manger</p>
+            <p className="font-display text-lg text-ink">Food Planner</p>
             <p className="num text-xs text-ink-soft">
               {formatLong(from)} → {formatLong(to)}
             </p>
@@ -139,9 +139,11 @@ export function ShoppingClient({
                                   : "text-ink",
                               )}
                             >
-                              <span className="num font-medium">
-                                {formatQuantity(item)}
-                              </span>{" "}
+                              {formatQuantity(item) && (
+                                <span className="num font-medium">
+                                  {formatQuantity(item)}{" "}
+                                </span>
+                              )}
                               {item.name}
                               {item.notes.length > 0 && (
                                 <span className="text-ink-soft">

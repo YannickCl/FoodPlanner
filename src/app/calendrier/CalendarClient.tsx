@@ -3,7 +3,15 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import type { Category } from "@/generated/prisma/enums";
-import { WEEKDAY_LABELS, formatLong, shiftMonth, buildMonthGrid } from "@/lib/dates";
+import {
+  WEEKDAY_LABELS,
+  formatLong,
+  shiftMonth,
+  buildMonthGrid,
+  addDays,
+  fromISO,
+  toISO,
+} from "@/lib/dates";
 import { setMeal, generatePlanning } from "@/app/actions/planning";
 import {
   RecipePickerModal,
@@ -118,15 +126,21 @@ export function CalendarClient({
     commitMeal(ctx, recipeId);
   }
 
-  function runGenerate(scope: "month" | "sixmonths", mode: "fill" | "replace") {
-    const from = firstISO;
-    const to =
-      scope === "month"
-        ? lastISO
-        : (() => {
-            const { year: y, month0: m } = shiftMonth(year, month0, 5);
-            return buildMonthGrid(y, m, todayISO).lastISO;
-          })();
+  function runGenerate(
+    scope: "month" | "sixmonths" | "custom",
+    mode: "fill" | "replace",
+    untilDate?: string,
+  ) {
+    let from = firstISO;
+    let to = lastISO;
+    if (scope === "sixmonths") {
+      const { year: y, month0: m } = shiftMonth(year, month0, 5);
+      to = buildMonthGrid(y, m, todayISO).lastISO;
+    } else if (scope === "custom") {
+      // D'aujourd'hui jusqu'à la date choisie.
+      from = todayISO;
+      to = untilDate && untilDate >= todayISO ? untilDate : todayISO;
+    }
     setGenOpen(false);
     startTransition(async () => {
       await generatePlanning({ from, to, mode });
@@ -237,6 +251,7 @@ export function CalendarClient({
       {genOpen && (
         <GenerateModal
           monthLabel={monthLabel}
+          todayISO={todayISO}
           onClose={() => setGenOpen(false)}
           onRun={runGenerate}
         />
@@ -380,15 +395,22 @@ function Slot({
 
 function GenerateModal({
   monthLabel,
+  todayISO,
   onClose,
   onRun,
 }: {
   monthLabel: string;
+  todayISO: string;
   onClose: () => void;
-  onRun: (scope: "month" | "sixmonths", mode: "fill" | "replace") => void;
+  onRun: (
+    scope: "month" | "sixmonths" | "custom",
+    mode: "fill" | "replace",
+    untilDate?: string,
+  ) => void;
 }) {
-  const [scope, setScope] = useState<"month" | "sixmonths">("month");
+  const [scope, setScope] = useState<"month" | "sixmonths" | "custom">("month");
   const [mode, setMode] = useState<"fill" | "replace">("fill");
+  const [untilDate, setUntilDate] = useState(toISO(addDays(fromISO(todayISO), 6)));
 
   return (
     <div
@@ -418,6 +440,34 @@ function GenerateModal({
               onChange={() => setScope("sixmonths")}
               title="Les 6 prochains mois"
             />
+            <label
+              className={cn(
+                "flex cursor-pointer items-center gap-2 rounded-lg border p-2.5 transition-colors",
+                scope === "custom"
+                  ? "border-gold bg-gold-soft/40"
+                  : "border-line hover:bg-parchment",
+              )}
+            >
+              <input
+                type="radio"
+                checked={scope === "custom"}
+                onChange={() => setScope("custom")}
+                className="accent-gold"
+              />
+              <span className="text-sm text-ink">Jusqu'au</span>
+              <input
+                type="date"
+                value={untilDate}
+                min={todayISO}
+                onChange={(e) => {
+                  setUntilDate(e.target.value);
+                  setScope("custom");
+                }}
+                onClick={() => setScope("custom")}
+                className="num rounded-lg border border-line bg-parchment px-2 py-1 text-sm text-ink outline-none focus:border-gold"
+              />
+              <span className="text-xs text-ink-soft">(à partir d'aujourd'hui)</span>
+            </label>
           </div>
         </fieldset>
 
@@ -447,7 +497,7 @@ function GenerateModal({
             Annuler
           </button>
           <button
-            onClick={() => onRun(scope, mode)}
+            onClick={() => onRun(scope, mode, untilDate)}
             className="rounded-full bg-ink px-5 py-2 text-sm font-medium text-parchment hover:opacity-90"
           >
             Générer

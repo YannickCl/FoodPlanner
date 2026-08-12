@@ -114,13 +114,17 @@ export function aggregateShoppingList(planned: PlannedRecipe[]): ShoppingList {
   return { groups, itemCount };
 }
 
-/** Formatage d'une quantité : "400 g", "1.5 kg", "2 oignon", "au goût". */
+/**
+ * Formatage d'une quantité pour la liste de courses : "400 g", "1.5 kg",
+ * "2 oignon". Sans quantité connue, on n'affiche rien (juste le nom suffit
+ * pour savoir qu'il faut en acheter).
+ */
 export function formatQuantity(item: {
   quantity: number | null;
   unit: Unit | null;
   hasQuantity: boolean;
 }): string {
-  if (!item.hasQuantity || item.quantity === null) return "au goût";
+  if (!item.hasQuantity || item.quantity === null) return "";
   const q = item.quantity;
   const num = Number.isInteger(q) ? q.toString() : q.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
   const unitLabel = item.unit ? UNIT_LABELS[item.unit] : "";

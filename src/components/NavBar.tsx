@@ -18,7 +18,7 @@ export function NavBar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <Link href="/calendrier" className="flex items-baseline gap-2">
           <span className="font-display text-xl font-semibold text-ink">
-            Le Garde-manger
+            Food Planner
           </span>
           <span className="hidden text-xs uppercase tracking-widest text-ink-soft sm:inline">
             · repas de la famille
