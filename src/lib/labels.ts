@@ -71,6 +71,15 @@ export const AISLE_LABELS: Record<Aisle, string> = {
   AUTRES: "Autres",
 };
 
+export const AISLE_EMOJI: Record<Aisle, string> = {
+  BOUCHERIE: "🥩",
+  POISSONNERIE: "🐟",
+  CREMERIE: "🧀",
+  FRUITS_LEGUMES: "🥦",
+  EPICERIE: "🫙",
+  AUTRES: "🧺",
+};
+
 // Ordre d'affichage des rayons sur la liste de courses (ordre logique en magasin).
 export const AISLE_ORDER: Aisle[] = [
   Aisle.FRUITS_LEGUMES,

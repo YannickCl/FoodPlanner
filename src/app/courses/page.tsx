@@ -21,7 +21,7 @@ export default async function CoursesPage({
   const from = sp.from ?? defaults.from;
   const to = sp.to ?? defaults.to;
 
-  const { meals, checks } = await getShoppingData(from, to);
+  const { meals, checks, extras } = await getShoppingData(from, to);
 
   const planned: PlannedRecipe[] = meals
     .filter((m) => m.recipe)
@@ -88,6 +88,7 @@ export default async function CoursesPage({
       checkedKeys={checkedKeys}
       recipeCount={planned.length}
       recipeBreakdown={recipeBreakdown}
+      extras={extras.map((e) => ({ id: e.id, name: e.name, checked: e.checked }))}
     />
   );
 }

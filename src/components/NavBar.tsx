@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { href: "/calendrier", label: "Calendrier" },
-  { href: "/recettes", label: "Recettes" },
-  { href: "/courses", label: "Courses" },
-  { href: "/reglages", label: "Réglages" },
+  { href: "/calendrier", label: "Calendrier", emoji: "📅" },
+  { href: "/recettes", label: "Recettes", emoji: "📖" },
+  { href: "/courses", label: "Courses", emoji: "🛒" },
+  { href: "/reglages", label: "Réglages", emoji: "⚙️" },
 ];
 
 export function NavBar() {
@@ -38,7 +38,10 @@ export function NavBar() {
                     : "text-ink-soft hover:bg-parchment-deep hover:text-ink"
                 }`}
               >
-                {l.label}
+                <span aria-hidden className="mr-1">
+                  {l.emoji}
+                </span>
+                <span className="hidden sm:inline">{l.label}</span>
               </Link>
             );
           })}

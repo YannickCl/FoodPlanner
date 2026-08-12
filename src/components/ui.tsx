@@ -1,23 +1,17 @@
 import type { Category, Season } from "@/generated/prisma/enums";
 import { CATEGORY_LABELS, SEASON_LABELS } from "@/lib/labels";
+import { CATEGORY_STYLE } from "@/lib/category-style";
 import { cn } from "@/lib/cn";
-
-const CATEGORY_STYLES: Record<Category, string> = {
-  FAVORI: "bg-gold-soft text-ink border-gold/40",
-  RAPIDE: "bg-green/12 text-green border-green/30",
-  HEALTHY: "bg-green/10 text-green border-green/25",
-  SALADE_ETE: "bg-green/15 text-green border-green/30",
-  SOUPE_HIVER: "bg-brick/12 text-brick border-brick/30",
-};
 
 export function CategoryBadge({ category }: { category: Category }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
-        CATEGORY_STYLES[category],
+        "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium",
+        CATEGORY_STYLE[category].badge,
       )}
     >
+      <span aria-hidden>{CATEGORY_STYLE[category].emoji}</span>
       {CATEGORY_LABELS[category]}
     </span>
   );

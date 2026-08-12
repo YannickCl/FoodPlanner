@@ -58,6 +58,18 @@ model PlannedMeal {
   @@index([date])
 }
 
+// Articles ajoutés à la main sur la liste de courses (piles, gel douche…).
+model ShoppingExtra {
+  id         String   @id @default(cuid())
+  rangeStart DateTime @db.Date
+  rangeEnd   DateTime @db.Date
+  name       String
+  checked    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([rangeStart, rangeEnd])
+}
+
 // Réglages du foyer (ligne unique, id = "household").
 model Settings {
   id        String   @id @default("household")

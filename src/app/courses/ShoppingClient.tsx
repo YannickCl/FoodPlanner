@@ -2,14 +2,26 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toggleCheck } from "@/app/actions/shopping";
+import {
+  toggleCheck,
+  addExtra,
+  toggleExtra,
+  deleteExtra,
+} from "@/app/actions/shopping";
 import { type ShoppingList } from "@/lib/shopping";
 import { formatLong, weekRange, monthRangeOf } from "@/lib/dates";
+import { AISLE_EMOJI } from "@/lib/labels";
 import { cn } from "@/lib/cn";
 
 interface RecipeBreakdown {
   name: string;
   items: { name: string; qtyLabel: string }[];
+}
+
+interface Extra {
+  id: string;
+  name: string;
+  checked: boolean;
 }
 
 export function ShoppingClient({
@@ -20,6 +32,7 @@ export function ShoppingClient({
   checkedKeys,
   recipeCount,
   recipeBreakdown,
+  extras,
 }: {
   from: string;
   to: string;
@@ -28,9 +41,32 @@ export function ShoppingClient({
   checkedKeys: string[];
   recipeCount: number;
   recipeBreakdown: RecipeBreakdown[];
+  extras: Extra[];
 }) {
   const router = useRouter();
   const [checked, setChecked] = useState<Set<string>>(new Set(checkedKeys));
+  const [items, setItems] = useState<Extra[]>(extras);
+  const [newItem, setNewItem] = useState("");
+
+  function addItem() {
+    const name = newItem.trim();
+    if (!name) return;
+    setNewItem("");
+    addExtra({ rangeStart: from, rangeEnd: to, name }).then((res) => {
+      if (res?.id) setItems((l) => [...l, { id: res.id, name, checked: false }]);
+    });
+  }
+  function toggleItem(id: string) {
+    setItems((l) =>
+      l.map((it) => (it.id === id ? { ...it, checked: !it.checked } : it)),
+    );
+    const it = items.find((x) => x.id === id);
+    void toggleExtra({ id, checked: !it?.checked });
+  }
+  function removeItem(id: string) {
+    setItems((l) => l.filter((it) => it.id !== id));
+    void deleteExtra({ id });
+  }
 
   function setRange(f: string, t: string) {
     router.push(`/courses?from=${f}&to=${t}`);
@@ -60,7 +96,7 @@ export function ShoppingClient({
       <div className="no-print mb-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-3xl text-ink">Liste de courses</h1>
+            <h1 className="text-3xl text-ink">🛒 Liste de courses</h1>
             <p className="mt-1 text-sm text-ink-soft">
               <span className="num">{recipeCount}</span> repas ·{" "}
               <span className="num">{list.itemCount}</span> articles
@@ -124,6 +160,9 @@ export function ShoppingClient({
               {list.groups.map((group) => (
                 <div key={group.aisle}>
                   <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-gold">
+                    <span aria-hidden className="mr-1">
+                      {AISLE_EMOJI[group.aisle]}
+                    </span>
                     {group.label}
                   </p>
                   <ul className="space-y-0.5">
@@ -169,9 +208,63 @@ export function ShoppingClient({
             </div>
           )}
 
+          <div className="mt-4">
+            <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-brick">
+              🧺 Autres articles
+            </p>
+            <ul className="space-y-0.5">
+              {items.map((it) => (
+                <li key={it.id} className="flex items-baseline gap-2 py-0.5">
+                  <input
+                    type="checkbox"
+                    checked={it.checked}
+                    onChange={() => toggleItem(it.id)}
+                    className="no-print mt-1 h-4 w-4 shrink-0 accent-green"
+                  />
+                  <span
+                    className={cn(
+                      "flex-1 text-sm leading-snug",
+                      it.checked ? "text-ink-soft line-through" : "text-ink",
+                    )}
+                  >
+                    {it.name}
+                  </span>
+                  <button
+                    onClick={() => removeItem(it.id)}
+                    className="no-print text-ink-soft hover:text-brick"
+                    aria-label="Retirer"
+                  >
+                    ✕
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <div className="no-print mt-2 flex gap-2">
+              <input
+                value={newItem}
+                onChange={(e) => setNewItem(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    addItem();
+                  }
+                }}
+                placeholder="Piles, gel douche, sacs poubelle…"
+                className="flex-1 rounded-lg border border-line bg-parchment px-3 py-1.5 text-sm text-ink outline-none focus:border-gold"
+              />
+              <button
+                onClick={addItem}
+                className="rounded-lg bg-green px-3 py-1.5 text-sm font-medium text-parchment"
+              >
+                Ajouter
+              </button>
+            </div>
+          </div>
+
           <div className="mt-4 border-t border-dashed border-ink/20 pt-3 text-center">
             <p className="num text-xs text-ink-soft">
-              {list.itemCount} article{list.itemCount > 1 ? "s" : ""}
+              {list.itemCount + items.length} article
+              {list.itemCount + items.length > 1 ? "s" : ""}
             </p>
           </div>
         </div>

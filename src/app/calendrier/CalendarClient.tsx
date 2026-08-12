@@ -18,6 +18,7 @@ import {
   type PickerRecipe,
 } from "@/components/RecipePickerModal";
 import { cn } from "@/lib/cn";
+import { CATEGORY_STYLE } from "@/lib/category-style";
 
 export interface MealCell {
   recipeId: string;
@@ -33,14 +34,6 @@ interface Week {
   inMonth: boolean;
   isToday: boolean;
 }
-
-const CATEGORY_ACCENT: Record<Category, string> = {
-  FAVORI: "border-l-gold",
-  RAPIDE: "border-l-green",
-  HEALTHY: "border-l-green",
-  SALADE_ETE: "border-l-green",
-  SOUPE_HIVER: "border-l-brick",
-};
 
 // Limite de navigation : ±6 mois autour du mois courant réel.
 function monthsFromNow(year: number, month0: number): number {
@@ -636,8 +629,9 @@ function Slot({
       <button
         onClick={onClick}
         className={cn(
-          "block w-full rounded border-l-[3px] bg-parchment px-1.5 py-1 text-left text-[11px] leading-tight text-ink hover:bg-parchment-deep",
-          CATEGORY_ACCENT[cell.category],
+          "block w-full rounded border-l-[3px] px-1.5 py-1 text-left text-[11px] leading-tight text-ink hover:brightness-95",
+          CATEGORY_STYLE[cell.category].accent,
+          CATEGORY_STYLE[cell.category].tint,
           selecting && isSelected && "ring-2 ring-brick",
           selecting && !isSelected && "opacity-70",
         )}

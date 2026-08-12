@@ -110,5 +110,10 @@ export async function getShoppingData(from: ISODate, to: ISODate) {
     where: { rangeStart: isoToDbDate(from), rangeEnd: isoToDbDate(to) },
   });
 
-  return { meals, checks };
+  const extras = await prisma.shoppingExtra.findMany({
+    where: { rangeStart: isoToDbDate(from), rangeEnd: isoToDbDate(to) },
+    orderBy: { createdAt: "asc" },
+  });
+
+  return { meals, checks, extras };
 }
