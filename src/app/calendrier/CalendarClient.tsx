@@ -88,7 +88,7 @@ export function CalendarClient({
   // Sur mobile (vue agenda), défiler jusqu'au jour courant à l'ouverture.
   const todayRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    todayRef.current?.scrollIntoView({ block: "center" });
+    todayRef.current?.scrollIntoView({ block: "start" });
   }, [year, month0]);
 
   const offset = monthsFromNow(year, month0);
