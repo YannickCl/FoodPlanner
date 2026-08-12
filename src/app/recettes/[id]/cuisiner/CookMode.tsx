@@ -32,6 +32,7 @@ export function CookMode({ recipeId, name, prepTime, steps, ingredients }: Props
   const nextTimerId = useRef(1);
   const ringed = useRef<Set<number>>(new Set());
   const [needRotate, setNeedRotate] = useState(false);
+  const [wakeOn, setWakeOn] = useState(false);
 
   const last = steps.length - 1;
   const step = steps[i] ?? "";
@@ -58,6 +59,33 @@ export function CookMode({ recipeId, name, prepTime, steps, ingredients }: Props
     return () => {
       window.removeEventListener("resize", check);
       window.removeEventListener("orientationchange", check);
+    };
+  }, []);
+
+  // --- Écran maintenu allumé pendant la cuisine (les minuteurs sonnent à l'heure) ---
+  useEffect(() => {
+    let sentinel: WakeLockSentinel | null = null;
+    const request = async () => {
+      try {
+        if ("wakeLock" in navigator && document.visibilityState === "visible") {
+          sentinel = await navigator.wakeLock.request("screen");
+          setWakeOn(true);
+          sentinel.addEventListener("release", () => setWakeOn(false));
+        }
+      } catch {
+        setWakeOn(false); // refusé ou non supporté
+      }
+    };
+    request();
+    // iOS libère le verrou quand l'app passe en arrière-plan : on le redemande au retour.
+    const onVis = () => {
+      if (document.visibilityState === "visible") request();
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      document.removeEventListener("visibilitychange", onVis);
+      sentinel?.release().catch(() => {});
+      sentinel = null;
     };
   }, []);
 
@@ -175,6 +203,7 @@ export function CookMode({ recipeId, name, prepTime, steps, ingredients }: Props
           <p className="truncate font-display text-lg leading-none">{name}</p>
           <p className="num mt-0.5 text-xs text-ink-soft">
             Étape {i + 1} / {steps.length} · {prepTime}
+            {wakeOn && <span className="ml-1">· 🔆 écran allumé</span>}
           </p>
         </div>
         <button
