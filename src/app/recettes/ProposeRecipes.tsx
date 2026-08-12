@@ -76,7 +76,7 @@ export function ProposeRecipes() {
           >
             <div className="flex items-start justify-between border-b border-line p-4">
               <div>
-                <h2 className="text-xl text-ink">Suggestions de l'IA</h2>
+                <h2 className="text-xl text-ink">Suggestions de l’IA</h2>
                 <p className="text-sm text-ink-soft">
                   Coche celles à ajouter à ton carnet.
                 </p>

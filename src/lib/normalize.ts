@@ -45,3 +45,19 @@ export function normalizeName(name: string): string {
 export function ingredientKey(name: string, unit: Unit | null | undefined): string {
   return `${normalizeName(name)}::${unit ?? "NONE"}`;
 }
+
+// Mots de contenant / conditionnement à retirer pour regrouper les courses
+// (ex: "boîte de tomates" et "tomates" -> même article ; "gousses d'ail" -> "ail").
+const CONTAINER_RE =
+  /^(boite|boites|sachet|sachets|tranche|tranches|gousse|gousses|bouquet|bouquets|brin|brins|branche|branches|feuille|feuilles|boule|boules|pot|pots|barquette|barquettes|paquet|paquets|conserve|conserves)\s+(?:de\s+|d\s+|d')/;
+
+/**
+ * Clé de regroupement pour la liste de courses : nom normalisé + suppression
+ * du mot de contenant en tête. Regroupe "Parmesan"/"50 g parmesan",
+ * "boîte de tomates concassées"/"tomates concassées", etc.
+ */
+export function aggregationKey(name: string): string {
+  let n = normalizeName(name);
+  n = n.replace(CONTAINER_RE, "").trim();
+  return n || normalizeName(name);
+}

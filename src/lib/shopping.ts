@@ -1,6 +1,6 @@
-import type { Aisle, Unit } from "@/generated/prisma/enums";
-import { ingredientKey, normalizeName } from "./normalize";
-import { AISLE_LABELS, AISLE_ORDER, UNIT_LABELS } from "./labels";
+import { Unit, type Aisle } from "@/generated/prisma/enums";
+import { aggregationKey, normalizeName } from "./normalize";
+import { AISLE_LABELS, AISLE_ORDER } from "./labels";
 import { isPantryStaple } from "./staples";
 
 // Ingrédient tel que fourni à l'agrégateur (déjà chargé depuis la base).
@@ -21,14 +21,12 @@ export interface PlannedRecipe {
 }
 
 export interface ShoppingItem {
-  key: string; // clé stable (nom normalisé + unité) = ShoppingListCheck.ingredientKey
+  key: string; // clé stable = nom regroupé (sert de ShoppingListCheck.ingredientKey)
   name: string; // nom lisible représentatif
   aisle: Aisle;
-  unit: Unit | null;
-  quantity: number | null; // null si "au goût" / non quantifié
-  hasQuantity: boolean;
+  qtyLabel: string; // quantité prête à afficher ("400 g", "1.5 kg", "3", "" si inconnue)
   sources: string[]; // recettes d'origine (dédoublonnées)
-  notes: string[]; // notes agrégées (au goût, émincé...)
+  notes: string[]; // notes agrégées
 }
 
 export interface ShoppingGroup {
@@ -42,69 +40,122 @@ export interface ShoppingList {
   itemCount: number;
 }
 
+// Accumulateur par article : on somme séparément masse (g), volume (ml) et
+// décompte (pièces). Les unités "de cuisine" (c. à s./c. à c./pincée) ne sont
+// pas des quantités d'achat -> on n'affiche que le nom.
+interface Acc {
+  key: string;
+  name: string;
+  aisle: Aisle;
+  grams: number;
+  ml: number;
+  count: number;
+  sources: string[];
+  notes: string[];
+}
+
+function trim(n: number): string {
+  const r = Math.round(n * 100) / 100;
+  return Number.isInteger(r) ? r.toString() : r.toString();
+}
+
+function formatMass(g: number): string {
+  return g >= 1000 ? `${trim(g / 1000)} kg` : `${trim(g)} g`;
+}
+function formatVol(ml: number): string {
+  if (ml >= 1000) return `${trim(ml / 1000)} l`;
+  if (ml >= 10) return `${trim(ml / 10)} cl`;
+  return `${trim(ml)} ml`;
+}
+
 /**
  * Agrège les ingrédients de toutes les recettes planifiées.
- * - même nom normalisé + même unité -> quantités additionnées (après mise à
- *   l'échelle par les portions) ;
- * - unités différentes ou non parseables -> lignes distinctes (§3.3).
+ * - regroupement par nom (contenants ignorés : "boîte de", "gousses d'"…) ;
+ * - masses (g/kg) et volumes (ml/cl/l) additionnés et affichés proprement ;
+ * - unités de cuisine (c. à s., c. à c., pincée) et lignes sans quantité :
+ *   on affiche seulement le nom (on n'achète pas "1 c. à s. de farine").
  */
 export function aggregateShoppingList(planned: PlannedRecipe[]): ShoppingList {
-  const map = new Map<string, ShoppingItem>();
+  const map = new Map<string, Acc>();
 
   for (const pr of planned) {
-    const factor =
-      pr.servingsBase > 0 ? pr.servings / pr.servingsBase : 1;
+    const factor = pr.servingsBase > 0 ? pr.servings / pr.servingsBase : 1;
 
     for (const ing of pr.ingredients) {
-      // Ingrédients de base (eau, sel, poivre, huile) : jamais sur la liste.
-      if (isPantryStaple(ing.name)) continue;
+      if (isPantryStaple(ing.name)) continue; // eau, sel, poivre, huile
 
-      const key = ingredientKey(ing.name, ing.unit);
-      let item = map.get(key);
-      if (!item) {
-        item = {
+      const key = aggregationKey(ing.name);
+      let acc = map.get(key);
+      if (!acc) {
+        acc = {
           key,
           name: ing.name,
           aisle: ing.aisle,
-          unit: ing.unit,
-          quantity: null,
-          hasQuantity: false,
+          grams: 0,
+          ml: 0,
+          count: 0,
           sources: [],
           notes: [],
         };
-        map.set(key, item);
+        map.set(key, acc);
       }
 
-      if (ing.quantity !== null) {
-        const scaled = ing.quantity * factor;
-        item.quantity = (item.quantity ?? 0) + scaled;
-        item.hasQuantity = true;
+      const q = ing.quantity !== null ? ing.quantity * factor : null;
+      if (q !== null) {
+        switch (ing.unit) {
+          case Unit.G:
+            acc.grams += q;
+            break;
+          case Unit.KG:
+            acc.grams += q * 1000;
+            break;
+          case Unit.ML:
+            acc.ml += q;
+            break;
+          case Unit.CL:
+            acc.ml += q * 10;
+            break;
+          case Unit.L:
+            acc.ml += q * 1000;
+            break;
+          case Unit.PIECE:
+          case null:
+            acc.count += q;
+            break;
+          // CAS / CAC / PINCEE : mesure de cuisine -> pas une quantité d'achat.
+          default:
+            break;
+        }
       }
-      if (!item.sources.includes(pr.recipeName)) {
-        item.sources.push(pr.recipeName);
-      }
-      if (ing.note && !item.notes.includes(ing.note)) {
-        item.notes.push(ing.note);
-      }
-      // Préférer un nom d'affichage court et stable.
-      if (ing.name.length < item.name.length) item.name = ing.name;
+
+      if (ing.note && !acc.notes.includes(ing.note)) acc.notes.push(ing.note);
+      // Nom d'affichage : le plus court et lisible.
+      if (ing.name.length < acc.name.length) acc.name = ing.name;
+      // Rayon : préférer un rayon précis à "AUTRES".
+      if (acc.aisle === "AUTRES" && ing.aisle !== "AUTRES") acc.aisle = ing.aisle;
     }
   }
 
-  // Arrondi propre des quantités.
-  for (const item of map.values()) {
-    if (item.quantity !== null) {
-      item.quantity = Math.round(item.quantity * 100) / 100;
-    }
-  }
-
-  // Regroupement par rayon, dans l'ordre magasin.
   const groups: ShoppingGroup[] = [];
   let itemCount = 0;
   for (const aisle of AISLE_ORDER) {
     const items = [...map.values()]
-      .filter((i) => i.aisle === aisle)
-      .sort((a, b) => normalizeName(a.name).localeCompare(normalizeName(b.name)));
+      .filter((a) => a.aisle === aisle)
+      .sort((a, b) => normalizeName(a.name).localeCompare(normalizeName(b.name)))
+      .map((a): ShoppingItem => {
+        const parts: string[] = [];
+        if (a.count > 0) parts.push(trim(a.count));
+        if (a.grams > 0) parts.push(formatMass(a.grams));
+        if (a.ml > 0) parts.push(formatVol(a.ml));
+        return {
+          key: a.key,
+          name: a.name,
+          aisle: a.aisle,
+          qtyLabel: parts.join(" + "),
+          sources: a.sources,
+          notes: a.notes,
+        };
+      });
     if (items.length) {
       groups.push({ aisle, label: AISLE_LABELS[aisle], items });
       itemCount += items.length;
@@ -112,21 +163,4 @@ export function aggregateShoppingList(planned: PlannedRecipe[]): ShoppingList {
   }
 
   return { groups, itemCount };
-}
-
-/**
- * Formatage d'une quantité pour la liste de courses : "400 g", "1.5 kg",
- * "2 oignon". Sans quantité connue, on n'affiche rien (juste le nom suffit
- * pour savoir qu'il faut en acheter).
- */
-export function formatQuantity(item: {
-  quantity: number | null;
-  unit: Unit | null;
-  hasQuantity: boolean;
-}): string {
-  if (!item.hasQuantity || item.quantity === null) return "";
-  const q = item.quantity;
-  const num = Number.isInteger(q) ? q.toString() : q.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
-  const unitLabel = item.unit ? UNIT_LABELS[item.unit] : "";
-  return unitLabel ? `${num} ${unitLabel}` : num;
 }

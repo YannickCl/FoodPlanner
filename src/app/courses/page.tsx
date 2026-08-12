@@ -26,19 +26,20 @@ export default async function CoursesPage({
   const planned: PlannedRecipe[] = meals
     .filter((m) => m.recipe)
     .map((m) => {
-      const choices = (m.choices ?? {}) as Record<string, string>;
+      const choices = (m.choices ?? {}) as Record<string, string | string[]>;
       const ingredients: RawIngredient[] = [];
       for (const i of m.recipe!.ingredients) {
         if (i.isChoice) {
-          // Garniture au choix : n'ajouter que l'option retenue pour ce repas.
-          const chosen = choices[i.id];
-          if (chosen) {
+          // Garniture(s) au choix : ajouter chaque option retenue pour ce repas.
+          const raw = choices[i.id];
+          const chosen = Array.isArray(raw) ? raw : raw ? [raw] : [];
+          for (const opt of chosen) {
             ingredients.push({
-              name: chosen,
+              name: opt,
               quantity: null,
               unit: null,
               note: null,
-              aisle: guessAisle(chosen),
+              aisle: guessAisle(opt),
             });
           }
           continue;

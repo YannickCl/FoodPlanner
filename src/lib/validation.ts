@@ -62,8 +62,8 @@ export const setMealSchema = z.object({
   mealTime: z.enum([MealTime.MIDI, MealTime.SOIR]),
   recipeId: z.string().nullable(),
   servings: z.coerce.number().int().min(1).max(50).default(6),
-  // garnitures choisies : { [ingredientId]: "option" }
-  choices: z.record(z.string(), z.string()).nullish(),
+  // garnitures choisies : { [ingredientId]: ["option1", "option2", …] }
+  choices: z.record(z.string(), z.array(z.string())).nullish(),
 });
 
 export const generateSchema = z.object({

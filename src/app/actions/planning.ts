@@ -44,6 +44,26 @@ export async function setMeal(input: unknown) {
   return { ok: true };
 }
 
+/** Supprime plusieurs repas d'un coup (mode sélection du calendrier). */
+export async function clearMeals(
+  cells: { date: string; mealTime: "MIDI" | "SOIR" }[],
+) {
+  const valid = (cells ?? []).filter((c) => /^\d{4}-\d{2}-\d{2}$/.test(c.date));
+  if (!valid.length) return { ok: true, count: 0 };
+
+  await prisma.$transaction(
+    valid.map((c) =>
+      prisma.plannedMeal.deleteMany({
+        where: { date: isoToDbDate(c.date), mealTime: c.mealTime },
+      }),
+    ),
+  );
+
+  revalidatePath("/calendrier");
+  revalidatePath("/courses");
+  return { ok: true, count: valid.length };
+}
+
 /** Génère le planning sur une période (mode "fill" ou "replace"). */
 export async function generatePlanning(input: unknown) {
   const { from, to, mode } = generateSchema.parse(input);
@@ -74,7 +94,16 @@ export async function generatePlanning(input: unknown) {
           restrictions,
         ),
     )
-    .map(({ ingredients: _ing, ...rest }) => rest);
+    .map((r) => ({
+      id: r.id,
+      name: r.name,
+      containsStarch: r.containsStarch,
+      starchFamily: r.starchFamily,
+      season: r.season,
+      mealTime: r.mealTime,
+      dayType: r.dayType,
+      minGapDays: r.minGapDays,
+    }));
 
   // Contexte : repas des 90 jours précédant la période, pour respecter les gaps.
   const preStart = toISO(addDays(fromISO(from), -90));

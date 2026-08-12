@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toggleCheck } from "@/app/actions/shopping";
-import { formatQuantity, type ShoppingList } from "@/lib/shopping";
+import { type ShoppingList } from "@/lib/shopping";
 import { formatLong, weekRange, monthRangeOf } from "@/lib/dates";
 import { cn } from "@/lib/cn";
 
@@ -139,9 +139,9 @@ export function ShoppingClient({
                                   : "text-ink",
                               )}
                             >
-                              {formatQuantity(item) && (
+                              {item.qtyLabel && (
                                 <span className="num font-medium">
-                                  {formatQuantity(item)}{" "}
+                                  {item.qtyLabel}{" "}
                                 </span>
                               )}
                               {item.name}
