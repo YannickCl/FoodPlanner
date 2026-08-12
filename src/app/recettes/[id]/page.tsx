@@ -57,6 +57,14 @@ export default async function RecipeDetailPage({
           </div>
         </div>
         <div className="flex gap-2">
+          {recipe.steps.length > 0 && (
+            <Link
+              href={`/recettes/${recipe.id}/cuisiner`}
+              className="rounded-full bg-brick px-5 py-2 text-sm font-semibold text-parchment shadow-sm transition-opacity hover:opacity-90"
+            >
+              🍳 Lancer la recette
+            </Link>
+          )}
           <Link
             href={`/recettes/${recipe.id}/edit`}
             className="rounded-full border border-ink px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-parchment"
