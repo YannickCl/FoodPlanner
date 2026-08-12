@@ -519,7 +519,8 @@ function GarnishModal({
         <div className="flex-1 space-y-5 overflow-y-auto p-5">
           <div>
             <label className="mb-1 block text-sm font-medium text-ink">
-              Nombre de portions
+              Nombre de{" "}
+              {recipe.name.toLowerCase().includes("pizza") ? "pizzas" : "portions"}
             </label>
             <input
               type="number"
@@ -590,12 +591,21 @@ function GarnishModal({
             Annuler
           </button>
           <button
-            onClick={() =>
+            onClick={() => {
+              // Inclure une garniture tapée mais pas encore "Ajoutée".
+              const finalChoices: Record<string, string[]> = {};
+              for (const g of recipe.choiceGroups) {
+                const set = [...(selected[g.id] ?? [])];
+                const pending = (custom[g.id] ?? "").trim();
+                if (pending && !set.some((x) => x.toLowerCase() === pending.toLowerCase()))
+                  set.push(pending);
+                finalChoices[g.id] = set;
+              }
               onConfirm(
-                selected,
+                finalChoices,
                 Math.max(1, parseInt(servings, 10) || defaultServings),
-              )
-            }
+              );
+            }}
             className="rounded-full bg-ink px-5 py-2 text-sm font-medium text-parchment hover:opacity-90"
           >
             Valider

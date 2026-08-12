@@ -7,6 +7,11 @@ import { type ShoppingList } from "@/lib/shopping";
 import { formatLong, weekRange, monthRangeOf } from "@/lib/dates";
 import { cn } from "@/lib/cn";
 
+interface RecipeBreakdown {
+  name: string;
+  items: { name: string; qtyLabel: string }[];
+}
+
 export function ShoppingClient({
   from,
   to,
@@ -14,6 +19,7 @@ export function ShoppingClient({
   list,
   checkedKeys,
   recipeCount,
+  recipeBreakdown,
 }: {
   from: string;
   to: string;
@@ -21,6 +27,7 @@ export function ShoppingClient({
   list: ShoppingList;
   checkedKeys: string[];
   recipeCount: number;
+  recipeBreakdown: RecipeBreakdown[];
 }) {
   const router = useRouter();
   const [checked, setChecked] = useState<Set<string>>(new Set(checkedKeys));
@@ -170,6 +177,35 @@ export function ShoppingClient({
         </div>
         <div className="ticket-edge rotate-180" />
       </div>
+
+      {recipeBreakdown.length > 0 && (
+        <details className="mx-auto mt-6 max-w-md rounded-[var(--radius-card)] border border-line bg-parchment-card p-4">
+          <summary className="cursor-pointer text-sm font-semibold text-ink">
+            Détail par recette
+          </summary>
+          <p className="mt-1 text-xs text-ink-soft">
+            Les ingrédients regroupés sous chaque plat (certains se répètent avec
+            la liste ci-dessus).
+          </p>
+          <div className="mt-3 space-y-4">
+            {recipeBreakdown.map((r) => (
+              <div key={r.name}>
+                <p className="mb-1 font-display text-base text-ink">{r.name}</p>
+                <ul className="space-y-0.5">
+                  {r.items.map((it, i) => (
+                    <li key={i} className="text-sm text-ink">
+                      {it.qtyLabel && (
+                        <span className="num font-medium">{it.qtyLabel} </span>
+                      )}
+                      {it.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </details>
+      )}
     </div>
   );
 }

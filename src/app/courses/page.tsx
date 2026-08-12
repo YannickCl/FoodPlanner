@@ -63,6 +63,22 @@ export default async function CoursesPage({
   const list = aggregateShoppingList(planned);
   const checkedKeys = checks.filter((c) => c.checked).map((c) => c.ingredientKey);
 
+  // Détail par recette : les ingrédients regroupés sous chaque plat.
+  const byName = new Map<string, PlannedRecipe[]>();
+  for (const p of planned) {
+    const arr = byName.get(p.recipeName) ?? [];
+    arr.push(p);
+    byName.set(p.recipeName, arr);
+  }
+  const recipeBreakdown = [...byName.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([name, prs]) => ({
+      name,
+      items: aggregateShoppingList(prs)
+        .groups.flatMap((g) => g.items)
+        .map((it) => ({ name: it.name, qtyLabel: it.qtyLabel })),
+    }));
+
   return (
     <ShoppingClient
       from={from}
@@ -71,6 +87,7 @@ export default async function CoursesPage({
       list={list}
       checkedKeys={checkedKeys}
       recipeCount={planned.length}
+      recipeBreakdown={recipeBreakdown}
     />
   );
 }
