@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import type { Category } from "@/generated/prisma/enums";
 import {
   WEEKDAY_LABELS,
@@ -84,6 +84,12 @@ export function CalendarClient({
   } | null>(null);
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
+
+  // Sur mobile (vue agenda), défiler jusqu'au jour courant à l'ouverture.
+  const todayRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    todayRef.current?.scrollIntoView({ block: "center" });
+  }, [year, month0]);
 
   const offset = monthsFromNow(year, month0);
   const canPrev = offset > -6;
@@ -287,8 +293,9 @@ export function CalendarClient({
           .map((day) => (
             <div
               key={day.iso}
+              ref={day.isToday ? todayRef : undefined}
               className={cn(
-                "rounded-xl border bg-parchment-card p-2.5",
+                "scroll-mt-20 rounded-xl border bg-parchment-card p-2.5",
                 day.isToday ? "border-gold ring-1 ring-gold" : "border-line",
               )}
             >
