@@ -35,7 +35,12 @@ export async function setMeal(input: unknown) {
         servings: data.servings,
         choices,
       },
-      update: { recipeId: data.recipeId, servings: data.servings, choices },
+      update: {
+        recipeId: data.recipeId,
+        servings: data.servings,
+        choices,
+        remindedAt: null, // nouveau plat -> le rappel pourra repartir
+      },
     });
   }
 
