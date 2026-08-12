@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------------------------------------------------------------------------
+   Charte "parchemin" (voir PLAN-DEV-CLAUDE-CODE.md §0)
+   Fond parchemin, encre, accents or / brique / vert.
+   Polices : Fraunces (display), Inter (texte), IBM Plex Mono (chiffres).
+--------------------------------------------------------------------------- */
+@theme {
+  --color-parchment: #f3efe4;
+  --color-parchment-deep: #e9e3d3;
+  --color-parchment-card: #faf7ef;
+  --color-ink: #1e2b23;
+  --color-ink-soft: #4a5852;
+  --color-gold: #c9a227;
+  --color-gold-soft: #e7d9a6;
+  --color-brick: #b4502a;
+  --color-green: #4f6f52;
+  --color-line: #d8d0bd;
+
+  --radius-card: 14px;
 }
 
+/* Les polices next/font exposent --font-fraunces / --font-inter / --font-plex-mono
+   sur <body>. `@theme inline` inline ces valeurs dans les utilitaires
+   (font-display / font-sans / font-mono) au lieu d'émettre une variable vide. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-parchment);
+  color: var(--color-ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Titres en Fraunces par défaut */
+h1, h2, h3, h4 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Chiffres (quantités, dates, compteurs) en Plex Mono */
+.num {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Petit grain de papier discret sur le fond */
+.paper-grain {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(30, 43, 35, 0.035) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
+}
+
+/* ---- Ticket de caisse (liste de courses) ---- */
+.ticket {
+  background: repeating-linear-gradient(
+    var(--color-parchment-card) 0 27px,
+    var(--color-parchment-card) 27px
+  );
+  box-shadow: 0 2px 0 rgba(30, 43, 35, 0.05), 0 12px 30px rgba(30, 43, 35, 0.08);
+}
+.ticket-edge {
+  --w: 10px;
+  background:
+    linear-gradient(-45deg, transparent 50%, var(--color-parchment-card) 50%) 0 0 / var(--w) var(--w) repeat-x,
+    linear-gradient(45deg, transparent 50%, var(--color-parchment-card) 50%) 0 0 / var(--w) var(--w) repeat-x;
+  height: var(--w);
+}
+
+/* ---- Impression : ne montrer que le ticket ---- */
+@media print {
+  @page {
+    margin: 12mm;
+  }
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-area {
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  .ticket {
+    box-shadow: none !important;
+    background: #fff !important;
+  }
 }

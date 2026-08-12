@@ -1,0 +1,2275 @@
+{
+ "tartiflette": {
+  "nom": "Tartiflette",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "weekend",
+  "season": "hiver_pref",
+  "min_gap": 28,
+  "temps": "1h10",
+  "ingredients": [
+   "1 reblochon (500g)",
+   "1.2kg de pommes de terre",
+   "250g de lardons fumés",
+   "2 oignons",
+   "20cl de crème fraîche épaisse",
+   "10cl de vin blanc sec",
+   "Poivre"
+  ],
+  "etapes": [
+   "Cuire les pommes de terre 20 min à l'eau, peler et couper en rondelles épaisses.",
+   "Faire revenir les oignons émincés puis les lardons dans une poêle.",
+   "Dans un plat à gratin, alterner pommes de terre, oignons/lardons, arroser de vin blanc et de crème.",
+   "Couper le reblochon en deux dans l'épaisseur, déposer croûte vers le haut.",
+   "Enfourner 25-30 min à 200°C jusqu'à belle coloration. Servir avec une salade verte."
+  ],
+  "feculent": true,
+  "famille": "pdt"
+ },
+ "burger_maison": {
+  "nom": "Burger maison",
+  "cat": "favori",
+  "meal": "both",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 21,
+  "temps": "35 min",
+  "ingredients": [
+   "6 pains à burger",
+   "900g de bœuf haché (15% MG)",
+   "6 tranches de cheddar",
+   "1 salade batavia",
+   "2 tomates",
+   "1 oignon rouge",
+   "Cornichons",
+   "Sauce burger (ketchup, moutarde, mayo)",
+   "Sel, poivre"
+  ],
+  "etapes": [
+   "Former 6 steaks hachés, saler/poivrer.",
+   "Cuire à la poêle ou au barbecue 3-4 min par face, ajouter le cheddar en fin de cuisson.",
+   "Toaster légèrement les pains.",
+   "Garnir : sauce, salade, tomate, steak/cheddar, oignon rouge, cornichons.",
+   "Servir avec une salade verte ou des frites/légumes au four pour alléger."
+  ],
+  "feculent": true,
+  "famille": "pain"
+ },
+ "poulet_curry_riz_brocoli": {
+  "nom": "Poulet au curry, riz et brocoli",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 21,
+  "temps": "40 min",
+  "ingredients": [
+   "900g de blancs de poulet",
+   "2 c.à.s de pâte ou poudre de curry",
+   "40cl de lait de coco",
+   "1 oignon",
+   "2 gousses d'ail",
+   "1 brocoli",
+   "360g de riz basmati",
+   "Huile, sel"
+  ],
+  "etapes": [
+   "Faire revenir oignon et ail émincés, ajouter le poulet en morceaux et le faire dorer.",
+   "Saupoudrer de curry, mélanger 1 min puis verser le lait de coco.",
+   "Laisser mijoter 15-20 min à couvert.",
+   "Cuire le riz et le brocoli à la vapeur pendant ce temps.",
+   "Servir le curry avec le riz et le brocoli vapeur."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "pates_bolognaise": {
+  "nom": "Pâtes bolognaise",
+  "cat": "favori",
+  "meal": "both",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 18,
+  "temps": "45 min",
+  "ingredients": [
+   "600g de bœuf haché",
+   "700g de pâtes (penne/tagliatelles)",
+   "2 boîtes de tomates concassées",
+   "1 oignon",
+   "2 carottes",
+   "2 gousses d'ail",
+   "1 c.à.s de concentré de tomate",
+   "Herbes de Provence",
+   "Parmesan"
+  ],
+  "etapes": [
+   "Faire suer oignon, carottes et ail finement coupés.",
+   "Ajouter la viande hachée, bien colorer.",
+   "Ajouter tomates concassées, concentré et herbes, saler/poivrer.",
+   "Laisser mijoter 30 min à couvert en remuant de temps en temps.",
+   "Cuire les pâtes al dente, servir nappées de sauce et de parmesan."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "chili_con_carne": {
+  "nom": "Chili con carne",
+  "cat": "favori",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 24,
+  "temps": "50 min",
+  "ingredients": [
+   "700g de bœuf haché",
+   "2 boîtes de haricots rouges",
+   "1 boîte de tomates concassées",
+   "1 poivron",
+   "1 oignon",
+   "2 gousses d'ail",
+   "1 c.à.s de cumin",
+   "1 c.à.c de paprika",
+   "Piment doux/fort au goût"
+  ],
+  "etapes": [
+   "Faire revenir oignon, ail et poivron, ajouter la viande et bien la colorer.",
+   "Ajouter épices, tomates concassées et haricots rouges égouttés.",
+   "Laisser mijoter 30-35 min à couvert.",
+   "Rectifier l'assaisonnement.",
+   "Servir chaud dans un bol, avec un peu de coriandre fraîche si désiré (les haricots rouges suffisent, pas besoin de riz)."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "pates_carbonara": {
+  "nom": "Pâtes carbonara",
+  "cat": "favori",
+  "meal": "both",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 18,
+  "temps": "25 min",
+  "ingredients": [
+   "700g de spaghetti",
+   "250g de poitrine fumée/guanciale en lardons",
+   "6 jaunes d'œufs + 1 œuf entier",
+   "100g de parmesan râpé",
+   "Poivre noir"
+  ],
+  "etapes": [
+   "Cuire les pâtes al dente.",
+   "Faire dorer les lardons sans matière grasse.",
+   "Battre les œufs avec le parmesan et beaucoup de poivre.",
+   "Hors du feu, mélanger pâtes égouttées, lardons et appareil œufs/parmesan (utiliser un peu d'eau de cuisson pour lier).",
+   "Servir aussitôt avec du parmesan supplémentaire."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "fajitas_poulet": {
+  "nom": "Fajitas au poulet",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 21,
+  "temps": "35 min",
+  "ingredients": [
+   "800g de blancs de poulet",
+   "3 poivrons de couleurs différentes",
+   "2 oignons",
+   "12 tortillas de blé",
+   "Épices fajitas (cumin, paprika, ail, piment)",
+   "Guacamole, crème fraîche, salsa",
+   "Jus de citron vert"
+  ],
+  "etapes": [
+   "Couper poulet, poivrons et oignons en lanières.",
+   "Faire mariner le poulet avec les épices et le citron vert 15 min si possible.",
+   "Poêler le poulet à feu vif, réserver, puis poêler les légumes.",
+   "Réunir poulet et légumes.",
+   "Réchauffer les tortillas et servir avec guacamole, crème et salsa à garnir soi-même."
+  ],
+  "feculent": true,
+  "famille": "tortilla"
+ },
+ "blanquette_veau": {
+  "nom": "Blanquette de veau",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "weekend",
+  "season": "hiver_pref",
+  "min_gap": 28,
+  "temps": "1h30",
+  "ingredients": [
+   "1.2kg d'épaule de veau",
+   "300g de carottes",
+   "250g de champignons de Paris",
+   "2 oignons",
+   "1 bouquet garni",
+   "40g de beurre",
+   "40g de farine",
+   "20cl de crème fraîche",
+   "1 jaune d'œuf",
+   "360g de riz"
+  ],
+  "etapes": [
+   "Blanchir la viande 5 min à l'eau bouillante, rincer.",
+   "Cuire la viande avec carottes, oignon clouté et bouquet garni 1h à petit frémissement.",
+   "Ajouter les champignons 15 min avant la fin.",
+   "Préparer un roux (beurre+farine), mouiller avec le bouillon filtré, laisser épaissir.",
+   "Lier avec crème et jaune d'œuf hors du feu, napper la viande et servir avec du riz."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "curry_crevettes": {
+  "nom": "Curry de crevettes",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 21,
+  "temps": "30 min",
+  "ingredients": [
+   "900g de crevettes décortiquées",
+   "40cl de lait de coco",
+   "2 c.à.s de pâte de curry (rouge ou jaune)",
+   "1 oignon",
+   "2 gousses d'ail",
+   "1 poivron rouge",
+   "Coriandre fraîche",
+   "360g de riz basmati"
+  ],
+  "etapes": [
+   "Faire revenir oignon, ail et poivron émincés.",
+   "Ajouter la pâte de curry, mélanger 1 min, verser le lait de coco.",
+   "Laisser mijoter 10 min puis ajouter les crevettes 4-5 min (pas plus pour rester moelleuses).",
+   "Parsemer de coriandre fraîche.",
+   "Servir avec du riz basmati."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "pizza_maison": {
+  "nom": "Pizza maison",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 18,
+  "temps": "40 min (+repos pâte)",
+  "ingredients": [
+   "500g de farine",
+   "1 sachet de levure boulangère",
+   "30cl d'eau tiède",
+   "2 c.à.s d'huile d'olive",
+   "400g de sauce tomate",
+   "400g de mozzarella",
+   "Garnitures au choix (jambon, champignons, chorizo, légumes)",
+   "Origan"
+  ],
+  "etapes": [
+   "Préparer la pâte (farine, levure, eau, huile, sel), pétrir puis laisser lever 1h.",
+   "Étaler la pâte en 2-3 pizzas selon la taille du four.",
+   "Garnir de sauce tomate, mozzarella et garnitures choisies.",
+   "Enfourner 12-15 min à 240°C (four préchauffé, chaleur forte).",
+   "Servir avec une salade verte pour équilibrer le repas."
+  ],
+  "feculent": true,
+  "famille": "pizza"
+ },
+ "legumes_rotis_saucisse_toulouse": {
+  "nom": "Légumes rôtis et saucisse de Toulouse",
+  "cat": "favori",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 16,
+  "temps": "45 min",
+  "ingredients": [
+   "6 saucisses de Toulouse",
+   "1kg de légumes de saison (courgettes, poivrons, carottes, oignons rouges)",
+   "3 c.à.s d'huile d'olive",
+   "Herbes de Provence",
+   "2 gousses d'ail"
+  ],
+  "etapes": [
+   "Couper les légumes en morceaux réguliers, les disposer sur une plaque.",
+   "Arroser d'huile d'olive, ail et herbes, enfourner 30 min à 200°C.",
+   "Cuire les saucisses à la poêle ou au four 15-20 min en les retournant.",
+   "Réunir légumes rôtis et saucisses sur un plat.",
+   "Servir tel quel, éventuellement avec un peu de moutarde."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "lasagnes_maison": {
+  "nom": "Lasagnes maison",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 21,
+  "temps": "1h15",
+  "ingredients": [
+   "600g de bœuf haché",
+   "12 plaques de lasagnes",
+   "2 boîtes de tomates concassées",
+   "1 oignon",
+   "1 carotte",
+   "60g de beurre",
+   "60g de farine",
+   "60cl de lait",
+   "100g de parmesan",
+   "150g de mozzarella"
+  ],
+  "etapes": [
+   "Préparer une bolognaise (viande, oignon, carotte, tomates) mijotée 25 min.",
+   "Préparer une béchamel (beurre, farine, lait) légèrement salée et muscadée.",
+   "Monter les lasagnes en couches : plaques, bolognaise, béchamel, répéter.",
+   "Terminer par de la béchamel, parmesan et mozzarella.",
+   "Enfourner 35-40 min à 180°C jusqu'à belle coloration."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "carbonade_flamande": {
+  "nom": "Carbonade flamande",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "weekend",
+  "season": "hiver_pref",
+  "min_gap": 28,
+  "temps": "2h",
+  "ingredients": [
+   "1.2kg de bœuf à braiser (paleron)",
+   "3 oignons",
+   "75cl de bière brune",
+   "2 tranches de pain d'épices",
+   "2 c.à.s de moutarde",
+   "2 c.à.s de cassonade",
+   "2 c.à.s de vinaigre",
+   "360g de riz ou pain de campagne"
+  ],
+  "etapes": [
+   "Faire dorer la viande en morceaux, réserver.",
+   "Faire revenir les oignons émincés, remettre la viande.",
+   "Tartiner les tranches de pain d'épices de moutarde, les déposer sur la viande, verser la bière.",
+   "Ajouter cassonade et vinaigre, laisser mijoter à couvert 1h30-2h à feu doux.",
+   "Servir avec du riz, des frites ou du pain de campagne."
+  ],
+  "feculent": true,
+  "famille": "pdt"
+ },
+ "moules_frites": {
+  "nom": "Moules frites",
+  "cat": "favori",
+  "meal": "midi",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 21,
+  "temps": "40 min",
+  "ingredients": [
+   "3kg de moules",
+   "2 échalotes",
+   "1 gousse d'ail",
+   "25cl de vin blanc sec",
+   "1 branche de persil",
+   "50g de beurre",
+   "1kg de pommes de terre (frites au four)"
+  ],
+  "etapes": [
+   "Nettoyer et trier les moules soigneusement.",
+   "Faire suer échalotes et ail dans le beurre.",
+   "Ajouter le vin blanc, porter à ébullition puis ajouter les moules.",
+   "Couvrir et cuire 5-6 min en secouant la marmite jusqu'à ouverture des moules.",
+   "Parsemer de persil, servir avec des frites au four (pommes de terre coupées, huile, four 220°C 30 min)."
+  ],
+  "feculent": true,
+  "famille": "pdt"
+ },
+ "salade_pates_thon_nicoise": {
+  "nom": "Salade de pâtes au thon façon niçoise",
+  "cat": "salade_ete",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "ete",
+  "min_gap": 14,
+  "temps": "20 min",
+  "ingredients": [
+   "500g de pâtes courtes",
+   "3 boîtes de thon au naturel",
+   "200g de tomates cerises",
+   "1 poivron",
+   "100g d'olives noires",
+   "3 œufs durs",
+   "Vinaigrette (huile d'olive, vinaigre, moutarde)"
+  ],
+  "etapes": [
+   "Cuire les pâtes al dente, refroidir sous l'eau froide.",
+   "Couper tomates et poivron, émietter le thon.",
+   "Mélanger pâtes, légumes, thon et olives.",
+   "Ajouter la vinaigrette, mélanger.",
+   "Servir bien frais avec les œufs durs en quartiers."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "salade_riz_thon_crudites": {
+  "nom": "Salade de riz, thon et crudités",
+  "cat": "salade_ete",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "ete",
+  "min_gap": 14,
+  "temps": "20 min",
+  "ingredients": [
+   "400g de riz",
+   "2 boîtes de thon",
+   "2 carottes râpées",
+   "1 concombre",
+   "1/2 chou rouge émincé",
+   "Maïs doux",
+   "Vinaigrette citronnée"
+  ],
+  "etapes": [
+   "Cuire le riz, laisser refroidir.",
+   "Râper/émincer les crudités.",
+   "Mélanger riz, thon émietté et crudités.",
+   "Assaisonner d'une vinaigrette au citron.",
+   "Réserver au frais 30 min avant de servir."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "salade_lentilles_thon_crudites": {
+  "nom": "Salade de lentilles, thon et crudités",
+  "cat": "salade_ete",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "ete",
+  "min_gap": 14,
+  "temps": "25 min",
+  "ingredients": [
+   "400g de lentilles vertes",
+   "2 boîtes de thon",
+   "1 oignon rouge",
+   "Persil",
+   "Tomates cerises",
+   "Vinaigrette moutarde",
+   "1 échalote"
+  ],
+  "etapes": [
+   "Cuire les lentilles 20-25 min à l'eau, égoutter.",
+   "Émincer oignon rouge et échalote finement.",
+   "Mélanger lentilles tièdes avec la vinaigrette (elles absorbent mieux les saveurs).",
+   "Ajouter thon émietté, tomates cerises et persil.",
+   "Servir tiède ou froid."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "salade_pates_pesto_mozza": {
+  "nom": "Salade de pâtes au pesto et mozzarella",
+  "cat": "salade_ete",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "ete",
+  "min_gap": 14,
+  "temps": "20 min",
+  "ingredients": [
+   "500g de pâtes courtes",
+   "150g de pesto",
+   "2 billes de mozzarella",
+   "250g de tomates cerises",
+   "Pignons de pin",
+   "Basilic frais"
+  ],
+  "etapes": [
+   "Cuire les pâtes al dente, refroidir.",
+   "Couper mozzarella et tomates cerises.",
+   "Mélanger pâtes, pesto, mozzarella, tomates.",
+   "Parsemer de pignons torréfiés et basilic.",
+   "Servir frais."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "salade_riz_poulet_curry_froid": {
+  "nom": "Salade de riz au poulet façon curry froid",
+  "cat": "salade_ete",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "ete",
+  "min_gap": 14,
+  "temps": "25 min",
+  "ingredients": [
+   "400g de riz",
+   "600g de blancs de poulet cuits",
+   "1 c.à.c de curry en poudre",
+   "2 c.à.s de yaourt grec",
+   "1 pomme",
+   "Raisins secs",
+   "Amandes effilées"
+  ],
+  "etapes": [
+   "Cuire le riz, laisser refroidir.",
+   "Cuire les blancs de poulet à la poêle, couper en dés.",
+   "Préparer une sauce yaourt-curry.",
+   "Mélanger riz, poulet, pomme en dés, raisins secs et sauce.",
+   "Parsemer d'amandes effilées, servir bien frais."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "salade_quinoa_feta_concombre": {
+  "nom": "Salade de quinoa, feta et concombre",
+  "cat": "salade_ete",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "ete",
+  "min_gap": 12,
+  "temps": "20 min",
+  "ingredients": [
+   "350g de quinoa",
+   "200g de feta",
+   "1 concombre",
+   "Tomates cerises",
+   "Menthe fraîche",
+   "Huile d'olive, citron"
+  ],
+  "etapes": [
+   "Cuire le quinoa, laisser refroidir.",
+   "Couper concombre, tomates et feta en dés.",
+   "Mélanger tous les ingrédients.",
+   "Assaisonner d'huile d'olive et de jus de citron, ajouter la menthe ciselée.",
+   "Servir frais."
+  ],
+  "feculent": true,
+  "famille": "quinoa"
+ },
+ "salade_taboule": {
+  "nom": "Taboulé maison",
+  "cat": "salade_ete",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "ete",
+  "min_gap": 14,
+  "temps": "25 min",
+  "ingredients": [
+   "300g de semoule fine",
+   "3 tomates",
+   "1 concombre",
+   "1 bouquet de persil plat",
+   "1 bouquet de menthe",
+   "2 citrons",
+   "Huile d'olive"
+  ],
+  "etapes": [
+   "Humidifier la semoule avec un peu d'eau tiède, laisser gonfler 15 min.",
+   "Couper très finement tomates et concombre.",
+   "Ciseler persil et menthe.",
+   "Mélanger tout avec la semoule égrainée à la fourchette.",
+   "Assaisonner généreusement d'huile d'olive et de jus de citron, réserver au frais."
+  ],
+  "feculent": true,
+  "famille": "semoule"
+ },
+ "salade_lentilles_feta_grenade": {
+  "nom": "Salade de lentilles, feta et grenade",
+  "cat": "salade_ete",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "ete",
+  "min_gap": 14,
+  "temps": "25 min",
+  "ingredients": [
+   "400g de lentilles vertes",
+   "200g de feta",
+   "1 grenade (ou grenade en grains surgelée)",
+   "Roquette",
+   "Vinaigrette miel-moutarde"
+  ],
+  "etapes": [
+   "Cuire les lentilles, égoutter et refroidir.",
+   "Émietter la feta, égrainer la grenade.",
+   "Mélanger lentilles, roquette, feta et grenade.",
+   "Ajouter la vinaigrette miel-moutarde.",
+   "Servir frais."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "soupe_legumes_maison": {
+  "nom": "Soupe de légumes maison",
+  "cat": "soupe_hiver",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "hiver",
+  "min_gap": 10,
+  "temps": "35 min",
+  "ingredients": [
+   "2 poireaux",
+   "4 carottes",
+   "1 navet",
+   "2 pommes de terre",
+   "1 oignon",
+   "1 cube de bouillon de légumes",
+   "Crème fraîche (facultatif)"
+  ],
+  "etapes": [
+   "Éplucher et couper tous les légumes.",
+   "Les faire suer 5 min dans un peu d'huile.",
+   "Couvrir d'eau, ajouter le bouillon, cuire 25 min.",
+   "Mixer jusqu'à obtenir une texture lisse.",
+   "Servir avec une touche de crème fraîche, accompagné de pain et jambon/fromage si besoin de plus consistant."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "veloute_potiron": {
+  "nom": "Velouté de potiron",
+  "cat": "soupe_hiver",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "hiver",
+  "min_gap": 14,
+  "temps": "35 min",
+  "ingredients": [
+   "1kg de potiron",
+   "1 oignon",
+   "20cl de crème liquide",
+   "1 cube de bouillon",
+   "Noix de muscade",
+   "Graines de courge torréfiées"
+  ],
+  "etapes": [
+   "Couper le potiron et l'oignon, faire suer avec un peu d'huile.",
+   "Couvrir d'eau et de bouillon, cuire 25 min.",
+   "Mixer, ajouter la crème et la muscade.",
+   "Rectifier l'assaisonnement.",
+   "Servir avec des graines de courge torréfiées."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "soupe_poireaux_pdt": {
+  "nom": "Soupe poireaux-pommes de terre",
+  "cat": "soupe_hiver",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "hiver",
+  "min_gap": 14,
+  "temps": "35 min",
+  "ingredients": [
+   "4 poireaux",
+   "800g de pommes de terre",
+   "1 oignon",
+   "20cl de crème fraîche",
+   "1 cube de bouillon",
+   "Ciboulette"
+  ],
+  "etapes": [
+   "Émincer poireaux et oignon, couper les pommes de terre.",
+   "Faire suer puis couvrir d'eau et de bouillon, cuire 25 min.",
+   "Mixer, ajouter la crème fraîche.",
+   "Parsemer de ciboulette ciselée.",
+   "Servir chaud."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "soupe_lentilles_corail_curry": {
+  "nom": "Soupe de lentilles corail au curry",
+  "cat": "soupe_hiver",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "hiver",
+  "min_gap": 14,
+  "temps": "30 min",
+  "ingredients": [
+   "300g de lentilles corail",
+   "1 oignon",
+   "1 c.à.s de curry en poudre",
+   "20cl de lait de coco",
+   "1 cube de bouillon de légumes",
+   "Coriandre fraîche"
+  ],
+  "etapes": [
+   "Faire revenir l'oignon émincé avec le curry.",
+   "Ajouter les lentilles corail rincées, couvrir d'eau et de bouillon.",
+   "Cuire 15-20 min jusqu'à ce que les lentilles soient fondantes.",
+   "Ajouter le lait de coco, mixer partiellement ou totalement selon la texture voulue.",
+   "Parsemer de coriandre fraîche, servir avec du pain."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "minestrone": {
+  "nom": "Minestrone",
+  "cat": "soupe_hiver",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "hiver",
+  "min_gap": 14,
+  "temps": "40 min",
+  "ingredients": [
+   "2 carottes",
+   "2 courgettes",
+   "1 boîte de haricots blancs",
+   "1 boîte de tomates concassées",
+   "100g de petites pâtes",
+   "1 oignon",
+   "2 gousses d'ail",
+   "Parmesan"
+  ],
+  "etapes": [
+   "Faire revenir oignon et ail, ajouter carottes et courgettes en dés.",
+   "Ajouter les tomates concassées et couvrir d'eau, cuire 15 min.",
+   "Ajouter haricots blancs et petites pâtes, cuire encore 10-12 min.",
+   "Rectifier l'assaisonnement.",
+   "Servir avec du parmesan râpé."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "soupe_courgettes": {
+  "nom": "Soupe de courgettes",
+  "cat": "soupe_hiver",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "hiver",
+  "min_gap": 14,
+  "temps": "30 min",
+  "ingredients": [
+   "1kg de courgettes",
+   "1 oignon",
+   "1 pomme de terre",
+   "20cl de crème fraîche légère",
+   "1 cube de bouillon",
+   "Menthe ou basilic"
+  ],
+  "etapes": [
+   "Couper courgettes, oignon et pomme de terre.",
+   "Faire suer puis couvrir d'eau et de bouillon, cuire 20 min.",
+   "Mixer, ajouter la crème.",
+   "Parsemer d'herbes fraîches ciselées.",
+   "Servir chaud."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "veloute_champignons": {
+  "nom": "Velouté de champignons",
+  "cat": "soupe_hiver",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "hiver",
+  "min_gap": 14,
+  "temps": "30 min",
+  "ingredients": [
+   "600g de champignons de Paris",
+   "1 oignon",
+   "1 pomme de terre",
+   "20cl de crème liquide",
+   "1 cube de bouillon",
+   "Persil"
+  ],
+  "etapes": [
+   "Faire revenir champignons et oignon émincés.",
+   "Ajouter la pomme de terre coupée, couvrir d'eau et de bouillon, cuire 20 min.",
+   "Mixer, ajouter la crème.",
+   "Parsemer de persil.",
+   "Servir chaud avec des croûtons."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "garbure": {
+  "nom": "Garbure (soupe du Sud-Ouest)",
+  "cat": "soupe_hiver",
+  "meal": "soir",
+  "day_type": "weekend",
+  "season": "hiver",
+  "min_gap": 21,
+  "temps": "1h",
+  "ingredients": [
+   "1/2 chou vert",
+   "4 pommes de terre",
+   "3 carottes",
+   "1 boîte de haricots blancs",
+   "2 cuisses de confit de canard",
+   "1 oignon",
+   "1 cube de bouillon"
+  ],
+  "etapes": [
+   "Faire revenir l'oignon, ajouter les légumes coupés.",
+   "Couvrir d'eau et de bouillon, cuire 30 min.",
+   "Ajouter le chou émincé et les haricots blancs, cuire encore 15 min.",
+   "Ajouter les cuisses de confit effilochées en fin de cuisson pour les réchauffer.",
+   "Servir bien chaud, c'est encore meilleur réchauffé le lendemain."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "jambon_puree": {
+  "nom": "Jambon-purée",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 8,
+  "temps": "20 min",
+  "ingredients": [
+   "6 tranches de jambon blanc",
+   "1kg de pommes de terre",
+   "20cl de lait",
+   "50g de beurre",
+   "Muscade"
+  ],
+  "etapes": [
+   "Cuire les pommes de terre à l'eau 20 min.",
+   "Écraser avec beurre et lait chaud, muscade.",
+   "Poêler ou réchauffer les tranches de jambon.",
+   "Servir la purée avec le jambon.",
+   "Ajouter une petite salade verte pour la touche healthy."
+  ],
+  "feculent": true,
+  "famille": "pdt"
+ },
+ "omelette_nature_salade": {
+  "nom": "Omelette nature et salade verte",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 7,
+  "temps": "15 min",
+  "ingredients": [
+   "12 œufs",
+   "Sel, poivre",
+   "Beurre",
+   "1 salade verte",
+   "Vinaigrette"
+  ],
+  "etapes": [
+   "Battre les œufs en omelette, saler/poivrer.",
+   "Cuire à la poêle beurrée à feu moyen.",
+   "Plier et servir dès que la cuisson vous convient (baveuse ou bien cuite).",
+   "Accompagner d'une salade verte vinaigrette.",
+   "Ajouter du pain complet pour compléter."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "omelette_champignons": {
+  "nom": "Omelette aux champignons",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "20 min",
+  "ingredients": [
+   "12 œufs",
+   "400g de champignons de Paris",
+   "1 échalote",
+   "Persil",
+   "Beurre"
+  ],
+  "etapes": [
+   "Poêler les champignons émincés avec l'échalote jusqu'à évaporation de l'eau.",
+   "Battre les œufs, saler/poivrer.",
+   "Verser les œufs sur les champignons dans la poêle.",
+   "Cuire à feu doux, parsemer de persil.",
+   "Servir avec une salade."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "omelette_fromage_jambon": {
+  "nom": "Omelette au fromage et jambon",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "15 min",
+  "ingredients": [
+   "12 œufs",
+   "150g de gruyère râpé",
+   "4 tranches de jambon en dés",
+   "Beurre"
+  ],
+  "etapes": [
+   "Battre les œufs, saler/poivrer légèrement (le jambon est déjà salé).",
+   "Ajouter jambon en dés et une partie du fromage.",
+   "Cuire à la poêle beurrée.",
+   "Parsemer du reste de fromage juste avant de plier.",
+   "Servir avec une salade de crudités."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "omelette_fines_herbes_tomates": {
+  "nom": "Omelette aux fines herbes et tomates",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "15 min",
+  "ingredients": [
+   "12 œufs",
+   "2 tomates",
+   "Ciboulette, persil, cerfeuil",
+   "Beurre"
+  ],
+  "etapes": [
+   "Couper les tomates en dés, égoutter l'excédent de jus.",
+   "Battre les œufs avec les herbes ciselées.",
+   "Cuire à la poêle beurrée, ajouter les tomates à mi-cuisson.",
+   "Plier et servir.",
+   "Accompagner de pain grillé et d'une salade."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "steak_haricots_verts": {
+  "nom": "Steak et haricots verts",
+  "cat": "rapide",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "20 min",
+  "ingredients": [
+   "6 steaks (bœuf ou haché)",
+   "1kg de haricots verts",
+   "Échalote",
+   "Beurre"
+  ],
+  "etapes": [
+   "Cuire les haricots verts à la vapeur ou à l'eau bouillante 10-12 min.",
+   "Saisir les steaks à la poêle selon la cuisson désirée.",
+   "Faire sauter les haricots verts avec un peu de beurre et d'échalote.",
+   "Dresser steak et haricots verts ensemble.",
+   "Servir immédiatement."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "pates_beurre_parmesan": {
+  "nom": "Pâtes beurre-parmesan",
+  "cat": "rapide",
+  "meal": "midi",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "15 min",
+  "ingredients": [
+   "700g de pâtes",
+   "80g de beurre",
+   "100g de parmesan râpé",
+   "Poivre"
+  ],
+  "etapes": [
+   "Cuire les pâtes al dente.",
+   "Égoutter en gardant un peu d'eau de cuisson.",
+   "Mélanger avec le beurre, le parmesan et un peu d'eau de cuisson pour lier.",
+   "Poivrer généreusement.",
+   "Servir avec une salade de crudités pour l'équilibre."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "croque_monsieur_salade": {
+  "nom": "Croque-monsieur et salade",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "20 min",
+  "ingredients": [
+   "12 tranches de pain de mie",
+   "6 tranches de jambon",
+   "150g de gruyère râpé",
+   "30g de beurre",
+   "1 salade verte"
+  ],
+  "etapes": [
+   "Beurrer les tranches de pain, garnir de jambon et de fromage.",
+   "Refermer les sandwichs.",
+   "Cuire à la poêle ou au four jusqu'à ce que le fromage soit fondant et doré.",
+   "Servir avec une salade verte vinaigrette.",
+   "Ajouter des crudités pour plus de légumes."
+  ],
+  "feculent": true,
+  "famille": "pain"
+ },
+ "wrap_poulet_crudites": {
+  "nom": "Wraps au poulet et crudités",
+  "cat": "rapide",
+  "meal": "midi",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "20 min",
+  "ingredients": [
+   "6 tortillas",
+   "600g de blancs de poulet",
+   "Salade, tomates, concombre",
+   "Sauce yaourt-citron",
+   "Épices au choix"
+  ],
+  "etapes": [
+   "Poêler le poulet en lanières avec les épices.",
+   "Préparer les crudités.",
+   "Garnir les tortillas de poulet, crudités et sauce.",
+   "Rouler fermement.",
+   "Servir tel quel, éventuellement tiédi à la poêle."
+  ],
+  "feculent": true,
+  "famille": "tortilla"
+ },
+ "sandwich_club_maison": {
+  "nom": "Sandwich club maison",
+  "cat": "rapide",
+  "meal": "midi",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "20 min",
+  "ingredients": [
+   "18 tranches de pain de mie",
+   "6 blancs de poulet ou 12 tranches de dinde",
+   "6 œufs",
+   "Salade, tomates",
+   "Mayonnaise légère"
+  ],
+  "etapes": [
+   "Griller le pain de mie légèrement.",
+   "Cuire le poulet ou faire chauffer la dinde, cuire les œufs au plat ou durs.",
+   "Monter les club sandwichs en 3 étages : pain, garniture, pain, garniture, pain.",
+   "Maintenir avec des piques.",
+   "Servir avec une salade verte."
+  ],
+  "feculent": true,
+  "famille": "pain"
+ },
+ "poelee_jambon_legumes": {
+  "nom": "Poêlée de jambon et légumes",
+  "cat": "rapide",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "20 min",
+  "ingredients": [
+   "6 tranches de jambon en dés",
+   "800g de légumes variés surgelés ou frais",
+   "1 gousse d'ail",
+   "Huile d'olive",
+   "Herbes de Provence"
+  ],
+  "etapes": [
+   "Faire revenir les légumes dans l'huile d'olive.",
+   "Ajouter l'ail et les herbes.",
+   "Ajouter le jambon en dés en fin de cuisson pour le réchauffer.",
+   "Assaisonner.",
+   "Servir chaud tel quel, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "quiche_lorraine_salade": {
+  "nom": "Quiche lorraine et salade",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "45 min",
+  "ingredients": [
+   "1 pâte brisée",
+   "200g de lardons",
+   "4 œufs",
+   "30cl de crème liquide",
+   "10cl de lait",
+   "Muscade",
+   "1 salade verte"
+  ],
+  "etapes": [
+   "Foncer un moule avec la pâte brisée.",
+   "Faire revenir les lardons, les répartir sur la pâte.",
+   "Battre œufs, crème, lait, sel, poivre, muscade et verser sur les lardons.",
+   "Enfourner 30-35 min à 180°C.",
+   "Servir tiède avec une salade verte."
+  ],
+  "feculent": true,
+  "famille": "pate_brisee"
+ },
+ "riz_saute_legumes_oeuf": {
+  "nom": "Riz sauté aux légumes et œuf",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "20 min",
+  "ingredients": [
+   "400g de riz cuit (idéalement de la veille)",
+   "3 œufs",
+   "200g de petits pois",
+   "2 carottes",
+   "Sauce soja",
+   "Huile de sésame"
+  ],
+  "etapes": [
+   "Faire revenir les légumes coupés en petits dés.",
+   "Ajouter le riz, bien mélanger en séparant les grains.",
+   "Pousser sur le côté, casser les œufs, brouiller puis mélanger au riz.",
+   "Assaisonner de sauce soja et d'un filet d'huile de sésame.",
+   "Servir chaud."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "pates_sauce_tomate_basilic": {
+  "nom": "Pâtes sauce tomate-basilic",
+  "cat": "rapide",
+  "meal": "midi",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "20 min",
+  "ingredients": [
+   "700g de pâtes",
+   "2 boîtes de tomates concassées",
+   "2 gousses d'ail",
+   "Basilic frais",
+   "Huile d'olive",
+   "Parmesan"
+  ],
+  "etapes": [
+   "Faire revenir l'ail dans l'huile d'olive.",
+   "Ajouter les tomates concassées, saler, laisser mijoter 15 min.",
+   "Cuire les pâtes al dente.",
+   "Mélanger pâtes et sauce, ajouter le basilic frais ciselé.",
+   "Servir avec du parmesan."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "galette_jambon_fromage": {
+  "nom": "Galettes de sarrasin jambon-fromage",
+  "cat": "rapide",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "25 min",
+  "ingredients": [
+   "6 galettes de sarrasin (toutes prêtes ou pâte maison)",
+   "6 tranches de jambon",
+   "150g de gruyère râpé",
+   "6 œufs (optionnel)",
+   "1 salade verte"
+  ],
+  "etapes": [
+   "Chauffer les galettes à la poêle.",
+   "Garnir de jambon et fromage, replier en carré.",
+   "Ajouter un œuf au plat par-dessus si désiré avant de refermer.",
+   "Cuire jusqu'à ce que le fromage fonde.",
+   "Servir avec une salade verte."
+  ],
+  "feculent": true,
+  "famille": "galette"
+ },
+ "boeuf_hache_petits_pois": {
+  "nom": "Bœuf haché et petits pois",
+  "cat": "rapide",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 10,
+  "temps": "25 min",
+  "ingredients": [
+   "700g de bœuf haché",
+   "800g de petits pois (surgelés)",
+   "1 oignon",
+   "1 gousse d'ail",
+   "Concentré de tomate",
+   "Herbes de Provence"
+  ],
+  "etapes": [
+   "Faire revenir oignon et ail, ajouter la viande hachée et bien la colorer.",
+   "Ajouter le concentré de tomate et un peu d'eau.",
+   "Ajouter les petits pois, laisser mijoter 15 min.",
+   "Assaisonner d'herbes de Provence.",
+   "Servir tel quel ou avec un peu de riz."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "saumon_papillote_legumes": {
+  "nom": "Saumon en papillote et légumes",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "30 min",
+  "ingredients": [
+   "6 pavés de saumon",
+   "1 courgette",
+   "1 poivron",
+   "1 citron",
+   "Aneth ou persil",
+   "Huile d'olive"
+  ],
+  "etapes": [
+   "Couper les légumes en fines lamelles.",
+   "Répartir légumes et saumon sur des feuilles de papier cuisson.",
+   "Arroser d'huile d'olive, jus de citron, herbes, saler/poivrer.",
+   "Fermer les papillotes, enfourner 18-20 min à 200°C.",
+   "Servir directement dans la papillote."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "pave_saumon_poele_riz": {
+  "nom": "Pavé de saumon poêlé, légumes verts",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "25 min",
+  "ingredients": [
+   "6 pavés de saumon",
+   "1 citron",
+   "Épinards frais et brocoli",
+   "Huile d'olive"
+  ],
+  "etapes": [
+   "Cuire les épinards et le brocoli à la vapeur.",
+   "Poêler le saumon côté peau 4-5 min puis retourner 2-3 min.",
+   "Arroser de jus de citron.",
+   "Servir avec les légumes verts, sans féculent pour un dîner léger."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "cabillaud_sauce_citron": {
+  "nom": "Cabillaud sauce citron et légumes vapeur",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "30 min",
+  "ingredients": [
+   "6 filets de cabillaud",
+   "Haricots verts et brocoli",
+   "1 citron",
+   "20cl de crème légère",
+   "Persil",
+   "Beurre"
+  ],
+  "etapes": [
+   "Cuire les haricots verts et le brocoli à la vapeur.",
+   "Cuire le cabillaud au four ou à la poêle 8-10 min.",
+   "Préparer une sauce avec jus de citron, crème légère et un peu de beurre, réduire légèrement.",
+   "Napper le poisson de sauce, parsemer de persil.",
+   "Servir avec les légumes vapeur, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "dorade_four_legumes": {
+  "nom": "Dorade au four et légumes",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 16,
+  "temps": "40 min",
+  "ingredients": [
+   "2 dorades entières (ou 6 filets)",
+   "800g de légumes (tomates, courgettes, oignons)",
+   "1 citron",
+   "Herbes de Provence",
+   "Huile d'olive"
+  ],
+  "etapes": [
+   "Disposer les légumes coupés dans un plat, arroser d'huile d'olive.",
+   "Poser le poisson par-dessus, saler/poivrer, ajouter rondelles de citron et herbes.",
+   "Enfourner 30-35 min à 190°C.",
+   "Vérifier la cuisson du poisson (chair qui se détache facilement).",
+   "Servir directement dans le plat."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "thon_snacke_sesame": {
+  "nom": "Thon snacké au sésame, avocat",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "20 min",
+  "ingredients": [
+   "6 pavés de thon frais",
+   "Graines de sésame",
+   "Sauce soja",
+   "2 avocats",
+   "Gingembre frais",
+   "Salade verte"
+  ],
+  "etapes": [
+   "Rouler les pavés de thon dans les graines de sésame.",
+   "Snacker le thon 1-2 min de chaque côté (rester rosé au centre).",
+   "Couper en tranches, servir avec sauce soja, avocat et gingembre.",
+   "Accompagner d'une salade verte, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "poisson_blanc_gratin_epinards": {
+  "nom": "Poisson blanc et gratin d'épinards",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "35 min",
+  "ingredients": [
+   "6 filets de poisson blanc (colin, merlu)",
+   "1kg d'épinards frais ou surgelés",
+   "20cl de crème légère",
+   "Muscade",
+   "50g de parmesan"
+  ],
+  "etapes": [
+   "Cuire les épinards puis les égoutter, mélanger avec crème et muscade.",
+   "Répartir dans un plat, parsemer de parmesan, gratiner 10 min au four.",
+   "Cuire le poisson à la vapeur ou à la poêle.",
+   "Servir le poisson avec le gratin d'épinards.",
+   "Ajouter un filet de citron."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "saumon_teriyaki_riz": {
+  "nom": "Saumon teriyaki, brocoli vapeur",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "25 min",
+  "ingredients": [
+   "6 pavés de saumon",
+   "Sauce soja",
+   "Miel",
+   "Gingembre",
+   "Brocoli et haricots verts"
+  ],
+  "etapes": [
+   "Préparer une marinade sauce soja, miel, gingembre râpé.",
+   "Faire mariner le saumon 10 min.",
+   "Cuire le brocoli et les haricots verts vapeur.",
+   "Poêler le saumon en le nappant régulièrement de marinade jusqu'à caramélisation légère.",
+   "Servir avec les légumes vapeur, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "brandade_legere_cabillaud": {
+  "nom": "Brandade légère de cabillaud",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 18,
+  "temps": "45 min",
+  "ingredients": [
+   "800g de cabillaud",
+   "800g de pommes de terre",
+   "20cl de lait",
+   "2 gousses d'ail",
+   "Huile d'olive",
+   "Muscade"
+  ],
+  "etapes": [
+   "Pocher le cabillaud dans du lait avec l'ail 10 min, émietter.",
+   "Cuire les pommes de terre, les écraser.",
+   "Mélanger poisson émietté et purée avec un filet d'huile d'olive, muscade.",
+   "Répartir dans un plat, gratiner 10 min au four.",
+   "Servir avec une salade verte."
+  ],
+  "feculent": true,
+  "famille": "pdt"
+ },
+ "poulet_roti_legumes_four": {
+  "nom": "Poulet rôti et légumes au four",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 16,
+  "temps": "1h10",
+  "ingredients": [
+   "1 poulet fermier (1.8kg)",
+   "1kg de légumes non féculents (carottes, oignons, fenouil, poivrons)",
+   "Thym, romarin",
+   "Huile d'olive",
+   "2 gousses d'ail"
+  ],
+  "etapes": [
+   "Disposer les légumes coupés dans un plat avec l'ail.",
+   "Poser le poulet dessus, arroser d'huile d'olive, saler/poivrer, ajouter les herbes.",
+   "Enfourner 1h à 1h10 à 190°C en arrosant régulièrement.",
+   "Vérifier la cuisson (jus clair).",
+   "Servir avec les légumes rôtis."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "escalope_dinde_champignons_riz": {
+  "nom": "Escalope de dinde aux champignons, sauce légère",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "25 min",
+  "ingredients": [
+   "6 escalopes de dinde",
+   "400g de champignons de Paris",
+   "1 échalote",
+   "20cl de crème légère",
+   "Haricots verts"
+  ],
+  "etapes": [
+   "Cuire les haricots verts à la vapeur.",
+   "Poêler les escalopes de dinde, réserver.",
+   "Faire revenir champignons et échalote dans la même poêle.",
+   "Ajouter la crème, laisser réduire légèrement, remettre les escalopes.",
+   "Servir avec les haricots verts, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "risotto_champignons": {
+  "nom": "Risotto aux champignons",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "35 min",
+  "ingredients": [
+   "400g de riz arborio",
+   "500g de champignons",
+   "1 oignon",
+   "1L de bouillon de légumes",
+   "10cl de vin blanc",
+   "80g de parmesan"
+  ],
+  "etapes": [
+   "Faire revenir l'oignon, ajouter le riz et le nacrer 2 min.",
+   "Déglacer au vin blanc.",
+   "Ajouter le bouillon chaud louche par louche en remuant, jusqu'à absorption complète (18-20 min).",
+   "Poêler les champignons à part, les incorporer en fin de cuisson.",
+   "Terminer avec le parmesan, servir crémeux."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "risotto_petits_pois_jambon": {
+  "nom": "Risotto petits pois et jambon",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "35 min",
+  "ingredients": [
+   "400g de riz arborio",
+   "400g de petits pois",
+   "150g de jambon en dés",
+   "1 oignon",
+   "1L de bouillon de légumes",
+   "80g de parmesan"
+  ],
+  "etapes": [
+   "Faire revenir l'oignon, ajouter le riz et le nacrer.",
+   "Ajouter le bouillon chaud progressivement en remuant (18-20 min).",
+   "Ajouter les petits pois et le jambon en cours de cuisson.",
+   "Terminer avec le parmesan.",
+   "Servir bien crémeux."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "tajine_poulet_legumes": {
+  "nom": "Tajine de poulet aux légumes",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 18,
+  "temps": "55 min",
+  "ingredients": [
+   "1kg de hauts de cuisse de poulet",
+   "3 carottes",
+   "2 courgettes",
+   "1 boîte de pois chiches",
+   "1 oignon",
+   "Épices tajine (cumin, gingembre, cannelle, curcuma)",
+   "Abricots secs"
+  ],
+  "etapes": [
+   "Faire dorer le poulet avec l'oignon et les épices.",
+   "Ajouter les légumes coupés et les abricots secs.",
+   "Couvrir d'eau à mi-hauteur, laisser mijoter 35-40 min à couvert.",
+   "Ajouter les pois chiches 10 min avant la fin.",
+   "Servir tel quel dans un bol creux : légumes et pois chiches suffisent, pas besoin de semoule."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "boeuf_bourguignon_leger": {
+  "nom": "Bœuf bourguignon (version allégée)",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 21,
+  "temps": "2h",
+  "ingredients": [
+   "1.2kg de bœuf à braiser",
+   "300g de carottes",
+   "250g de champignons",
+   "2 oignons",
+   "50cl de vin rouge",
+   "1 bouquet garni",
+   "1 c.à.s de farine"
+  ],
+  "etapes": [
+   "Faire dorer la viande, réserver.",
+   "Faire revenir oignons et carottes, saupoudrer de farine.",
+   "Remettre la viande, mouiller avec le vin rouge, ajouter le bouquet garni.",
+   "Laisser mijoter 1h30 à 1h45 à couvert, ajouter les champignons 20 min avant la fin.",
+   "Servir avec des pommes de terre vapeur ou des pâtes."
+  ],
+  "feculent": true,
+  "famille": "pdt"
+ },
+ "poivrons_farcis_riz_viande": {
+  "nom": "Poivrons farcis riz et viande",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "50 min",
+  "ingredients": [
+   "6 poivrons",
+   "500g de bœuf ou veau haché",
+   "200g de riz cuit",
+   "1 oignon",
+   "1 boîte de tomates concassées",
+   "Herbes de Provence"
+  ],
+  "etapes": [
+   "Couper le chapeau des poivrons, les épépiner.",
+   "Mélanger viande, riz cuit, oignon émincé et herbes.",
+   "Farcir les poivrons, les disposer dans un plat avec la tomate concassée autour.",
+   "Enfourner 35-40 min à 190°C.",
+   "Servir chaud."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "courgettes_farcies": {
+  "nom": "Courgettes farcies",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "50 min",
+  "ingredients": [
+   "6 courgettes rondes ou longues",
+   "500g de bœuf haché",
+   "1 oignon",
+   "50g de chapelure",
+   "1 œuf",
+   "Parmesan"
+  ],
+  "etapes": [
+   "Évider les courgettes, réserver la chair.",
+   "Mélanger viande, oignon, chapelure, œuf et chair de courgette hachée.",
+   "Farcir les courgettes.",
+   "Enfourner 35-40 min à 190°C, parsemer de parmesan en fin de cuisson.",
+   "Servir chaud."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "poelee_quinoa_legumes_poulet": {
+  "nom": "Poêlée de quinoa, légumes et poulet",
+  "cat": "healthy",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "30 min",
+  "ingredients": [
+   "350g de quinoa",
+   "600g de blancs de poulet",
+   "1 courgette",
+   "1 poivron",
+   "1 gousse d'ail",
+   "Huile d'olive"
+  ],
+  "etapes": [
+   "Cuire le quinoa.",
+   "Poêler le poulet coupé en dés, réserver.",
+   "Faire sauter les légumes coupés avec l'ail.",
+   "Réunir quinoa, poulet et légumes dans la poêle.",
+   "Assaisonner, servir chaud."
+  ],
+  "feculent": true,
+  "famille": "quinoa"
+ },
+ "buddha_bowl_poulet": {
+  "nom": "Buddha bowl au poulet",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "30 min",
+  "ingredients": [
+   "600g de blancs de poulet",
+   "350g de riz ou quinoa",
+   "1 avocat",
+   "Carottes râpées",
+   "Chou rouge",
+   "Graines de sésame",
+   "Sauce yaourt-citron"
+  ],
+  "etapes": [
+   "Cuire le riz ou quinoa.",
+   "Poêler ou rôtir le poulet, couper en tranches.",
+   "Préparer les crudités (carottes, chou rouge, avocat).",
+   "Dresser en bols par sections colorées.",
+   "Ajouter la sauce et les graines de sésame."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "buddha_bowl_saumon": {
+  "nom": "Buddha bowl au saumon",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "30 min",
+  "ingredients": [
+   "6 pavés de saumon",
+   "350g de riz ou quinoa",
+   "Edamame ou petits pois",
+   "1 avocat",
+   "Concombre",
+   "Sauce soja-sésame"
+  ],
+  "etapes": [
+   "Cuire le riz ou quinoa.",
+   "Cuire le saumon au four ou à la poêle, émietter ou couper en cubes.",
+   "Préparer les légumes (edamame, avocat, concombre).",
+   "Dresser en bols.",
+   "Assaisonner de sauce soja-sésame."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "wok_boeuf_legumes": {
+  "nom": "Wok de bœuf et légumes",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "25 min",
+  "ingredients": [
+   "600g de bœuf en lanières (bavette)",
+   "Légumes wok (poivrons, brocolis, carottes, pousses de soja)",
+   "Sauce soja",
+   "Gingembre",
+   "Ail"
+  ],
+  "etapes": [
+   "Faire mariner le bœuf avec un peu de sauce soja.",
+   "Saisir le bœuf à feu vif quelques minutes, réserver.",
+   "Faire sauter les légumes avec ail et gingembre en gardant du croquant.",
+   "Réunir bœuf et légumes, ajouter un trait de sauce soja.",
+   "Servir tel quel, généreux en légumes, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "wok_poulet_legumes_curry": {
+  "nom": "Wok de poulet aux légumes et curry",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "25 min",
+  "ingredients": [
+   "600g de blancs de poulet",
+   "Légumes wok variés",
+   "1 c.à.c de curry en poudre",
+   "Sauce soja"
+  ],
+  "etapes": [
+   "Couper le poulet en lanières, le faire sauter à feu vif.",
+   "Ajouter les légumes coupés, poursuivre la cuisson 5-6 min.",
+   "Saupoudrer de curry, ajouter un peu de sauce soja.",
+   "Bien mélanger.",
+   "Servir tel quel, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "ratatouille_oeuf_poche": {
+  "nom": "Ratatouille et œuf poché",
+  "cat": "healthy",
+  "meal": "both",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "45 min",
+  "ingredients": [
+   "2 courgettes",
+   "2 aubergines",
+   "2 poivrons",
+   "3 tomates",
+   "1 oignon",
+   "2 gousses d'ail",
+   "6 œufs",
+   "Herbes de Provence"
+  ],
+  "etapes": [
+   "Couper tous les légumes en dés.",
+   "Faire revenir séparément ou ensemble avec l'huile d'olive et l'ail.",
+   "Laisser mijoter 30 min à couvert avec les herbes.",
+   "Pocher les œufs (eau frémissante vinaigrée, 3 min).",
+   "Servir la ratatouille surmontée d'un œuf poché."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "gratin_choufleur_jambon": {
+  "nom": "Gratin de chou-fleur et jambon",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "45 min",
+  "ingredients": [
+   "1 gros chou-fleur",
+   "6 tranches de jambon",
+   "40g de beurre",
+   "40g de farine",
+   "50cl de lait",
+   "100g de gruyère",
+   "Muscade"
+  ],
+  "etapes": [
+   "Cuire le chou-fleur en fleurettes à la vapeur 10-12 min.",
+   "Préparer une béchamel (beurre, farine, lait), muscade.",
+   "Disposer chou-fleur et jambon dans un plat, napper de béchamel.",
+   "Parsemer de gruyère.",
+   "Gratiner 20 min à 200°C."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "parmentier_boeuf": {
+  "nom": "Parmentier de bœuf",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 16,
+  "temps": "50 min",
+  "ingredients": [
+   "700g de bœuf haché (ou restes de pot-au-feu)",
+   "1kg de pommes de terre",
+   "1 oignon",
+   "20cl de lait",
+   "40g de beurre",
+   "Gruyère râpé"
+  ],
+  "etapes": [
+   "Faire revenir l'oignon et la viande hachée, assaisonner.",
+   "Cuire et écraser les pommes de terre en purée avec lait et beurre.",
+   "Répartir la viande dans un plat, couvrir de purée.",
+   "Parsemer de gruyère.",
+   "Gratiner 20 min à 200°C."
+  ],
+  "feculent": true,
+  "famille": "pdt"
+ },
+ "couscous_legumes_poulet": {
+  "nom": "Couscous poulet et légumes",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 18,
+  "temps": "1h",
+  "ingredients": [
+   "1kg de hauts de cuisse de poulet",
+   "400g de semoule",
+   "3 carottes",
+   "2 courgettes",
+   "1 boîte de pois chiches",
+   "1 oignon",
+   "Épices ras-el-hanout"
+  ],
+  "etapes": [
+   "Faire dorer le poulet avec l'oignon et les épices.",
+   "Ajouter les légumes coupés, couvrir d'eau, mijoter 35-40 min.",
+   "Ajouter les pois chiches en fin de cuisson.",
+   "Préparer la semoule selon les indications (souvent vapeur ou eau bouillante + repos).",
+   "Servir la semoule avec le bouillon, poulet et légumes."
+  ],
+  "feculent": true,
+  "famille": "semoule"
+ },
+ "poulet_basquaise": {
+  "nom": "Poulet basquaise",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 16,
+  "temps": "50 min",
+  "ingredients": [
+   "1kg de hauts de cuisse de poulet",
+   "3 poivrons",
+   "2 tomates",
+   "1 oignon",
+   "10cl de vin blanc",
+   "Piment d'Espelette"
+  ],
+  "etapes": [
+   "Faire dorer le poulet, réserver.",
+   "Faire revenir oignon et poivrons, ajouter les tomates.",
+   "Remettre le poulet, déglacer au vin blanc, ajouter le piment d'Espelette.",
+   "Laisser mijoter 30-35 min à couvert.",
+   "Servir chaud tel quel, sans féculent (déjà généreux en légumes)."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "saute_porc_legumes": {
+  "nom": "Sauté de porc aux légumes",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "30 min",
+  "ingredients": [
+   "700g de filet mignon de porc",
+   "Légumes variés (poivrons, carottes, brocolis)",
+   "1 gousse d'ail",
+   "Sauce soja"
+  ],
+  "etapes": [
+   "Couper le porc en cubes, le faire dorer.",
+   "Ajouter les légumes coupés et l'ail.",
+   "Poursuivre la cuisson 10-12 min en remuant.",
+   "Assaisonner d'un trait de sauce soja.",
+   "Servir tel quel, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "pates_legumes_grilles": {
+  "nom": "Pâtes aux légumes grillés",
+  "cat": "healthy",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "30 min",
+  "ingredients": [
+   "600g de pâtes",
+   "1 courgette",
+   "1 aubergine",
+   "1 poivron",
+   "Huile d'olive",
+   "Parmesan",
+   "Basilic"
+  ],
+  "etapes": [
+   "Couper les légumes en tranches, les griller au four ou à la poêle-grill.",
+   "Cuire les pâtes al dente.",
+   "Mélanger pâtes et légumes grillés avec un filet d'huile d'olive.",
+   "Ajouter parmesan et basilic frais.",
+   "Servir chaud ou tiède."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "salade_chaude_lentilles_saucisse": {
+  "nom": "Salade chaude de lentilles et saucisse fumée",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "35 min",
+  "ingredients": [
+   "400g de lentilles vertes",
+   "6 saucisses fumées (type Montbéliard)",
+   "1 oignon",
+   "1 carotte",
+   "Vinaigrette moutarde",
+   "Persil"
+  ],
+  "etapes": [
+   "Cuire les lentilles avec oignon et carotte 25 min.",
+   "Cuire les saucisses à la poêle ou au four.",
+   "Égoutter les lentilles, assaisonner encore tièdes de vinaigrette.",
+   "Trancher les saucisses, mélanger ou disposer sur les lentilles.",
+   "Parsemer de persil, servir tiède."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "boulettes_sauce_tomate_riz": {
+  "nom": "Boulettes sauce tomate",
+  "cat": "healthy",
+  "meal": "both",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "40 min",
+  "ingredients": [
+   "700g de bœuf ou veau haché",
+   "1 oignon",
+   "1 œuf",
+   "50g de chapelure",
+   "2 boîtes de tomates concassées",
+   "Herbes de Provence"
+  ],
+  "etapes": [
+   "Mélanger viande, oignon râpé, œuf, chapelure et herbes, former des boulettes.",
+   "Faire dorer les boulettes à la poêle.",
+   "Ajouter les tomates concassées, laisser mijoter 20 min.",
+   "Servir les boulettes nappées de sauce, avec une grande salade verte, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "gratin_pates_epinards": {
+  "nom": "Gratin de pâtes aux épinards",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "40 min",
+  "ingredients": [
+   "500g de pâtes",
+   "600g d'épinards",
+   "20cl de crème légère",
+   "150g de jambon en dés",
+   "100g de gruyère râpé",
+   "Muscade"
+  ],
+  "etapes": [
+   "Cuire les pâtes al dente.",
+   "Faire tomber les épinards, égoutter, mélanger avec la crème et la muscade.",
+   "Mélanger pâtes, épinards crémeux et jambon dans un plat.",
+   "Parsemer de gruyère.",
+   "Gratiner 15-20 min à 200°C."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "tian_de_legumes": {
+  "nom": "Tian de légumes provençal",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "weekend",
+  "season": "all",
+  "min_gap": 16,
+  "temps": "1h",
+  "ingredients": [
+   "2 courgettes",
+   "2 aubergines",
+   "4 tomates",
+   "2 oignons",
+   "Herbes de Provence",
+   "Huile d'olive",
+   "Poulet ou saucisses en accompagnement"
+  ],
+  "etapes": [
+   "Couper tous les légumes en rondelles fines.",
+   "Les disposer en les intercalant debout dans un plat à gratin.",
+   "Arroser d'huile d'olive et d'herbes de Provence.",
+   "Enfourner 45-50 min à 180°C.",
+   "Servir avec un poulet rôti ou des saucisses grillées à côté."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "poulet_citron_olives": {
+  "nom": "Poulet au citron confit et olives",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "both",
+  "season": "all",
+  "min_gap": 16,
+  "temps": "45 min",
+  "ingredients": [
+   "1kg de hauts de cuisse de poulet",
+   "1 citron confit",
+   "100g d'olives vertes",
+   "1 oignon",
+   "Épices (cumin, gingembre)",
+   "Courgettes vapeur"
+  ],
+  "etapes": [
+   "Faire dorer le poulet avec l'oignon et les épices.",
+   "Ajouter le citron confit coupé et les olives.",
+   "Couvrir d'un peu d'eau, laisser mijoter 30-35 min.",
+   "Rectifier l'assaisonnement (attention au sel, le citron confit et les olives sont déjà salés).",
+   "Servir avec des courgettes vapeur, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "cabillaud_legumes_vapeur": {
+  "nom": "Cabillaud et légumes vapeur",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "25 min",
+  "ingredients": [
+   "6 filets de cabillaud",
+   "Brocolis, carottes, courgettes",
+   "Huile d'olive",
+   "Citron",
+   "Aneth"
+  ],
+  "etapes": [
+   "Cuire le poisson et les légumes à la vapeur ensemble 12-15 min.",
+   "Assaisonner d'huile d'olive, jus de citron et aneth.",
+   "Servir simplement, c'est un plat très léger et digeste.",
+   "Ajouter un peu de riz ou pommes de terre vapeur pour plus de consistance.",
+   ""
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "pilaf_riz_crevettes": {
+  "nom": "Pilaf de riz aux crevettes",
+  "cat": "healthy",
+  "meal": "midi",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "30 min",
+  "ingredients": [
+   "600g de crevettes décortiquées",
+   "350g de riz",
+   "1 oignon",
+   "1 poivron",
+   "Bouillon de légumes",
+   "Persil"
+  ],
+  "etapes": [
+   "Faire revenir oignon et poivron, ajouter le riz et le nacrer.",
+   "Mouiller avec le bouillon (2 fois le volume de riz), couvrir et cuire 18 min sans remuer.",
+   "Poêler les crevettes séparément 3-4 min.",
+   "Incorporer les crevettes au riz en fin de cuisson.",
+   "Parsemer de persil, servir."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "galettes_legumes_quinoa": {
+  "nom": "Galettes de légumes et quinoa",
+  "cat": "healthy",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "35 min",
+  "ingredients": [
+   "200g de quinoa cuit",
+   "2 courgettes râpées",
+   "2 œufs",
+   "50g de farine",
+   "100g de feta émiettée",
+   "Persil"
+  ],
+  "etapes": [
+   "Râper les courgettes, les presser pour enlever l'excès d'eau.",
+   "Mélanger avec quinoa cuit, œufs, farine, feta et persil.",
+   "Former des galettes.",
+   "Cuire à la poêle 3-4 min par face.",
+   "Servir avec une salade verte."
+  ],
+  "feculent": true,
+  "famille": "quinoa"
+ },
+ "chili_vegetarien": {
+  "nom": "Chili végétarien",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 16,
+  "temps": "40 min",
+  "ingredients": [
+   "2 boîtes de haricots rouges",
+   "1 boîte de maïs",
+   "1 boîte de tomates concassées",
+   "1 poivron",
+   "1 oignon",
+   "Cumin, paprika"
+  ],
+  "etapes": [
+   "Faire revenir oignon et poivron.",
+   "Ajouter tomates concassées, haricots rouges et maïs.",
+   "Assaisonner de cumin et paprika, laisser mijoter 25 min.",
+   "Rectifier l'assaisonnement.",
+   "Servir chaud dans un bol, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "curry_legumes_pois_chiches": {
+  "nom": "Curry de légumes et pois chiches",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "35 min",
+  "ingredients": [
+   "2 boîtes de pois chiches",
+   "1 chou-fleur",
+   "2 carottes",
+   "40cl de lait de coco",
+   "2 c.à.s de curry",
+   "1 oignon"
+  ],
+  "etapes": [
+   "Faire revenir l'oignon avec le curry.",
+   "Ajouter chou-fleur et carottes coupés, mouiller avec le lait de coco.",
+   "Laisser mijoter 20 min, ajouter les pois chiches 10 min avant la fin.",
+   "Rectifier l'assaisonnement.",
+   "Servir tel quel dans un bol, les pois chiches suffisent à rassasier."
+  ],
+  "feculent": false,
+  "famille": null
+ },
+ "pates_saumon_epinards": {
+  "nom": "Pâtes au saumon et épinards",
+  "cat": "healthy",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "25 min",
+  "ingredients": [
+   "600g de pâtes",
+   "500g de saumon",
+   "300g d'épinards",
+   "20cl de crème légère",
+   "1 échalote",
+   "Aneth"
+  ],
+  "etapes": [
+   "Cuire les pâtes al dente.",
+   "Poêler le saumon en morceaux, réserver.",
+   "Faire tomber les épinards avec l'échalote, ajouter la crème.",
+   "Mélanger pâtes, sauce épinards et saumon délicatement.",
+   "Parsemer d'aneth, servir."
+  ],
+  "feculent": true,
+  "famille": "pates"
+ },
+ "riz_cantonais_maison": {
+  "nom": "Riz cantonais maison",
+  "cat": "healthy",
+  "meal": "both",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 14,
+  "temps": "25 min",
+  "ingredients": [
+   "400g de riz cuit froid",
+   "150g de petits pois",
+   "150g de jambon en dés",
+   "3 œufs",
+   "150g de crevettes cuites",
+   "Sauce soja"
+  ],
+  "etapes": [
+   "Faire revenir les petits pois.",
+   "Ajouter le riz froid, bien émietter les grains.",
+   "Pousser sur le côté, brouiller les œufs, mélanger au riz.",
+   "Ajouter jambon et crevettes, assaisonner de sauce soja.",
+   "Servir bien chaud."
+  ],
+  "feculent": true,
+  "famille": "riz"
+ },
+ "poelee_boeuf_haricots_verts": {
+  "nom": "Poêlée de bœuf et haricots verts à l'asiatique",
+  "cat": "healthy",
+  "meal": "soir",
+  "day_type": "semaine",
+  "season": "all",
+  "min_gap": 12,
+  "temps": "25 min",
+  "ingredients": [
+   "600g de bœuf en lanières",
+   "800g de haricots verts",
+   "Sauce soja",
+   "Ail, gingembre",
+   "Graines de sésame"
+  ],
+  "etapes": [
+   "Cuire les haricots verts à la vapeur 8-10 min.",
+   "Saisir le bœuf à feu vif avec ail et gingembre.",
+   "Ajouter les haricots verts, sauter 3-4 min ensemble.",
+   "Assaisonner de sauce soja, parsemer de sésame.",
+   "Servir tel quel, sans féculent."
+  ],
+  "feculent": false,
+  "famille": null
+ }
+}

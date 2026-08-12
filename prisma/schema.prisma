@@ -1,0 +1,139 @@
+// Schéma Prisma — App de planification de repas (usage familial, 6 personnes)
+// Voir PLAN-DEV-CLAUDE-CODE.md §2
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Recipe {
+  id             String        @id @default(cuid())
+  name           String
+  category       Category
+  prepTime       String // ex: "30 min" (texte libre, affichage seulement)
+  containsStarch Boolean       @default(false) // féculent -> réservé au déjeuner
+  starchFamily   StarchFamily? // règle anti-répétition
+  season         Season        @default(ALL) // ALL | ETE | HIVER | HIVER_PREF
+  mealTime       MealTime      @default(BOTH) // MIDI | SOIR | BOTH
+  dayType        DayType       @default(BOTH) // SEMAINE | WEEKEND | BOTH
+  minGapDays     Int           @default(14) // espacement minimum avant réapparition
+  servingsBase   Int           @default(6)
+  steps          String[] // une étape par élément
+  ingredients    Ingredient[]
+  plannedMeals   PlannedMeal[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Ingredient {
+  id            String   @id @default(cuid())
+  recipeId      String
+  recipe        Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  name          String // nom normalisé, ex: "oignon", "blanc de poulet"
+  quantity      Float? // nullable si "au goût" / "sel, poivre"
+  unit          Unit? // g, kg, ml, cl, l, piece, cas, cac, pincee...
+  note          String? // précision libre, ex: "au goût", "émincé"
+  aisle         Aisle // rayon pour la liste de courses
+  raw           String? // ligne d'origine du seed, pour relecture
+  isChoice      Boolean  @default(false) // "garniture au choix" -> choisie au moment de planifier
+  choiceOptions String[] // options possibles si isChoice (ex: jambon, champignons...)
+
+  @@index([recipeId])
+}
+
+model PlannedMeal {
+  id       String   @id @default(cuid())
+  date     DateTime @db.Date
+  mealTime MealTime // MIDI | SOIR (pas BOTH ici)
+  recipeId String?
+  recipe   Recipe?  @relation(fields: [recipeId], references: [id], onDelete: SetNull)
+  servings Int      @default(6)
+  choices  Json? // { [ingredientId]: "option choisie" } pour les garnitures au choix
+
+  @@unique([date, mealTime])
+  @@index([date])
+}
+
+// Réglages du foyer (ligne unique, id = "household").
+model Settings {
+  id        String   @id @default("household")
+  servings  Int      @default(6) // nombre de personnes par défaut
+  allergies String[] // ingrédients allergènes -> jamais planifiés
+  forbidden String[] // aliments interdits -> jamais planifiés
+  updatedAt DateTime @updatedAt
+}
+
+model ShoppingListCheck {
+  id            String   @id @default(cuid())
+  rangeStart    DateTime @db.Date
+  rangeEnd      DateTime @db.Date
+  ingredientKey String // nom normalisé + unité, sert de clé stable
+  checked       Boolean  @default(false)
+
+  @@unique([rangeStart, rangeEnd, ingredientKey])
+}
+
+enum Category {
+  FAVORI
+  RAPIDE
+  HEALTHY
+  SALADE_ETE
+  SOUPE_HIVER
+}
+
+enum MealTime {
+  MIDI
+  SOIR
+  BOTH
+}
+
+enum DayType {
+  SEMAINE
+  WEEKEND
+  BOTH
+}
+
+enum Season {
+  ALL
+  ETE
+  HIVER
+  HIVER_PREF
+}
+
+enum StarchFamily {
+  PATES
+  RIZ
+  PDT
+  PAIN
+  PIZZA
+  TORTILLA
+  SEMOULE
+  QUINOA
+  GALETTE
+  PATE_BRISEE // présent dans le seed (quiche/tarte), absent du cahier des charges initial
+}
+
+enum Unit {
+  G
+  KG
+  ML
+  CL
+  L
+  PIECE
+  CAS
+  CAC
+  PINCEE
+}
+
+enum Aisle {
+  BOUCHERIE
+  POISSONNERIE
+  CREMERIE
+  FRUITS_LEGUMES
+  EPICERIE
+  AUTRES
+}
