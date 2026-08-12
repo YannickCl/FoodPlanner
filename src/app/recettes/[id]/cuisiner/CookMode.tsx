@@ -14,7 +14,10 @@ interface Props {
 }
 
 interface Timer {
-  label: string;
+  id: number;
+  label: string; // durée telle qu'écrite ("10 min")
+  stepIndex: number; // étape d'où vient le minuteur
+  excerpt: string; // texte de l'étape, pour savoir de quoi il s'agit (riz, légumes…)
   total: number;
   remaining: number;
   running: boolean;
@@ -25,7 +28,9 @@ export function CookMode({ recipeId, name, prepTime, steps, ingredients }: Props
   const router = useRouter();
   const [i, setI] = useState(0);
   const [showIng, setShowIng] = useState(false);
-  const [timer, setTimer] = useState<Timer | null>(null);
+  const [timers, setTimers] = useState<Timer[]>([]);
+  const nextTimerId = useRef(1);
+  const ringed = useRef<Set<number>>(new Set());
   const [needRotate, setNeedRotate] = useState(false);
 
   const last = steps.length - 1;
@@ -67,25 +72,66 @@ export function CookMode({ recipeId, name, prepTime, steps, ingredients }: Props
     return () => window.removeEventListener("keydown", onKey);
   }, [next, prev, close]);
 
-  // --- Décompte du minuteur ---
+  // --- Décompte : fait avancer tous les minuteurs en cours à la fois ---
   useEffect(() => {
-    if (!timer || !timer.running || timer.remaining <= 0) return;
+    if (!timers.some((t) => t.running && t.remaining > 0)) return;
     const id = setInterval(() => {
-      setTimer((t) => {
-        if (!t || !t.running) return t;
-        const remaining = t.remaining - 1;
-        if (remaining <= 0) {
-          ring();
-          return { ...t, remaining: 0, running: false, done: true };
-        }
-        return { ...t, remaining };
-      });
+      setTimers((list) =>
+        list.map((t) => {
+          if (!t.running || t.remaining <= 0) return t;
+          const remaining = t.remaining - 1;
+          return remaining <= 0
+            ? { ...t, remaining: 0, running: false, done: true }
+            : { ...t, remaining };
+        }),
+      );
     }, 1000);
     return () => clearInterval(id);
-  }, [timer]);
+  }, [timers]);
+
+  // --- Sonnerie : une seule fois par minuteur arrivé à zéro ---
+  useEffect(() => {
+    for (const t of timers) {
+      if (t.done && !ringed.current.has(t.id)) {
+        ringed.current.add(t.id);
+        ring();
+      }
+    }
+  }, [timers]);
 
   function startTimer(d: StepDuration) {
-    setTimer({ label: d.label, total: d.seconds, remaining: d.seconds, running: true, done: false });
+    const id = nextTimerId.current++;
+    setTimers((list) => [
+      ...list,
+      {
+        id,
+        label: d.label,
+        stepIndex: i,
+        excerpt: step,
+        total: d.seconds,
+        remaining: d.seconds,
+        running: true,
+        done: false,
+      },
+    ]);
+  }
+
+  function toggleTimer(id: number) {
+    setTimers((list) =>
+      list.map((t) => (t.id === id && !t.done ? { ...t, running: !t.running } : t)),
+    );
+  }
+  function resetTimer(id: number) {
+    ringed.current.delete(id);
+    setTimers((list) =>
+      list.map((t) =>
+        t.id === id ? { ...t, remaining: t.total, running: true, done: false } : t,
+      ),
+    );
+  }
+  function closeTimer(id: number) {
+    ringed.current.delete(id);
+    setTimers((list) => list.filter((t) => t.id !== id));
   }
 
   async function goFullscreen() {
@@ -187,16 +233,19 @@ export function CookMode({ recipeId, name, prepTime, steps, ingredients }: Props
         )}
       </div>
 
-      {/* Minuteur actif */}
-      {timer && (
-        <TimerBar
-          timer={timer}
-          onToggle={() => setTimer((t) => (t ? { ...t, running: !t.running } : t))}
-          onReset={() =>
-            setTimer((t) => (t ? { ...t, remaining: t.total, running: true, done: false } : t))
-          }
-          onClose={() => setTimer(null)}
-        />
+      {/* Minuteurs actifs — plusieurs à la fois (ex : riz + légumes) */}
+      {timers.length > 0 && (
+        <div className="max-h-44 divide-y divide-line overflow-y-auto border-t border-line">
+          {timers.map((t) => (
+            <TimerBar
+              key={t.id}
+              timer={t}
+              onToggle={() => toggleTimer(t.id)}
+              onReset={() => resetTimer(t.id)}
+              onClose={() => closeTimer(t.id)}
+            />
+          ))}
+        </div>
       )}
 
       {/* Navigation bas */}
@@ -284,36 +333,46 @@ function TimerBar({
   return (
     <div
       className={cn(
-        "flex items-center gap-3 border-t border-line px-4 py-3",
+        "flex items-center gap-3 px-4 py-2.5",
         timer.done ? "bg-brick/15" : "bg-parchment-card",
       )}
     >
-      <span className="text-2xl">{timer.done ? "🔔" : "⏱"}</span>
+      <span className={cn("text-2xl", timer.done && "animate-pulse")}>
+        {timer.done ? "🔔" : "⏱"}
+      </span>
       <div className="min-w-0 flex-1">
-        <p className="num text-2xl font-semibold leading-none tabular-nums">
-          {formatClock(timer.remaining)}
-        </p>
+        <div className="flex items-baseline gap-2">
+          <p className="num text-xl font-semibold leading-none tabular-nums">
+            {formatClock(timer.remaining)}
+          </p>
+          <span className="shrink-0 rounded-full bg-gold-soft px-1.5 py-0.5 text-[11px] font-medium text-ink">
+            Étape {timer.stepIndex + 1}
+          </span>
+        </div>
         <p className="mt-0.5 truncate text-xs text-ink-soft">
-          {timer.done ? "Temps écoulé !" : `Minuteur ${timer.label}`}
+          {timer.done ? "⏰ Terminé — " : ""}
+          {timer.excerpt}
         </p>
       </div>
       {!timer.done && (
         <button
           onClick={onToggle}
-          className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:bg-parchment-deep"
+          className="rounded-full border border-line px-3 py-1.5 text-sm font-medium hover:bg-parchment-deep"
         >
           {timer.running ? "Pause" : "Reprendre"}
         </button>
       )}
       <button
         onClick={onReset}
-        className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:bg-parchment-deep"
+        className="rounded-full border border-line px-3 py-1.5 text-sm hover:bg-parchment-deep"
+        title="Recommencer"
       >
         ↺
       </button>
       <button
         onClick={onClose}
-        className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:bg-parchment-deep"
+        className="rounded-full border border-line px-3 py-1.5 text-sm hover:bg-parchment-deep"
+        title="Fermer"
       >
         ✕
       </button>
