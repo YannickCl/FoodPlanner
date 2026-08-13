@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import {
   toggleCheck,
   addExtra,
@@ -44,6 +44,7 @@ export function ShoppingClient({
   extras: Extra[];
 }) {
   const router = useRouter();
+  const [pending, startTransition] = useTransition();
   const [checked, setChecked] = useState<Set<string>>(new Set(checkedKeys));
   const [items, setItems] = useState<Extra[]>(extras);
   const [newItem, setNewItem] = useState("");
@@ -69,7 +70,7 @@ export function ShoppingClient({
   }
 
   function setRange(f: string, t: string) {
-    router.push(`/courses?from=${f}&to=${t}`);
+    startTransition(() => router.push(`/courses?from=${f}&to=${t}`));
   }
 
   function toggle(key: string) {
@@ -142,7 +143,12 @@ export function ShoppingClient({
         </div>
       </div>
 
-      <div className="print-area mx-auto max-w-md">
+      <div
+        className={cn(
+          "print-area mx-auto max-w-md transition-opacity",
+          pending && "pointer-events-none opacity-50",
+        )}
+      >
         <div className="ticket-edge" />
         <div className="ticket px-5 py-4">
           <div className="mb-3 border-b border-dashed border-ink/20 pb-3 text-center">

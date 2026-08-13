@@ -85,6 +85,31 @@ export function CalendarClient({
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
+  // Mise à jour optimiste : on affiche le changement tout de suite, sans attendre
+  // le serveur. `overlay` prime sur `mealMap` (null = créneau vidé). On le remet à
+  // zéro dès que de nouvelles données serveur arrivent (mealMap change) — via le
+  // motif recommandé « ajuster l'état pendant le rendu » plutôt qu'un effet.
+  const [overlay, setOverlay] = useState<Map<string, MealCell | null>>(new Map());
+  const [syncedMap, setSyncedMap] = useState(mealMap);
+  if (syncedMap !== mealMap) {
+    setSyncedMap(mealMap);
+    setOverlay(new Map());
+  }
+  const cellAt = (key: string): MealCell | undefined =>
+    overlay.has(key) ? (overlay.get(key) ?? undefined) : mealMap[key];
+  const setOptimistic = (key: string, cell: MealCell | null) =>
+    setOverlay((prev) => new Map(prev).set(key, cell));
+
+  function cellFromRecipe(r: PickerRecipe, servings: number): MealCell {
+    return {
+      recipeId: r.id,
+      name: r.name,
+      category: r.category,
+      containsStarch: r.containsStarch,
+      servings,
+    };
+  }
+
   // Sur mobile (vue agenda), défiler jusqu'au jour courant à l'ouverture,
   // en tenant compte de la hauteur réelle du menu + barre d'outils collants.
   const todayRef = useRef<HTMLDivElement>(null);
@@ -104,7 +129,7 @@ export function CalendarClient({
 
   function go(delta: number) {
     const { year: y, month0: m } = shiftMonth(year, month0, delta);
-    router.push(`/calendrier?y=${y}&m=${m}`);
+    startTransition(() => router.push(`/calendrier?y=${y}&m=${m}`));
   }
 
   function commitMeal(
@@ -112,7 +137,10 @@ export function CalendarClient({
     recipeId: string | null,
     choices?: Record<string, string[]>,
     servings?: number,
+    optimistic?: MealCell | null,
   ) {
+    // Affichage immédiat, puis synchro serveur en arrière-plan.
+    setOptimistic(`${ctx.date}#${ctx.mealTime}`, optimistic ?? null);
     startTransition(async () => {
       await setMeal({
         date: ctx.date,
@@ -136,9 +164,12 @@ export function CalendarClient({
         setGarnish({ date: ctx.date, mealTime: ctx.mealTime, recipe: r });
         return;
       }
+      setPicker(null);
+      commitMeal(ctx, recipeId, undefined, undefined, r ? cellFromRecipe(r, defaultServings) : null);
+      return;
     }
     setPicker(null);
-    commitMeal(ctx, recipeId);
+    commitMeal(ctx, null, undefined, undefined, null);
   }
 
   // Clic sur un créneau : en mode sélection on (dé)sélectionne les repas remplis ;
@@ -168,7 +199,7 @@ export function CalendarClient({
     for (const day of weeks.flat()) {
       if (!day.inMonth) continue;
       for (const mt of ["MIDI", "SOIR"] as const) {
-        if (mealMap[`${day.iso}#${mt}`]) next.add(`${day.iso}#${mt}`);
+        if (cellAt(`${day.iso}#${mt}`)) next.add(`${day.iso}#${mt}`);
       }
     }
     setSelected(next);
@@ -182,6 +213,11 @@ export function CalendarClient({
     if (!cells.length) return;
     setSelecting(false);
     setSelected(new Set());
+    setOverlay((prev) => {
+      const next = new Map(prev);
+      for (const c of cells) next.set(`${c.date}#${c.mealTime}`, null);
+      return next;
+    });
     startTransition(async () => {
       await clearMeals(cells);
       router.refresh();
@@ -215,7 +251,7 @@ export function CalendarClient({
     });
   }
 
-  const current = picker ? mealMap[`${picker.date}#${picker.mealTime}`] : null;
+  const current = picker ? cellAt(`${picker.date}#${picker.mealTime}`) : null;
 
   return (
     <div>
@@ -325,22 +361,22 @@ export function CalendarClient({
                 <Slot
                   day={day}
                   mealTime="MIDI"
-                  cell={mealMap[`${day.iso}#MIDI`]}
+                  cell={cellAt(`${day.iso}#MIDI`)}
                   selecting={selecting}
                   isSelected={selected.has(`${day.iso}#MIDI`)}
                   onClick={() =>
-                    onSlotClick(day.iso, "MIDI", mealMap[`${day.iso}#MIDI`])
+                    onSlotClick(day.iso, "MIDI", cellAt(`${day.iso}#MIDI`))
                   }
                   big
                 />
                 <Slot
                   day={day}
                   mealTime="SOIR"
-                  cell={mealMap[`${day.iso}#SOIR`]}
+                  cell={cellAt(`${day.iso}#SOIR`)}
                   selecting={selecting}
                   isSelected={selected.has(`${day.iso}#SOIR`)}
                   onClick={() =>
-                    onSlotClick(day.iso, "SOIR", mealMap[`${day.iso}#SOIR`])
+                    onSlotClick(day.iso, "SOIR", cellAt(`${day.iso}#SOIR`))
                   }
                   big
                 />
@@ -384,21 +420,21 @@ export function CalendarClient({
               <Slot
                 day={day}
                 mealTime="MIDI"
-                cell={mealMap[`${day.iso}#MIDI`]}
+                cell={cellAt(`${day.iso}#MIDI`)}
                 selecting={selecting}
                 isSelected={selected.has(`${day.iso}#MIDI`)}
                 onClick={() =>
-                  onSlotClick(day.iso, "MIDI", mealMap[`${day.iso}#MIDI`])
+                  onSlotClick(day.iso, "MIDI", cellAt(`${day.iso}#MIDI`))
                 }
               />
               <Slot
                 day={day}
                 mealTime="SOIR"
-                cell={mealMap[`${day.iso}#SOIR`]}
+                cell={cellAt(`${day.iso}#SOIR`)}
                 selecting={selecting}
                 isSelected={selected.has(`${day.iso}#SOIR`)}
                 onClick={() =>
-                  onSlotClick(day.iso, "SOIR", mealMap[`${day.iso}#SOIR`])
+                  onSlotClick(day.iso, "SOIR", cellAt(`${day.iso}#SOIR`))
                 }
               />
             </div>
@@ -458,7 +494,13 @@ export function CalendarClient({
           onConfirm={(choices, servings) => {
             const ctx = { date: garnish.date, mealTime: garnish.mealTime };
             setGarnish(null);
-            commitMeal(ctx, garnish.recipe.id, choices, servings);
+            commitMeal(
+              ctx,
+              garnish.recipe.id,
+              choices,
+              servings,
+              cellFromRecipe(garnish.recipe, servings ?? defaultServings),
+            );
           }}
         />
       )}
