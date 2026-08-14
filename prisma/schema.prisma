@@ -19,6 +19,7 @@ model Household {
   plan               Plan     @default(FREE) // abonnement (Stripe branché en Phase 2)
   stripeCustomerId   String?
   subscriptionStatus String?
+  onboardedAt        DateTime? // null tant que l'onboarding n'est pas terminé
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 

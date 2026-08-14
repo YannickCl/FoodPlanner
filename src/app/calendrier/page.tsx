@@ -1,8 +1,11 @@
+import { redirect } from "next/navigation";
 import {
   getPlannedMeals,
   getRecipesForPicker,
   getSettings,
 } from "@/lib/queries";
+import { prisma } from "@/lib/db";
+import { getCurrentHouseholdId } from "@/lib/tenant";
 import { buildMonthGrid, toISO } from "@/lib/dates";
 import { CalendarClient, type MealMap } from "./CalendarClient";
 
@@ -14,6 +17,14 @@ export default async function CalendrierPage({
   searchParams: Promise<{ y?: string; m?: string }>;
 }) {
   const sp = await searchParams;
+
+  // Onboarding non terminé -> on y renvoie.
+  const householdId = await getCurrentHouseholdId();
+  const household = await prisma.household.findUnique({
+    where: { id: householdId },
+    select: { onboardedAt: true },
+  });
+  if (!household?.onboardedAt) redirect("/onboarding");
   const now = new Date();
   const todayISO = toISO(now);
   const year = sp.y ? parseInt(sp.y, 10) : now.getFullYear();

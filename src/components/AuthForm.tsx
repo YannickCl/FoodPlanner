@@ -37,7 +37,7 @@ export function AuthForm({ mode, next = "/calendrier" }: { mode: Mode; next?: st
       } else if (mode === "signup") {
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
-        router.replace(next);
+        router.replace("/onboarding");
         router.refresh();
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {

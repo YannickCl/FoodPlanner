@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { recipeSchema } from "@/lib/validation";
 import { getSettings } from "@/lib/queries";
 import { getCurrentHouseholdId } from "@/lib/tenant";
+import { getRecipeQuota, FREE_RECIPE_LIMIT } from "@/lib/quota";
 import { generateRecipeFromName, proposeRecipes, type AIRecipe } from "@/lib/ai";
 import { guessAisle } from "@/lib/aisle";
 
@@ -33,6 +34,13 @@ export async function createRecipe(input: unknown): Promise<ActionResult> {
   if (!data) return { ok: false, fieldErrors };
 
   const householdId = await getCurrentHouseholdId();
+  const quota = await getRecipeQuota(householdId);
+  if (!quota.canAdd) {
+    return {
+      ok: false,
+      error: `Limite de ${FREE_RECIPE_LIMIT} recettes atteinte (offre gratuite). Passe en premium pour un carnet illimité.`,
+    };
+  }
   const recipe = await prisma.recipe.create({
     data: {
       householdId,
@@ -185,7 +193,10 @@ export async function proposeRecipesAI(
 export async function addRecipesAI(recipes: AIRecipeWithAisle[]) {
   const householdId = await getCurrentHouseholdId();
   const settings = await getSettings();
-  for (const r of recipes) {
+  // Respecte le quota gratuit : n'ajoute que ce qui rentre.
+  const quota = await getRecipeQuota(householdId);
+  const allow = quota.premium ? recipes : recipes.slice(0, quota.remaining);
+  for (const r of allow) {
     await prisma.recipe.create({
       data: {
         householdId,
@@ -213,5 +224,5 @@ export async function addRecipesAI(recipes: AIRecipeWithAisle[]) {
     });
   }
   revalidatePath("/recettes");
-  return { ok: true, count: recipes.length };
+  return { ok: true, count: allow.length, skipped: recipes.length - allow.length };
 }
