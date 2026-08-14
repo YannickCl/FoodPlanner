@@ -229,6 +229,12 @@ export function CalendarClient({
     setSelected(new Set());
   }
 
+  function goBatch() {
+    if (!selected.size) return;
+    const cells = [...selected].map((k) => k.replace("#", ":")).join(",");
+    router.push(`/batch?cells=${encodeURIComponent(cells)}`);
+  }
+
   function runGenerate(
     scope: "month" | "sixmonths" | "custom",
     mode: "fill" | "replace",
@@ -296,6 +302,13 @@ export function CalendarClient({
               className="rounded-full border border-line px-3 py-2 text-sm text-ink hover:bg-parchment-deep"
             >
               Tout le mois
+            </button>
+            <button
+              onClick={goBatch}
+              disabled={selected.size === 0}
+              className="rounded-full bg-green px-4 py-2 text-sm font-semibold text-parchment transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              🍱 Préparer en une fois
             </button>
             <button
               onClick={removeSelected}

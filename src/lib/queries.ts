@@ -101,6 +101,32 @@ export async function getPlannedMeals(
   }));
 }
 
+/** Repas sélectionnés (par date + midi/soir) pour une session de batch cooking. */
+export async function getBatchMeals(
+  cells: { date: ISODate; mealTime: "MIDI" | "SOIR" }[],
+) {
+  const householdId = await getCurrentHouseholdId();
+  if (!cells.length) return [];
+  const rows = await prisma.plannedMeal.findMany({
+    where: {
+      householdId,
+      recipeId: { not: null },
+      OR: cells.map((c) => ({ date: isoToDbDate(c.date), mealTime: c.mealTime })),
+    },
+    include: { recipe: { include: { ingredients: true } } },
+  });
+  return rows
+    .filter((r) => r.recipe)
+    .map((r) => ({
+      recipeName: r.recipe!.name,
+      servings: r.servings,
+      servingsBase: r.recipe!.servingsBase,
+      steps: r.recipe!.steps,
+      choices: (r.choices ?? {}) as Record<string, string | string[]>,
+      ingredients: r.recipe!.ingredients,
+    }));
+}
+
 /** Données brutes pour la liste de courses sur une période. */
 export async function getShoppingData(from: ISODate, to: ISODate) {
   const householdId = await getCurrentHouseholdId();
