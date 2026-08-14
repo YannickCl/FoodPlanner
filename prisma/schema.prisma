@@ -20,6 +20,7 @@ model Household {
   stripeCustomerId   String?
   subscriptionStatus String?
   onboardedAt        DateTime? // null tant que l'onboarding n'est pas terminé
+  inviteCode         String?  @unique // code de partage du foyer (inviter un membre)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 

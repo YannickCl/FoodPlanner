@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 // Pages publiques (accessibles sans être connecté).
-const PUBLIC_PREFIXES = ["/login", "/signup", "/reset"];
+const PUBLIC_PREFIXES = ["/login", "/signup", "/reset", "/rejoindre"];
 
 // Protège l'app derrière la session Supabase et rafraîchit les cookies de session.
 // (Next 16 : convention "proxy", ex-"middleware".)

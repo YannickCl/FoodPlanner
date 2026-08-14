@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { joinHousehold } from "@/app/actions/household";
 import { Card } from "@/components/ui";
 import { APP_NAME } from "@/lib/brand";
 
@@ -15,7 +16,15 @@ const COPY: Record<Mode, { title: string; cta: string }> = {
   reset: { title: "Mot de passe oublié", cta: "Recevoir le lien" },
 };
 
-export function AuthForm({ mode, next = "/calendrier" }: { mode: Mode; next?: string }) {
+export function AuthForm({
+  mode,
+  next = "/calendrier",
+  invite,
+}: {
+  mode: Mode;
+  next?: string;
+  invite?: string;
+}) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +46,12 @@ export function AuthForm({ mode, next = "/calendrier" }: { mode: Mode; next?: st
       } else if (mode === "signup") {
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
-        router.replace("/onboarding");
+        if (invite) {
+          await joinHousehold(invite);
+          router.replace("/calendrier");
+        } else {
+          router.replace("/onboarding");
+        }
         router.refresh();
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {

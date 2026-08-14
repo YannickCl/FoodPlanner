@@ -1,11 +1,23 @@
 import { getSettings } from "@/lib/queries";
+import { getCurrentHouseholdId } from "@/lib/tenant";
+import { getHouseholdMembers } from "@/app/actions/household";
+import { prisma } from "@/lib/db";
 import { SettingsForm } from "./SettingsForm";
 import { RemindersCard } from "./RemindersCard";
+import { MembersCard } from "./MembersCard";
 
 export const dynamic = "force-dynamic";
 
 export default async function ReglagesPage() {
   const settings = await getSettings();
+  const householdId = await getCurrentHouseholdId();
+  const [household, members] = await Promise.all([
+    prisma.household.findUnique({
+      where: { id: householdId },
+      select: { name: true, inviteCode: true },
+    }),
+    getHouseholdMembers(),
+  ]);
   return (
     <div className="mx-auto max-w-2xl">
       <p className="eyebrow mb-1">Votre foyer</p>
@@ -28,6 +40,13 @@ export default async function ReglagesPage() {
           dinnerEnabled: settings.dinnerEnabled,
         }}
       />
+      <div className="mt-4">
+        <MembersCard
+          householdName={household?.name ?? "Mon foyer"}
+          initialCode={household?.inviteCode ?? null}
+          members={members}
+        />
+      </div>
       <div className="mt-4">
         <RemindersCard />
       </div>
