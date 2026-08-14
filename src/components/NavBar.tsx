@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 const LINKS = [
   { href: "/calendrier", label: "Calendrier", emoji: "📅" },
@@ -11,9 +12,20 @@ const LINKS = [
   { href: "/reglages", label: "Réglages", emoji: "⚙️" },
 ];
 
+const HIDDEN_PREFIXES = ["/login", "/signup", "/reset"];
+
 export function NavBar() {
   const pathname = usePathname();
-  if (pathname === "/login") return null;
+  const router = useRouter();
+  if (HIDDEN_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
+    return null;
+  }
+
+  async function signOut() {
+    await createSupabaseBrowserClient().auth.signOut();
+    router.replace("/login");
+    router.refresh();
+  }
   return (
     <header className="no-print sticky top-0 z-30 border-b border-line/80 bg-parchment/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
@@ -46,6 +58,16 @@ export function NavBar() {
               </Link>
             );
           })}
+          <button
+            onClick={signOut}
+            title="Se déconnecter"
+            className="rounded-full px-3 py-1.5 text-sm font-medium text-ink-soft transition-colors hover:bg-parchment-deep hover:text-ink"
+          >
+            <span aria-hidden className="mr-1">
+              ⏻
+            </span>
+            <span className="hidden sm:inline">Quitter</span>
+          </button>
         </nav>
       </div>
     </header>

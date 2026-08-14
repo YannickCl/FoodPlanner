@@ -1,25 +1,64 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth";
+import { createServerClient } from "@supabase/ssr";
 
-// Protège toutes les pages derrière le mot de passe du foyer, sauf /login et
-// les ressources publiques. (Next 16 : convention "proxy", ex-"middleware".)
+// Pages publiques (accessibles sans être connecté).
+const PUBLIC_PREFIXES = ["/login", "/signup", "/reset"];
+
+// Protège l'app derrière la session Supabase et rafraîchit les cookies de session.
+// (Next 16 : convention "proxy", ex-"middleware".)
 export async function proxy(req: NextRequest) {
-  const secret = process.env.AUTH_SECRET ?? "";
-  const token = req.cookies.get(SESSION_COOKIE)?.value;
-  const ok = await verifySessionToken(secret, token);
+  let response = NextResponse.next({ request: req });
 
-  if (ok) return NextResponse.next();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => req.cookies.getAll(),
+        setAll: (cookiesToSet) => {
+          cookiesToSet.forEach(({ name, value }) => req.cookies.set(name, value));
+          response = NextResponse.next({ request: req });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options),
+          );
+        },
+      },
+    },
+  );
 
-  const url = req.nextUrl.clone();
-  url.pathname = "/login";
-  url.searchParams.set("next", req.nextUrl.pathname);
-  return NextResponse.redirect(url);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const path = req.nextUrl.pathname;
+  const isPublic = PUBLIC_PREFIXES.some(
+    (p) => path === p || path.startsWith(p + "/"),
+  );
+
+  // Pas connecté sur une page privée -> vers /login (en gardant la destination).
+  if (!user && !isPublic) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/login";
+    url.searchParams.set("next", path);
+    return NextResponse.redirect(url);
+  }
+
+  // Déjà connecté sur une page d'entrée d'auth -> vers l'app.
+  // (On exclut /reset/update : on y arrive AVEC une session de récupération.)
+  const isAuthEntry = ["/login", "/signup", "/reset"].includes(path);
+  if (user && isAuthEntry) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/calendrier";
+    url.search = "";
+    return NextResponse.redirect(url);
+  }
+
+  return response;
 }
 
 export const config = {
-  // Tout sauf : login, assets Next, favicon, PWA (manifeste + service worker),
-  // le cron des rappels (protégé par son propre secret) et fichiers statiques.
+  // Tout sauf : assets Next, favicon, PWA (manifeste + service worker), cron, images.
   matcher: [
-    "/((?!login|_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|api/cron|.*\\.(?:svg|png|jpg|jpeg|ico)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|api/cron|.*\\.(?:svg|png|jpg|jpeg|ico)$).*)",
   ],
 };

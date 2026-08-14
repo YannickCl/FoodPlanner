@@ -1,18 +1,46 @@
 import "server-only";
 import { prisma } from "./db";
+import { createSupabaseServerClient } from "./supabase/server";
 
 /**
- * Foyer courant. Transition Phase 0.2 : pas encore d'authentification, on renvoie
- * le foyer fondateur (le seul existant). En Phase 0.1, l'implémentation lira l'ID
- * depuis la session Supabase — tout le reste du code passe déjà par cette fonction.
+ * Foyer de l'utilisateur connecté. Lit la session Supabase, puis retrouve le
+ * foyer via la table User. Au tout premier accès (juste après l'inscription),
+ * crée le foyer + l'utilisateur (idempotent).
  */
 export async function getCurrentHouseholdId(): Promise<string> {
-  const h = await prisma.household.findFirst({
-    orderBy: { createdAt: "asc" },
-    select: { id: true },
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Non authentifié.");
+
+  const existing = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { householdId: true },
   });
-  if (!h) {
-    throw new Error("Aucun foyer trouvé — la migration Phase 0 n'a pas été exécutée.");
+  if (existing) return existing.householdId;
+
+  // Provisionnement : nouveau foyer + utilisateur propriétaire.
+  try {
+    return await prisma.$transaction(async (tx) => {
+      const household = await tx.household.create({ data: { name: "Mon foyer" } });
+      await tx.user.create({
+        data: {
+          id: user.id,
+          email: user.email ?? "",
+          householdId: household.id,
+          role: "owner",
+        },
+      });
+      return household.id;
+    });
+  } catch {
+    // Course possible (double 1ʳᵉ requête) : l'utilisateur a été créé entre-temps.
+    const u = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { householdId: true },
+    });
+    if (u) return u.householdId;
+    throw new Error("Impossible de créer le foyer.");
   }
-  return h.id;
 }

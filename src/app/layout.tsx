@@ -47,8 +47,14 @@ export const viewport: Viewport = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const settings = await getSettings();
-  const themeCss = buildThemeCss(settings);
+  // Sur les pages d'auth (non connecté), getSettings lève "Non authentifié" :
+  // on retombe alors sur le thème par défaut.
+  let themeCss = "";
+  try {
+    themeCss = buildThemeCss(await getSettings());
+  } catch {
+    themeCss = "";
+  }
   return (
     <html lang="fr">
       <body
