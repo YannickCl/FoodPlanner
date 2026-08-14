@@ -89,8 +89,13 @@ Règles de remplissage des champs :
 - minGapDays : espacement minimum avant de refaire le plat (14 par défaut, 21-28 pour les plats spéciaux).
 - prepTime : texte court, ex "30 min", "1h10".
 - ingredients : quantités pour 6 personnes. quantity = nombre (null si "au goût"). unit : G, KG, ML, CL, L, PIECE (pour un décompte : 2 oignons -> quantity 2, unit PIECE), CAS (cuillère à soupe), CAC (cuillère à café), PINCEE. note : précision libre ou null.
+- Liste chaque ingrédient sous sa forme ACHETABLE et crue (ex. "riz" cru, pas "riz cuit refroidi" ; "pâtes" crues) : sa cuisson/préparation est décrite dans les étapes.
 - N'ajoute PAS le sel, le poivre, l'eau ni l'huile dans la liste (ingrédients de base toujours présents).
-- steps : étapes claires, une par élément.
+- steps : la recette doit être COMPLÈTE et réalisable par un débutant, en partant de zéro. Impérativement :
+  • Aucun ingrédient ne doit "apparaître" déjà cuit/préparé sans une étape qui le prépare avant. Ex. pour un riz cantonais : commencer par cuire le riz à l'eau bouillante puis le laisser refroidir — ne suppose JAMAIS un composant déjà prêt.
+  • Chaque étape de cuisson précise l'USTENSILE et le feu (ex. "dans une grande poêle ou un wok, à feu vif", "dans une casserole d'eau bouillante", "au four à 200 °C") + une durée ou un repère visuel ("jusqu'à ce que ce soit doré").
+  • Explique en quelques mots les gestes techniques (ex. "émincer = couper en fines lamelles").
+  • Une action principale par étape, dans l'ordre chronologique.
 Réponds uniquement via le format structuré demandé, en français.`;
 
 function client() {
@@ -133,7 +138,7 @@ export async function generateRecipeFromName(
   const data = (await callStructured(
     prompt,
     recipeSchema(false),
-    4000,
+    5000,
   )) as Omit<AIRecipe, "name">;
   return { ...data, name };
 }
@@ -160,7 +165,7 @@ export async function proposeRecipes(opts: {
     properties: { recipes: { type: "array", items: recipeSchema(true) } },
     required: ["recipes"],
   };
-  const data = (await callStructured(prompt, schema, 12000)) as {
+  const data = (await callStructured(prompt, schema, 16000)) as {
     recipes: AIRecipe[];
   };
   return data.recipes ?? [];
