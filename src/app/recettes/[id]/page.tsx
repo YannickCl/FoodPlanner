@@ -14,7 +14,10 @@ import {
 } from "@/lib/labels";
 import { CategoryBadge, StarchBadge, Card } from "@/components/ui";
 import { DeleteRecipeButton } from "./DeleteRecipeButton";
+import { RegenerateButton } from "./RegenerateButton";
 import { classifyStep, EQUIPMENT_LABEL, TYPE_LABEL } from "@/lib/steps";
+import { prisma } from "@/lib/db";
+import { getCurrentHouseholdId } from "@/lib/tenant";
 import type { Aisle } from "@/generated/prisma/enums";
 
 export const dynamic = "force-dynamic";
@@ -27,6 +30,13 @@ export default async function RecipeDetailPage({
   const { id } = await params;
   const recipe = await getRecipe(id);
   if (!recipe) notFound();
+
+  const householdId = await getCurrentHouseholdId();
+  const household = await prisma.household.findUnique({
+    where: { id: householdId },
+    select: { plan: true },
+  });
+  const premium = household?.plan === "PREMIUM";
 
   const byAisle = new Map<Aisle, typeof recipe.ingredients>();
   for (const ing of recipe.ingredients) {
@@ -66,6 +76,7 @@ export default async function RecipeDetailPage({
               🍳 Lancer la recette
             </Link>
           )}
+          {premium && <RegenerateButton recipeId={recipe.id} />}
           <Link
             href={`/recettes/${recipe.id}/edit`}
             className="rounded-full border border-ink px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-parchment"

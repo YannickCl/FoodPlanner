@@ -124,6 +124,68 @@ export async function updateRecipe(
   redirect(`/recettes/${id}`);
 }
 
+/** Régénère une recette existante via l'IA (garde le nom), en premium uniquement. */
+export async function regenerateRecipe(
+  id: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const householdId = await getCurrentHouseholdId();
+  const household = await prisma.household.findUnique({
+    where: { id: householdId },
+    select: { plan: true },
+  });
+  if (household?.plan !== "PREMIUM") {
+    return { ok: false, error: "La régénération par l'IA fait partie de l'offre premium." };
+  }
+  const existing = await prisma.recipe.findFirst({
+    where: { id, householdId },
+    select: { id: true, name: true },
+  });
+  if (!existing) return { ok: false, error: "Recette introuvable." };
+
+  const settings = await getSettings();
+  let ai;
+  try {
+    ai = await generateRecipeFromName(existing.name, {
+      allergies: settings.allergies,
+      forbidden: settings.forbidden,
+    });
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Échec de la génération IA." };
+  }
+
+  await prisma.$transaction([
+    prisma.ingredient.deleteMany({ where: { recipeId: id } }),
+    prisma.recipe.update({
+      where: { id },
+      data: {
+        category: ai.category,
+        prepTime: ai.prepTime,
+        containsStarch: ai.containsStarch,
+        starchFamily: ai.containsStarch ? ai.starchFamily : null,
+        season: ai.season,
+        mealTime: ai.mealTime,
+        dayType: ai.dayType,
+        minGapDays: ai.minGapDays,
+        steps: ai.steps,
+        ingredients: {
+          create: ai.ingredients.map((i) => ({
+            name: i.name,
+            quantity: i.quantity,
+            unit: i.unit,
+            note: i.note,
+            aisle: guessAisle(i.name),
+          })),
+        },
+      },
+    }),
+  ]);
+
+  revalidatePath("/recettes");
+  revalidatePath(`/recettes/${id}`);
+  revalidatePath("/calendrier");
+  return { ok: true };
+}
+
 export async function deleteRecipe(id: string): Promise<ActionResult> {
   // PlannedMeal.recipeId passe à null (onDelete: SetNull) — pas de plantage.
   // deleteMany scopé au foyer : impossible de supprimer la recette d'un autre foyer.
