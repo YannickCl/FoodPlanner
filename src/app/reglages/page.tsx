@@ -1,6 +1,7 @@
 import { getSettings } from "@/lib/queries";
 import { getCurrentHouseholdId } from "@/lib/tenant";
 import { getHouseholdMembers } from "@/app/actions/household";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/db";
 import { SettingsForm } from "./SettingsForm";
 import { RemindersCard } from "./RemindersCard";
@@ -19,6 +20,9 @@ export default async function ReglagesPage() {
     }),
     getHouseholdMembers(),
   ]);
+  const {
+    data: { user },
+  } = await (await createSupabaseServerClient()).auth.getUser();
   return (
     <div className="mx-auto max-w-2xl">
       <p className="eyebrow mb-1">Votre foyer</p>
@@ -46,6 +50,7 @@ export default async function ReglagesPage() {
           householdName={household?.name ?? "Mon foyer"}
           initialCode={household?.inviteCode ?? null}
           members={members}
+          currentUserId={user?.id ?? ""}
         />
       </div>
       <div className="mt-4">

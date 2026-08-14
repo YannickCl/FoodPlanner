@@ -91,3 +91,81 @@ export async function getHouseholdMembers() {
     select: { id: true, email: true, role: true },
   });
 }
+
+/** Le propriétaire retire un membre : il repart dans un nouveau foyer vide. */
+export async function removeMember(
+  userId: string,
+): Promise<{ ok: boolean; error?: string }> {
+  const householdId = await getCurrentHouseholdId();
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Non authentifié." };
+
+  const me = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { role: true, householdId: true },
+  });
+  if (me?.householdId !== householdId || me.role !== "owner") {
+    return { ok: false, error: "Réservé au propriétaire du foyer." };
+  }
+  if (userId === user.id) {
+    return { ok: false, error: "Tu ne peux pas te retirer toi-même (utilise « Quitter »)." };
+  }
+  const target = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { householdId: true, role: true },
+  });
+  if (!target || target.householdId !== householdId) {
+    return { ok: false, error: "Membre introuvable." };
+  }
+  if (target.role === "owner") {
+    return { ok: false, error: "Impossible de retirer un propriétaire." };
+  }
+
+  const fresh = await prisma.household.create({
+    data: { name: "Mon foyer", onboardedAt: new Date() },
+  });
+  await prisma.user.update({
+    where: { id: userId },
+    data: { householdId: fresh.id, role: "owner" },
+  });
+  revalidatePath("/reglages");
+  return { ok: true };
+}
+
+/** L'utilisateur courant quitte le foyer (repart dans un nouveau foyer vide). */
+export async function leaveHousehold(): Promise<{ ok: boolean; error?: string }> {
+  const householdId = await getCurrentHouseholdId();
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Non authentifié." };
+
+  const members = await prisma.user.findMany({
+    where: { householdId },
+    orderBy: { createdAt: "asc" },
+    select: { id: true, role: true },
+  });
+  if (members.length <= 1) {
+    return { ok: false, error: "Tu es seul dans ce foyer : il n'y a rien à quitter." };
+  }
+  const me = members.find((m) => m.id === user.id);
+  // Si je pars et que je suis propriétaire, je promeus le plus ancien autre membre.
+  if (me?.role === "owner") {
+    const next = members.find((m) => m.id !== user.id);
+    if (next) await prisma.user.update({ where: { id: next.id }, data: { role: "owner" } });
+  }
+  const fresh = await prisma.household.create({
+    data: { name: "Mon foyer", onboardedAt: new Date() },
+  });
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { householdId: fresh.id, role: "owner" },
+  });
+  revalidatePath("/reglages");
+  revalidatePath("/calendrier");
+  return { ok: true };
+}
