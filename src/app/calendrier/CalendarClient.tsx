@@ -53,6 +53,7 @@ export function CalendarClient({
   mealMap,
   recipes,
   defaultServings,
+  premium,
 }: {
   year: number;
   month0: number;
@@ -64,6 +65,7 @@ export function CalendarClient({
   mealMap: MealMap;
   recipes: PickerRecipe[];
   defaultServings: number;
+  premium: boolean;
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -84,6 +86,7 @@ export function CalendarClient({
   } | null>(null);
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [intent, setIntent] = useState<"remove" | "batch">("remove");
 
   // Mise à jour optimiste : on affiche le changement tout de suite, sans attendre
   // le serveur. `overlay` prime sur `mealMap` (null = créneau vidé). On le remet à
@@ -295,7 +298,9 @@ export function CalendarClient({
         {selecting ? (
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm text-ink-soft">
-              <span className="num">{selected.size}</span> sélectionné(s)
+              {intent === "batch" ? "À cuisiner ensemble : " : ""}
+              <span className="num">{selected.size}</span>
+              {intent === "batch" ? "" : " sélectionné(s)"}
             </span>
             <button
               onClick={selectAllMonth}
@@ -303,20 +308,23 @@ export function CalendarClient({
             >
               Tout le mois
             </button>
-            <button
-              onClick={goBatch}
-              disabled={selected.size === 0}
-              className="rounded-full bg-green px-4 py-2 text-sm font-semibold text-parchment transition-opacity hover:opacity-90 disabled:opacity-50"
-            >
-              🍱 Préparer en une fois
-            </button>
-            <button
-              onClick={removeSelected}
-              disabled={pending || selected.size === 0}
-              className="rounded-full bg-brick px-4 py-2 text-sm font-semibold text-parchment transition-opacity hover:opacity-90 disabled:opacity-50"
-            >
-              {pending ? "…" : `Retirer (${selected.size})`}
-            </button>
+            {intent === "batch" ? (
+              <button
+                onClick={goBatch}
+                disabled={selected.size === 0}
+                className="rounded-full bg-green px-4 py-2 text-sm font-semibold text-parchment transition-opacity hover:opacity-90 disabled:opacity-50"
+              >
+                🍱 Lancer le batch ({selected.size})
+              </button>
+            ) : (
+              <button
+                onClick={removeSelected}
+                disabled={pending || selected.size === 0}
+                className="rounded-full bg-brick px-4 py-2 text-sm font-semibold text-parchment transition-opacity hover:opacity-90 disabled:opacity-50"
+              >
+                {pending ? "…" : `Retirer (${selected.size})`}
+              </button>
+            )}
             <button
               onClick={exitSelect}
               className="rounded-full border border-line px-3 py-2 text-sm text-ink-soft hover:text-ink"
@@ -327,11 +335,26 @@ export function CalendarClient({
         ) : (
           <div className="flex flex-wrap items-center gap-2">
             <button
-              onClick={() => setSelecting(true)}
+              onClick={() => {
+                setIntent("remove");
+                setSelecting(true);
+              }}
               disabled={pending}
               className="rounded-full border border-line px-4 py-2 text-sm font-medium text-ink hover:bg-parchment-deep disabled:opacity-60"
             >
               Modifier la sélection
+            </button>
+            <button
+              onClick={() => {
+                if (!premium) return;
+                setIntent("batch");
+                setSelecting(true);
+              }}
+              disabled={pending || !premium}
+              title={premium ? "Cuisiner plusieurs repas d'un coup" : "Réservé à l'offre premium"}
+              className="rounded-full bg-green px-4 py-2 text-sm font-semibold text-parchment shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              {premium ? "🍱 Batch cooking" : "🔒 Batch cooking"}
             </button>
             <button
               onClick={() => setGenOpen(true)}

@@ -22,9 +22,10 @@ export default async function CalendrierPage({
   const householdId = await getCurrentHouseholdId();
   const household = await prisma.household.findUnique({
     where: { id: householdId },
-    select: { onboardedAt: true },
+    select: { onboardedAt: true, plan: true },
   });
   if (!household?.onboardedAt) redirect("/onboarding");
+  const premium = household.plan === "PREMIUM";
   const now = new Date();
   const todayISO = toISO(now);
   const year = sp.y ? parseInt(sp.y, 10) : now.getFullYear();
@@ -64,6 +65,7 @@ export default async function CalendrierPage({
       mealMap={mealMap}
       recipes={recipes}
       defaultServings={settings.servings}
+      premium={premium}
     />
   );
 }

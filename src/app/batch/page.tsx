@@ -12,6 +12,7 @@ import { guessAisle } from "@/lib/aisle";
 import { AISLE_LABELS, AISLE_ORDER } from "@/lib/labels";
 import { EQUIPMENT_LABEL, TYPE_LABEL } from "@/lib/steps";
 import { Card } from "@/components/ui";
+import { BatchSession, type GuidedStep } from "./BatchSession";
 
 export const dynamic = "force-dynamic";
 
@@ -116,6 +117,19 @@ export default async function BatchPage({
   const plan = buildBatchPlan(meals.map((m) => ({ recipeName: m.recipeName, steps: m.steps })));
   const dishes = [...new Set(meals.map((m) => m.recipeName))];
 
+  const toGuided = (s: PlanStep, phase: "prep" | "cook"): GuidedStep => ({
+    recipe: s.recipe,
+    text: s.text,
+    phase,
+    durationMin: s.structure.durationMin,
+    equipment: s.structure.equipment,
+    type: s.structure.type,
+  });
+  const orderedSteps: GuidedStep[] = [
+    ...plan.miseEnPlace.map((s) => toGuided(s, "prep")),
+    ...plan.cuissons.map((s) => toGuided(s, "cook")),
+  ];
+
   return (
     <div className="mx-auto max-w-2xl">
       {back}
@@ -126,13 +140,22 @@ export default async function BatchPage({
         ~<span className="num">{plan.activeMin || plan.miseEnPlace.length * 5}</span>{" "}
         min · plus longue cuisson <span className="num">{plan.longestCookMin}</span> min
       </p>
-      <div className="mb-6 flex flex-wrap gap-1.5">
+      <div className="mb-5 flex flex-wrap gap-1.5">
         {dishes.map((d) => (
           <span key={d} className="rounded-full border border-line bg-parchment-card px-3 py-1 text-sm text-ink">
             {d}
           </span>
         ))}
       </div>
+
+      {/* Session guidée (le cœur : on est pris par la main) */}
+      <div className="mb-6">
+        <BatchSession dishes={dishes} steps={orderedSteps} />
+      </div>
+
+      <p className="mb-3 text-sm text-ink-soft">
+        Ou consulte le récap ci-dessous (ingrédients &amp; plan) avant de te lancer :
+      </p>
 
       {/* Ingrédients consolidés */}
       <Card className="mb-4 p-5">
