@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 import { SettingsForm } from "./SettingsForm";
 import { RemindersCard } from "./RemindersCard";
 import { MembersCard } from "./MembersCard";
+import { SubscriptionCard } from "./SubscriptionCard";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +15,7 @@ export default async function ReglagesPage() {
   const [household, members] = await Promise.all([
     prisma.household.findUnique({
       where: { id: householdId },
-      select: { name: true, inviteCode: true },
+      select: { name: true, inviteCode: true, plan: true, stripeCustomerId: true },
     }),
     getHouseholdMembers(),
   ]);
@@ -45,6 +46,12 @@ export default async function ReglagesPage() {
           householdName={household?.name ?? "Mon foyer"}
           initialCode={household?.inviteCode ?? null}
           members={members}
+        />
+      </div>
+      <div className="mt-4">
+        <SubscriptionCard
+          premium={household?.plan === "PREMIUM"}
+          hasStripeCustomer={!!household?.stripeCustomerId}
         />
       </div>
       <div className="mt-4">
