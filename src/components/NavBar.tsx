@@ -12,7 +12,17 @@ const LINKS = [
   { href: "/reglages", label: "Réglages", emoji: "⚙️" },
 ];
 
-const HIDDEN_PREFIXES = ["/login", "/signup", "/reset", "/onboarding", "/rejoindre"];
+const HIDDEN_PREFIXES = [
+  "/login",
+  "/signup",
+  "/reset",
+  "/onboarding",
+  "/rejoindre",
+  // Vitrine (a son propre en-tête)
+  "/",
+  "/tarifs",
+  "/mentions-legales",
+];
 
 export function NavBar() {
   const pathname = usePathname();
