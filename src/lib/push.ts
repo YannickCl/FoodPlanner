@@ -23,10 +23,18 @@ export interface PushPayload {
   tag?: string;
 }
 
-/** Envoie une notification à tous les appareils abonnés. Nettoie les abonnements morts. */
-export async function sendToAll(payload: PushPayload): Promise<{ sent: number; removed: number }> {
+/**
+ * Envoie une notification aux appareils abonnés. Nettoie les abonnements morts.
+ * `opts.householdId` restreint l'envoi aux appareils d'un foyer (multi-foyers).
+ */
+export async function sendToAll(
+  payload: PushPayload,
+  opts?: { householdId?: string },
+): Promise<{ sent: number; removed: number }> {
   configure();
-  const subs = await prisma.pushSub.findMany();
+  const subs = await prisma.pushSub.findMany({
+    where: opts?.householdId ? { householdId: opts.householdId } : undefined,
+  });
   const data = JSON.stringify(payload);
   let sent = 0;
   const dead: string[] = [];

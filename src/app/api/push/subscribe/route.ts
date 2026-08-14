@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { getCurrentHouseholdId } from "@/lib/tenant";
 
 export async function POST(req: Request) {
   const sub = await req.json().catch(() => null);
@@ -9,10 +10,11 @@ export async function POST(req: Request) {
   if (!endpoint || !p256dh || !auth) {
     return NextResponse.json({ ok: false, error: "Abonnement invalide" }, { status: 400 });
   }
+  const householdId = await getCurrentHouseholdId();
   await prisma.pushSub.upsert({
     where: { endpoint },
-    create: { endpoint, p256dh, auth },
-    update: { p256dh, auth },
+    create: { householdId, endpoint, p256dh, auth },
+    update: { householdId, p256dh, auth },
   });
   return NextResponse.json({ ok: true });
 }

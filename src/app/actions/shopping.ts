@@ -5,24 +5,28 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { toggleCheckSchema } from "@/lib/validation";
 import { isoToDbDate } from "@/lib/dates";
+import { getCurrentHouseholdId } from "@/lib/tenant";
 
 const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
 /** Coche/décoche un ingrédient de la liste de courses (persisté par période). */
 export async function toggleCheck(input: unknown) {
   const data = toggleCheckSchema.parse(input);
+  const householdId = await getCurrentHouseholdId();
   const rangeStart = isoToDbDate(data.rangeStart);
   const rangeEnd = isoToDbDate(data.rangeEnd);
 
   await prisma.shoppingListCheck.upsert({
     where: {
-      rangeStart_rangeEnd_ingredientKey: {
+      householdId_rangeStart_rangeEnd_ingredientKey: {
+        householdId,
         rangeStart,
         rangeEnd,
         ingredientKey: data.ingredientKey,
       },
     },
     create: {
+      householdId,
       rangeStart,
       rangeEnd,
       ingredientKey: data.ingredientKey,
@@ -45,8 +49,10 @@ const addExtraSchema = z.object({
 
 export async function addExtra(input: unknown) {
   const data = addExtraSchema.parse(input);
+  const householdId = await getCurrentHouseholdId();
   const extra = await prisma.shoppingExtra.create({
     data: {
+      householdId,
       rangeStart: isoToDbDate(data.rangeStart),
       rangeEnd: isoToDbDate(data.rangeEnd),
       name: data.name,
@@ -60,8 +66,9 @@ export async function toggleExtra(input: unknown) {
   const data = z
     .object({ id: z.string(), checked: z.boolean() })
     .parse(input);
-  await prisma.shoppingExtra.update({
-    where: { id: data.id },
+  const householdId = await getCurrentHouseholdId();
+  await prisma.shoppingExtra.updateMany({
+    where: { id: data.id, householdId },
     data: { checked: data.checked },
   });
   revalidatePath("/courses");
@@ -70,7 +77,8 @@ export async function toggleExtra(input: unknown) {
 
 export async function deleteExtra(input: unknown) {
   const data = z.object({ id: z.string() }).parse(input);
-  await prisma.shoppingExtra.delete({ where: { id: data.id } });
+  const householdId = await getCurrentHouseholdId();
+  await prisma.shoppingExtra.deleteMany({ where: { id: data.id, householdId } });
   revalidatePath("/courses");
   return { ok: true };
 }

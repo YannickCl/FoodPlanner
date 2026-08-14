@@ -66,7 +66,6 @@ function prepMinutes(prepTime: string): number {
  * Idempotent : chaque repas n'est notifié qu'une fois (champ remindedAt).
  */
 export async function runReminders(): Promise<ReminderResult> {
-  const settings = await prisma.settings.findUnique({ where: { id: "household" } });
   const { iso, minutes: nowMin } = parisNow();
 
   const result: ReminderResult = {
@@ -76,51 +75,66 @@ export async function runReminders(): Promise<ReminderResult> {
     sent: 0,
     details: [],
   };
-  if (!settings) return result;
-
-  const meals = [
-    { kind: "MIDI" as const, label: "le déjeuner", enabled: settings.lunchEnabled, time: settings.lunchTime },
-    { kind: "SOIR" as const, label: "le dîner", enabled: settings.dinnerEnabled, time: settings.dinnerTime },
-  ];
 
   const dateDb = isoToDbDate(iso);
+  // On parcourt chaque foyer avec ses propres réglages (multi-foyers).
+  const households = await prisma.household.findMany({ include: { settings: true } });
 
-  for (const m of meals) {
-    if (!m.enabled) continue;
-    const mealMin = parseHHMM(m.time);
-    if (mealMin == null) continue;
+  for (const h of households) {
+    const settings = h.settings;
+    if (!settings) continue;
 
-    const rows = await prisma.plannedMeal.findMany({
-      where: { date: dateDb, mealTime: m.kind, remindedAt: null, recipeId: { not: null } },
-      include: { recipe: true },
-    });
+    const meals = [
+      { kind: "MIDI" as const, label: "le déjeuner", enabled: settings.lunchEnabled, time: settings.lunchTime },
+      { kind: "SOIR" as const, label: "le dîner", enabled: settings.dinnerEnabled, time: settings.dinnerTime },
+    ];
 
-    for (const row of rows) {
-      if (!row.recipe) continue;
-      result.checked++;
-      const prep = prepMinutes(row.recipe.prepTime);
-      const reminderMin = mealMin - prep;
+    for (const m of meals) {
+      if (!m.enabled) continue;
+      const mealMin = parseHHMM(m.time);
+      if (mealMin == null) continue;
 
-      // On notifie une fois passé l'heure du rappel, tant qu'on n'est pas trop en retard.
-      if (nowMin >= reminderMin && nowMin <= mealMin + LATE_GRACE_MIN) {
-        const res = await sendToAll({
-          title: "🍳 C'est l'heure de cuisiner !",
-          body: `${row.recipe.name} — pour ${m.label} à ${m.time}. Prévois ~${prep} min.`,
-          url: `/recettes/${row.recipe.id}/cuisiner`,
-          tag: `meal-${row.id}`,
-        });
-        await prisma.plannedMeal.update({
-          where: { id: row.id },
-          data: { remindedAt: new Date() },
-        });
-        result.reminded++;
-        result.sent += res.sent;
-        result.details.push({
+      const rows = await prisma.plannedMeal.findMany({
+        where: {
+          householdId: h.id,
+          date: dateDb,
           mealTime: m.kind,
-          recipe: row.recipe.name,
-          reminderAt: fmtMin(reminderMin),
-          sent: res.sent,
-        });
+          remindedAt: null,
+          recipeId: { not: null },
+        },
+        include: { recipe: true },
+      });
+
+      for (const row of rows) {
+        if (!row.recipe) continue;
+        result.checked++;
+        const prep = prepMinutes(row.recipe.prepTime);
+        const reminderMin = mealMin - prep;
+
+        // On notifie une fois passé l'heure du rappel, tant qu'on n'est pas trop en retard.
+        if (nowMin >= reminderMin && nowMin <= mealMin + LATE_GRACE_MIN) {
+          const res = await sendToAll(
+            {
+              title: "🍳 C'est l'heure de cuisiner !",
+              body: `${row.recipe.name} — pour ${m.label} à ${m.time}. Prévois ~${prep} min.`,
+              url: `/recettes/${row.recipe.id}/cuisiner`,
+              tag: `meal-${row.id}`,
+            },
+            { householdId: h.id },
+          );
+          await prisma.plannedMeal.update({
+            where: { id: row.id },
+            data: { remindedAt: new Date() },
+          });
+          result.reminded++;
+          result.sent += res.sent;
+          result.details.push({
+            mealTime: m.kind,
+            recipe: row.recipe.name,
+            reminderAt: fmtMin(reminderMin),
+            sent: res.sent,
+          });
+        }
       }
     }
   }

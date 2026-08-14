@@ -10,8 +10,43 @@ datasource db {
   provider = "postgresql"
 }
 
+// ---------------------------------------------------------------------------
+// Multi-foyers (Phase 0) : Household = le "locataire", User = les membres.
+// ---------------------------------------------------------------------------
+model Household {
+  id                 String   @id @default(cuid())
+  name               String   @default("Mon foyer")
+  plan               Plan     @default(FREE) // abonnement (Stripe branché en Phase 2)
+  stripeCustomerId   String?
+  subscriptionStatus String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  users          User[]
+  recipes        Recipe[]
+  plannedMeals   PlannedMeal[]
+  shoppingExtras ShoppingExtra[]
+  shoppingChecks ShoppingListCheck[]
+  pushSubs       PushSub[]
+  settings       Settings?
+}
+
+// Compte utilisateur. id = identifiant Supabase Auth (rempli en Phase 0.1).
+model User {
+  id          String    @id
+  email       String    @unique
+  householdId String
+  household   Household  @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  role        String     @default("member") // owner | member
+  createdAt   DateTime   @default(now())
+
+  @@index([householdId])
+}
+
 model Recipe {
   id             String        @id @default(cuid())
+  householdId    String
+  household      Household     @relation(fields: [householdId], references: [id], onDelete: Cascade)
   name           String
   category       Category
   prepTime       String // ex: "30 min" (texte libre, affichage seulement)
@@ -27,6 +62,8 @@ model Recipe {
   plannedMeals   PlannedMeal[]
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+
+  @@index([householdId])
 }
 
 model Ingredient {
@@ -47,6 +84,8 @@ model Ingredient {
 
 model PlannedMeal {
   id       String   @id @default(cuid())
+  householdId String
+  household   Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
   date     DateTime @db.Date
   mealTime MealTime // MIDI | SOIR (pas BOTH ici)
   recipeId String?
@@ -55,22 +94,29 @@ model PlannedMeal {
   choices  Json? // { [ingredientId]: "option choisie" } pour les garnitures au choix
   remindedAt DateTime? // rappel "à vos fourneaux" déjà envoyé pour ce repas
 
-  @@unique([date, mealTime])
+  @@unique([householdId, date, mealTime])
   @@index([date])
+  @@index([householdId])
 }
 
 // Abonnements Web Push (un par appareil/navigateur).
 model PushSub {
   id        String   @id @default(cuid())
+  householdId String
+  household   Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
   endpoint  String   @unique
   p256dh    String
   auth      String
   createdAt DateTime @default(now())
+
+  @@index([householdId])
 }
 
 // Articles ajoutés à la main sur la liste de courses (piles, gel douche…).
 model ShoppingExtra {
   id         String   @id @default(cuid())
+  householdId String
+  household   Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
   rangeStart DateTime @db.Date
   rangeEnd   DateTime @db.Date
   name       String
@@ -78,18 +124,21 @@ model ShoppingExtra {
   createdAt  DateTime @default(now())
 
   @@index([rangeStart, rangeEnd])
+  @@index([householdId])
 }
 
-// Réglages du foyer (ligne unique, id = "household").
+// Réglages d'un foyer (une ligne par Household).
 model Settings {
-  id          String   @id @default("household")
+  id          String   @id @default(cuid())
+  householdId String   @unique
+  household   Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
   servings    Int      @default(6) // nombre de personnes par défaut
   allergies   String[] // ingrédients allergènes -> jamais planifiés
   forbidden   String[] // aliments interdits -> jamais planifiés
   bgColor     String? // couleur de fond personnalisée (hex)
   cardColor   String? // couleur des cartes / vignettes (hex)
   accentColor String? // couleur d'accent (hex)
-  // Heures des repas (pour les futurs rappels de cuisine — V2)
+  // Heures des repas (pour les rappels de cuisine)
   lunchTime     String  @default("12:30")
   lunchEnabled  Boolean @default(false)
   dinnerTime    String  @default("19:30")
@@ -99,12 +148,20 @@ model Settings {
 
 model ShoppingListCheck {
   id            String   @id @default(cuid())
+  householdId   String
+  household     Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
   rangeStart    DateTime @db.Date
   rangeEnd      DateTime @db.Date
   ingredientKey String // nom normalisé + unité, sert de clé stable
   checked       Boolean  @default(false)
 
-  @@unique([rangeStart, rangeEnd, ingredientKey])
+  @@unique([householdId, rangeStart, rangeEnd, ingredientKey])
+  @@index([householdId])
+}
+
+enum Plan {
+  FREE
+  PREMIUM
 }
 
 enum Category {

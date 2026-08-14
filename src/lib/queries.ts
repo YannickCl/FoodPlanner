@@ -1,14 +1,17 @@
 import "server-only";
 import { prisma } from "./db";
 import { isoToDbDate, dbDateToISO, type ISODate } from "./dates";
+import { getCurrentHouseholdId } from "./tenant";
 import type { Category } from "@/generated/prisma/enums";
 
 export async function getRecipes(opts?: {
   search?: string;
   category?: Category;
 }) {
+  const householdId = await getCurrentHouseholdId();
   return prisma.recipe.findMany({
     where: {
+      householdId,
       ...(opts?.category ? { category: opts.category } : {}),
       ...(opts?.search
         ? { name: { contains: opts.search, mode: "insensitive" } }
@@ -20,24 +23,28 @@ export async function getRecipes(opts?: {
 }
 
 export async function getRecipe(id: string) {
-  return prisma.recipe.findUnique({
-    where: { id },
+  const householdId = await getCurrentHouseholdId();
+  return prisma.recipe.findFirst({
+    where: { id, householdId },
     include: { ingredients: { orderBy: { aisle: "asc" } } },
   });
 }
 
-/** Réglages du foyer (crée la ligne unique avec les valeurs par défaut si besoin). */
+/** Réglages du foyer courant (crée la ligne avec les valeurs par défaut si besoin). */
 export async function getSettings() {
+  const householdId = await getCurrentHouseholdId();
   return prisma.settings.upsert({
-    where: { id: "household" },
-    create: { id: "household" },
+    where: { householdId },
+    create: { householdId },
     update: {},
   });
 }
 
 /** Recettes minimales pour les sélecteurs / le générateur (+ garnitures au choix). */
 export async function getRecipesForPicker() {
+  const householdId = await getCurrentHouseholdId();
   const recipes = await prisma.recipe.findMany({
+    where: { householdId },
     orderBy: { name: "asc" },
     select: {
       id: true,
@@ -75,8 +82,9 @@ export async function getPlannedMeals(
   from: ISODate,
   to: ISODate,
 ): Promise<PlannedMealDTO[]> {
+  const householdId = await getCurrentHouseholdId();
   const rows = await prisma.plannedMeal.findMany({
-    where: { date: { gte: isoToDbDate(from), lte: isoToDbDate(to) } },
+    where: { householdId, date: { gte: isoToDbDate(from), lte: isoToDbDate(to) } },
     include: {
       recipe: {
         select: { id: true, name: true, category: true, containsStarch: true },
@@ -95,8 +103,10 @@ export async function getPlannedMeals(
 
 /** Données brutes pour la liste de courses sur une période. */
 export async function getShoppingData(from: ISODate, to: ISODate) {
+  const householdId = await getCurrentHouseholdId();
   const meals = await prisma.plannedMeal.findMany({
     where: {
+      householdId,
       date: { gte: isoToDbDate(from), lte: isoToDbDate(to) },
       recipeId: { not: null },
     },
@@ -108,11 +118,11 @@ export async function getShoppingData(from: ISODate, to: ISODate) {
   });
 
   const checks = await prisma.shoppingListCheck.findMany({
-    where: { rangeStart: isoToDbDate(from), rangeEnd: isoToDbDate(to) },
+    where: { householdId, rangeStart: isoToDbDate(from), rangeEnd: isoToDbDate(to) },
   });
 
   const extras = await prisma.shoppingExtra.findMany({
-    where: { rangeStart: isoToDbDate(from), rangeEnd: isoToDbDate(to) },
+    where: { householdId, rangeStart: isoToDbDate(from), rangeEnd: isoToDbDate(to) },
     orderBy: { createdAt: "asc" },
   });
 

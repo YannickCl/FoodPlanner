@@ -59,6 +59,13 @@ async function main() {
   await prisma.ingredient.deleteMany();
   await prisma.recipe.deleteMany();
 
+  // Multi-foyers : rattacher les recettes du seed à un foyer (réutilise le premier).
+  const household =
+    (await prisma.household.findFirst({ orderBy: { createdAt: "asc" } })) ??
+    (await prisma.household.create({
+      data: { name: "Foyer fondateur", plan: "PREMIUM" },
+    }));
+
   const stats = {
     ingredients: 0,
     withQty: 0,
@@ -97,6 +104,7 @@ async function main() {
 
     await prisma.recipe.create({
       data: {
+        householdId: household.id,
         name: r.nom,
         category: toEnum(Category, r.cat, `${slug}.cat`),
         prepTime: r.temps,

@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { APP_NAME } from "@/lib/brand";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Food Planner",
-    short_name: "Food Planner",
+    name: APP_NAME,
+    short_name: APP_NAME,
     description: "Repas de la famille : recettes, calendrier et liste de courses.",
     start_url: "/calendrier",
     display: "standalone",

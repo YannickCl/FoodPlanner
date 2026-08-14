@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
+import { getCurrentHouseholdId } from "@/lib/tenant";
 import { z } from "zod";
 
 const hexColor = z
@@ -38,9 +39,10 @@ export async function saveSettings(input: unknown) {
     dinnerTime: data.dinnerTime,
     dinnerEnabled: data.dinnerEnabled,
   };
+  const householdId = await getCurrentHouseholdId();
   await prisma.settings.upsert({
-    where: { id: "household" },
-    create: { id: "household", ...values },
+    where: { householdId },
+    create: { householdId, ...values },
     update: values,
   });
   revalidatePath("/reglages");

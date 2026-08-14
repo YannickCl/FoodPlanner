@@ -13,22 +13,27 @@ import {
 } from "@/lib/dates";
 import { generatePlan, type Slot, type ExistingMeal } from "@/lib/generate";
 import { getSettings } from "@/lib/queries";
+import { getCurrentHouseholdId } from "@/lib/tenant";
 import { hasRestrictedIngredient } from "@/lib/restrictions";
 
 /** Upsert (ou effacement) d'un repas sur un créneau. */
 export async function setMeal(input: unknown) {
   const data = setMealSchema.parse(input);
+  const householdId = await getCurrentHouseholdId();
   const date = isoToDbDate(data.date);
   const choices = data.choices ?? undefined;
 
   if (data.recipeId === null) {
     await prisma.plannedMeal.deleteMany({
-      where: { date, mealTime: data.mealTime },
+      where: { householdId, date, mealTime: data.mealTime },
     });
   } else {
     await prisma.plannedMeal.upsert({
-      where: { date_mealTime: { date, mealTime: data.mealTime } },
+      where: {
+        householdId_date_mealTime: { householdId, date, mealTime: data.mealTime },
+      },
       create: {
+        householdId,
         date,
         mealTime: data.mealTime,
         recipeId: data.recipeId,
@@ -56,10 +61,11 @@ export async function clearMeals(
   const valid = (cells ?? []).filter((c) => /^\d{4}-\d{2}-\d{2}$/.test(c.date));
   if (!valid.length) return { ok: true, count: 0 };
 
+  const householdId = await getCurrentHouseholdId();
   await prisma.$transaction(
     valid.map((c) =>
       prisma.plannedMeal.deleteMany({
-        where: { date: isoToDbDate(c.date), mealTime: c.mealTime },
+        where: { householdId, date: isoToDbDate(c.date), mealTime: c.mealTime },
       }),
     ),
   );
@@ -73,10 +79,12 @@ export async function clearMeals(
 export async function generatePlanning(input: unknown) {
   const { from, to, mode } = generateSchema.parse(input);
 
+  const householdId = await getCurrentHouseholdId();
   const settings = await getSettings();
   const restrictions = [...settings.allergies, ...settings.forbidden];
 
   const allRecipes = await prisma.recipe.findMany({
+    where: { householdId },
     select: {
       id: true,
       name: true,
@@ -116,6 +124,7 @@ export async function generatePlanning(input: unknown) {
 
   const contextRows = await prisma.plannedMeal.findMany({
     where: {
+      householdId,
       date: { gte: isoToDbDate(preStart), lte: isoToDbDate(preEnd) },
       recipeId: { not: null },
     },
@@ -132,7 +141,7 @@ export async function generatePlanning(input: unknown) {
   // conserver et en tenir compte (gaps + familles).
   if (mode === "fill") {
     const inRange = await prisma.plannedMeal.findMany({
-      where: { date: { gte: isoToDbDate(from), lte: isoToDbDate(to) } },
+      where: { householdId, date: { gte: isoToDbDate(from), lte: isoToDbDate(to) } },
       select: { date: true, mealTime: true, recipeId: true },
     });
     for (const r of inRange) {
@@ -153,13 +162,14 @@ export async function generatePlanning(input: unknown) {
 
   await prisma.$transaction(async (tx) => {
     if (mode === "replace") {
-      // Tout régénérer : on efface la période puis on réécrit.
+      // Tout régénérer : on efface la période (du foyer) puis on réécrit.
       await tx.plannedMeal.deleteMany({
-        where: { date: { gte: isoToDbDate(from), lte: isoToDbDate(to) } },
+        where: { householdId, date: { gte: isoToDbDate(from), lte: isoToDbDate(to) } },
       });
       if (assignments.length) {
         await tx.plannedMeal.createMany({
           data: assignments.map((a) => ({
+            householdId,
             date: isoToDbDate(a.date),
             mealTime: a.mealTime,
             recipeId: a.recipeId,
@@ -172,9 +182,14 @@ export async function generatePlanning(input: unknown) {
       for (const a of assignments) {
         await tx.plannedMeal.upsert({
           where: {
-            date_mealTime: { date: isoToDbDate(a.date), mealTime: a.mealTime },
+            householdId_date_mealTime: {
+              householdId,
+              date: isoToDbDate(a.date),
+              mealTime: a.mealTime,
+            },
           },
           create: {
+            householdId,
             date: isoToDbDate(a.date),
             mealTime: a.mealTime,
             recipeId: a.recipeId,

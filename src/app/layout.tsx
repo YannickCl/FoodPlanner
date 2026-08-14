@@ -4,6 +4,7 @@ import "./globals.css";
 import { NavBar } from "@/components/NavBar";
 import { getSettings } from "@/lib/queries";
 import { buildThemeCss } from "@/lib/theme";
+import { APP_NAME } from "@/lib/brand";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -23,14 +24,14 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Food Planner",
+  title: APP_NAME,
   description: "Planification des repas de la famille",
   robots: { index: false, follow: false },
   manifest: "/manifest.webmanifest",
-  applicationName: "Food Planner",
+  applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
-    title: "Food Planner",
+    title: APP_NAME,
     statusBarStyle: "default",
   },
   icons: {

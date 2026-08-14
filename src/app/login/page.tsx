@@ -1,4 +1,5 @@
 import { LoginForm } from "./LoginForm";
+import { APP_NAME } from "@/lib/brand";
 
 export default async function LoginPage({
   searchParams,
@@ -13,7 +14,7 @@ export default async function LoginPage({
           🍽️
         </div>
         <p className="eyebrow mb-1">Repas de la famille</p>
-        <h1 className="font-display text-5xl text-ink">Food Planner</h1>
+        <h1 className="font-display text-5xl text-ink">{APP_NAME}</h1>
         <p className="mt-2 text-sm text-ink-soft">Accès réservé à la famille</p>
       </div>
       <LoginForm next={next ?? "/calendrier"} />

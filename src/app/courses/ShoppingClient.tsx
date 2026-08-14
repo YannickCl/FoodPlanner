@@ -12,6 +12,7 @@ import { type ShoppingList } from "@/lib/shopping";
 import { formatLong, weekRange, monthRangeOf } from "@/lib/dates";
 import { AISLE_EMOJI } from "@/lib/labels";
 import { cn } from "@/lib/cn";
+import { APP_NAME } from "@/lib/brand";
 
 interface RecipeBreakdown {
   name: string;
@@ -152,7 +153,7 @@ export function ShoppingClient({
         <div className="ticket-edge" />
         <div className="ticket px-5 py-4">
           <div className="mb-3 border-b border-dashed border-ink/20 pb-3 text-center">
-            <p className="font-display text-lg text-ink">Food Planner</p>
+            <p className="font-display text-lg text-ink">{APP_NAME}</p>
             <p className="num text-xs text-ink-soft">
               {formatLong(from)} → {formatLong(to)}
             </p>

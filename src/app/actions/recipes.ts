@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { recipeSchema } from "@/lib/validation";
 import { getSettings } from "@/lib/queries";
+import { getCurrentHouseholdId } from "@/lib/tenant";
 import { generateRecipeFromName, proposeRecipes, type AIRecipe } from "@/lib/ai";
 import { guessAisle } from "@/lib/aisle";
 
@@ -31,8 +32,10 @@ export async function createRecipe(input: unknown): Promise<ActionResult> {
   const { data, fieldErrors } = parse(input);
   if (!data) return { ok: false, fieldErrors };
 
+  const householdId = await getCurrentHouseholdId();
   const recipe = await prisma.recipe.create({
     data: {
+      householdId,
       name: data.name,
       category: data.category,
       prepTime: data.prepTime,
@@ -68,6 +71,14 @@ export async function updateRecipe(
 ): Promise<ActionResult> {
   const { data, fieldErrors } = parse(input);
   if (!data) return { ok: false, fieldErrors };
+
+  // Vérifie que la recette appartient bien au foyer courant.
+  const householdId = await getCurrentHouseholdId();
+  const owned = await prisma.recipe.findFirst({
+    where: { id, householdId },
+    select: { id: true },
+  });
+  if (!owned) return { ok: false, error: "Recette introuvable." };
 
   await prisma.$transaction([
     prisma.ingredient.deleteMany({ where: { recipeId: id } }),
@@ -107,7 +118,9 @@ export async function updateRecipe(
 
 export async function deleteRecipe(id: string): Promise<ActionResult> {
   // PlannedMeal.recipeId passe à null (onDelete: SetNull) — pas de plantage.
-  await prisma.recipe.delete({ where: { id } });
+  // deleteMany scopé au foyer : impossible de supprimer la recette d'un autre foyer.
+  const householdId = await getCurrentHouseholdId();
+  await prisma.recipe.deleteMany({ where: { id, householdId } });
   revalidatePath("/recettes");
   revalidatePath("/calendrier");
   redirect("/recettes");
@@ -150,8 +163,12 @@ export async function proposeRecipesAI(
   count = 5,
 ): Promise<{ ok: boolean; recipes?: AIRecipeWithAisle[]; error?: string }> {
   try {
+    const householdId = await getCurrentHouseholdId();
     const settings = await getSettings();
-    const existing = await prisma.recipe.findMany({ select: { name: true } });
+    const existing = await prisma.recipe.findMany({
+      where: { householdId },
+      select: { name: true },
+    });
     const recipes = await proposeRecipes({
       count,
       allergies: settings.allergies,
@@ -166,10 +183,12 @@ export async function proposeRecipesAI(
 
 /** Enregistre en base une liste de recettes proposées par l'IA. */
 export async function addRecipesAI(recipes: AIRecipeWithAisle[]) {
+  const householdId = await getCurrentHouseholdId();
   const settings = await getSettings();
   for (const r of recipes) {
     await prisma.recipe.create({
       data: {
+        householdId,
         name: r.name,
         category: r.category,
         prepTime: r.prepTime,
