@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { setMealSchema, generateSchema } from "@/lib/validation";
 import {
@@ -45,6 +46,8 @@ export async function setMeal(input: unknown) {
         servings: data.servings,
         choices,
         remindedAt: null, // nouveau plat -> le rappel pourra repartir
+        preparedAt: null, // ...et il n'est plus "préparé à l'avance"
+        storage: null,
       },
     });
   }
@@ -204,4 +207,50 @@ export async function generatePlanning(input: unknown) {
   revalidatePath("/calendrier");
   revalidatePath("/courses");
   return { ok: true, count: assignments.length };
+}
+
+// --- Batch cooking : marquer des repas comme préparés à l'avance ---
+
+const cellsSchema = z.array(
+  z.object({
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    mealTime: z.enum(["MIDI", "SOIR"]),
+  }),
+);
+
+/** Marque des repas comme "préparés à l'avance" (batch cooking). */
+export async function markPrepared(input: unknown) {
+  const { cells, storage } = z
+    .object({ cells: cellsSchema, storage: z.enum(["frigo", "congelo"]).nullable() })
+    .parse(input);
+  const householdId = await getCurrentHouseholdId();
+  if (!cells.length) return { ok: true, count: 0 };
+  const res = await prisma.$transaction(
+    cells.map((c) =>
+      prisma.plannedMeal.updateMany({
+        where: { householdId, date: isoToDbDate(c.date), mealTime: c.mealTime },
+        // remindedAt remis à zéro pour que le rappel "à réchauffer" puisse partir.
+        data: { preparedAt: new Date(), storage: storage ?? null, remindedAt: null },
+      }),
+    ),
+  );
+  revalidatePath("/calendrier");
+  return { ok: true, count: res.reduce((n, r) => n + r.count, 0) };
+}
+
+/** Annule le statut "préparé à l'avance". */
+export async function unmarkPrepared(input: unknown) {
+  const { cells } = z.object({ cells: cellsSchema }).parse(input);
+  const householdId = await getCurrentHouseholdId();
+  if (!cells.length) return { ok: true };
+  await prisma.$transaction(
+    cells.map((c) =>
+      prisma.plannedMeal.updateMany({
+        where: { householdId, date: isoToDbDate(c.date), mealTime: c.mealTime },
+        data: { preparedAt: null, storage: null, remindedAt: null },
+      }),
+    ),
+  );
+  revalidatePath("/calendrier");
+  return { ok: true };
 }

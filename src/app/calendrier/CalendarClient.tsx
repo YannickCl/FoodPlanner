@@ -27,6 +27,8 @@ export interface MealCell {
   category: Category;
   containsStarch: boolean;
   servings: number;
+  prepared?: boolean;
+  storage?: string | null;
 }
 export type MealMap = Record<string, MealCell>;
 
@@ -793,6 +795,7 @@ function Slot({
         <span className="block text-[9px] uppercase tracking-wide text-ink-soft">
           {selecting ? (isSelected ? "☑ " : "☐ ") : `${icon} `}
           {labelTxt}
+          {cell.prepared && <span className="ml-1 text-green" title="Préparé à l'avance">🥡 prêt</span>}
         </span>
         <span className={big ? "line-clamp-3" : "line-clamp-2"}>{cell.name}</span>
       </button>

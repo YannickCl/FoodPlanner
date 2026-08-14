@@ -150,7 +150,7 @@ export default async function BatchPage({
 
       {/* Session guidée (le cœur : on est pris par la main) */}
       <div className="mb-6">
-        <BatchSession dishes={dishes} steps={orderedSteps} />
+        <BatchSession dishes={dishes} steps={orderedSteps} cells={cells} />
       </div>
 
       <p className="mb-3 text-sm text-ink-soft">

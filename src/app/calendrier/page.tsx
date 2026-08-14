@@ -50,6 +50,8 @@ export default async function CalendrierPage({
       category: m.recipe.category,
       containsStarch: m.recipe.containsStarch,
       servings: m.servings,
+      prepared: m.prepared,
+      storage: m.storage,
     };
   }
 

@@ -7,6 +7,13 @@ import { sendToAll } from "@/lib/push";
 const TZ = "Europe/Paris";
 const DEFAULT_PREP_MIN = 20; // si la recette n'indique pas de durée
 const LATE_GRACE_MIN = 15; // on n'envoie plus un rappel au-delà de l'heure du repas + 15 min
+const REHEAT_LEAD_MIN = 15; // plat déjà préparé -> rappel "à réchauffer" 15 min avant
+
+function storageLabel(storage: string | null): string {
+  if (storage === "frigo") return " du frigo";
+  if (storage === "congelo") return " du congélateur";
+  return "";
+}
 
 interface ReminderDetail {
   mealTime: "MIDI" | "SOIR";
@@ -108,20 +115,27 @@ export async function runReminders(): Promise<ReminderResult> {
       for (const row of rows) {
         if (!row.recipe) continue;
         result.checked++;
-        const prep = prepMinutes(row.recipe.prepTime);
-        const reminderMin = mealMin - prep;
+        const prepared = row.preparedAt !== null;
+        // Plat préparé à l'avance -> juste à réchauffer (lead court, texte différent).
+        const lead = prepared ? REHEAT_LEAD_MIN : prepMinutes(row.recipe.prepTime);
+        const reminderMin = mealMin - lead;
 
         // On notifie une fois passé l'heure du rappel, tant qu'on n'est pas trop en retard.
         if (nowMin >= reminderMin && nowMin <= mealMin + LATE_GRACE_MIN) {
-          const res = await sendToAll(
-            {
-              title: "🍳 C'est l'heure de cuisiner !",
-              body: `${row.recipe.name} — pour ${m.label} à ${m.time}. Prévois ~${prep} min.`,
-              url: `/recettes/${row.recipe.id}/cuisiner`,
-              tag: `meal-${row.id}`,
-            },
-            { householdId: h.id },
-          );
+          const payload = prepared
+            ? {
+                title: "🥡 À réchauffer !",
+                body: `${row.recipe.name} est déjà prêt — sors-le${storageLabel(row.storage)} et réchauffe pour ${m.label} à ${m.time}.`,
+                url: `/recettes/${row.recipe.id}`,
+                tag: `meal-${row.id}`,
+              }
+            : {
+                title: "🍳 C'est l'heure de cuisiner !",
+                body: `${row.recipe.name} — pour ${m.label} à ${m.time}. Prévois ~${lead} min.`,
+                url: `/recettes/${row.recipe.id}/cuisiner`,
+                tag: `meal-${row.id}`,
+              };
+          const res = await sendToAll(payload, { householdId: h.id });
           await prisma.plannedMeal.update({
             where: { id: row.id },
             data: { remindedAt: new Date() },

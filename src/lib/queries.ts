@@ -75,6 +75,8 @@ export interface PlannedMealDTO {
   date: ISODate;
   mealTime: "MIDI" | "SOIR";
   servings: number;
+  prepared: boolean;
+  storage: string | null;
   recipe: { id: string; name: string; category: Category; containsStarch: boolean } | null;
 }
 
@@ -97,6 +99,8 @@ export async function getPlannedMeals(
     date: dbDateToISO(r.date),
     mealTime: r.mealTime as "MIDI" | "SOIR",
     servings: r.servings,
+    prepared: r.preparedAt !== null,
+    storage: r.storage,
     recipe: r.recipe,
   }));
 }

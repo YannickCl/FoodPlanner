@@ -3,6 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { formatClock } from "@/lib/duration";
 import { cn } from "@/lib/cn";
+import { markPrepared } from "@/app/actions/planning";
+
+export interface BatchCell {
+  date: string;
+  mealTime: "MIDI" | "SOIR";
+}
 
 export interface GuidedStep {
   recipe: string;
@@ -22,7 +28,15 @@ interface Timer {
   done: boolean;
 }
 
-export function BatchSession({ dishes, steps }: { dishes: string[]; steps: GuidedStep[] }) {
+export function BatchSession({
+  dishes,
+  steps,
+  cells,
+}: {
+  dishes: string[];
+  steps: GuidedStep[];
+  cells: BatchCell[];
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,7 +51,9 @@ export function BatchSession({ dishes, steps }: { dishes: string[]; steps: Guide
       <p className="mt-2 text-center text-xs text-ink-soft">
         On t’accompagne pas à pas — une seule chose à faire à la fois.
       </p>
-      {open && <Overlay dishes={dishes} steps={steps} onClose={() => setOpen(false)} />}
+      {open && (
+        <Overlay dishes={dishes} steps={steps} cells={cells} onClose={() => setOpen(false)} />
+      )}
     </>
   );
 }
@@ -45,10 +61,12 @@ export function BatchSession({ dishes, steps }: { dishes: string[]; steps: Guide
 function Overlay({
   dishes,
   steps,
+  cells,
   onClose,
 }: {
   dishes: string[];
   steps: GuidedStep[];
+  cells: BatchCell[];
   onClose: () => void;
 }) {
   // -1 = écran d'intro ; steps.length = écran de fin.
@@ -57,6 +75,20 @@ function Overlay({
   const nextTimerId = useRef(1);
   const ringed = useRef<Set<number>>(new Set());
   const [wakeOn, setWakeOn] = useState(false);
+  const [marking, setMarking] = useState(false);
+  const [marked, setMarked] = useState(false);
+
+  async function mark(storage: "frigo" | "congelo") {
+    setMarking(true);
+    try {
+      await markPrepared({ cells, storage });
+      setMarked(true);
+    } catch {
+      /* ignore : l'utilisateur pourra réessayer */
+    } finally {
+      setMarking(false);
+    }
+  }
 
   const last = steps.length - 1;
   const step = i >= 0 && i <= last ? steps[i] : null;
@@ -246,10 +278,43 @@ function Overlay({
           <div className="max-w-md">
             <p className="mb-4 text-6xl">🎉</p>
             <h2 className="mb-3 font-display text-3xl">Bravo, c’est bouclé !</h2>
-            <p className="text-ink-soft">
+            <p className="mb-6 text-ink-soft">
               Tes plats sont prêts ou en train de cuire. Profite des dernières minutes
               de cuisson pour ranger la cuisine. 🧽
             </p>
+
+            {marked ? (
+              <p className="rounded-2xl bg-green/15 px-4 py-3 text-sm font-medium text-green">
+                ✓ Marqués comme préparés — tu recevras un rappel « à réchauffer »
+                le jour venu, au lieu de « à cuisiner ».
+              </p>
+            ) : (
+              <div className="rounded-2xl border border-line bg-parchment-card p-4">
+                <p className="mb-1 text-sm font-medium text-ink">
+                  Tu les gardes pour plus tard ?
+                </p>
+                <p className="mb-3 text-xs text-ink-soft">
+                  Marque-les comme « préparés à l’avance » : le rappel deviendra « à
+                  réchauffer ».
+                </p>
+                <div className="flex justify-center gap-2">
+                  <button
+                    onClick={() => mark("frigo")}
+                    disabled={marking}
+                    className="rounded-full border border-line px-4 py-2 text-sm font-medium text-ink hover:bg-parchment-deep disabled:opacity-60"
+                  >
+                    🧊 Au frigo
+                  </button>
+                  <button
+                    onClick={() => mark("congelo")}
+                    disabled={marking}
+                    className="rounded-full border border-line px-4 py-2 text-sm font-medium text-ink hover:bg-parchment-deep disabled:opacity-60"
+                  >
+                    ❄️ Au congélateur
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
