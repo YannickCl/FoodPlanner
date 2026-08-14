@@ -14,6 +14,7 @@ import {
 } from "@/lib/labels";
 import { CategoryBadge, StarchBadge, Card } from "@/components/ui";
 import { DeleteRecipeButton } from "./DeleteRecipeButton";
+import { classifyStep, EQUIPMENT_LABEL, TYPE_LABEL } from "@/lib/steps";
 import type { Aisle } from "@/generated/prisma/enums";
 
 export const dynamic = "force-dynamic";
@@ -143,14 +144,28 @@ export default async function RecipeDetailPage({
         <Card className="p-5">
           <h2 className="mb-4 text-lg text-ink">Préparation</h2>
           <ol className="space-y-4">
-            {recipe.steps.map((step, i) => (
-              <li key={i} className="flex gap-3">
-                <span className="num flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold-soft text-sm font-semibold text-ink">
-                  {i + 1}
-                </span>
-                <p className="pt-0.5 text-ink">{step}</p>
-              </li>
-            ))}
+            {recipe.steps.map((step, i) => {
+              const s = classifyStep(step);
+              return (
+                <li key={i} className="flex gap-3">
+                  <span className="num flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold-soft text-sm font-semibold text-ink">
+                    {i + 1}
+                  </span>
+                  <div className="pt-0.5">
+                    <p className="text-ink">{step}</p>
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                      <StepBadge>{TYPE_LABEL[s.type]}</StepBadge>
+                      {s.equipment !== "aucun" && (
+                        <StepBadge>{EQUIPMENT_LABEL[s.equipment]}</StepBadge>
+                      )}
+                      {s.durationMin !== null && (
+                        <StepBadge>⏱ {s.durationMin} min</StepBadge>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
           </ol>
         </Card>
       </div>
@@ -177,4 +192,12 @@ function Row({
 
 function formatQty(q: number): string {
   return Number.isInteger(q) ? q.toString() : q.toString();
+}
+
+function StepBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-line bg-parchment px-2 py-0.5 text-[11px] text-ink-soft">
+      {children}
+    </span>
+  );
 }
