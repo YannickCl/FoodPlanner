@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/liste-de-courses", priority: 0.9 },
     { path: "/batch-cooking", priority: 0.9 },
     { path: "/guide/menu-de-la-semaine", priority: 0.9 },
+    { path: "/guide/charge-mentale-repas", priority: 0.9 },
     { path: "/guide/batch-cooking", priority: 0.9 },
     { path: "/guide/menu-batch-cooking-semaine", priority: 0.9 },
     { path: "/tarifs", priority: 0.8 },

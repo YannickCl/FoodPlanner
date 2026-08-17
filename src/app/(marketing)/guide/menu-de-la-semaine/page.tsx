@@ -134,9 +134,16 @@ export default function GuideMenuSemainePage() {
           </p>
           <ul className="ml-1 space-y-2">
             <Li>
-              <strong className="text-ink">Moins de charge mentale.</strong> La
-              décision est prise une fois pour la semaine, pas réinventée chaque
-              soir à 19&nbsp;h.
+              <strong className="text-ink">Moins de{" "}
+              <Link
+                href="/guide/charge-mentale-repas"
+                className="underline decoration-gold underline-offset-2 hover:text-gold"
+              >
+                charge mentale
+              </Link>
+              .</strong>{" "}
+              La décision est prise une fois pour la semaine, pas réinventée
+              chaque soir à 19&nbsp;h.
             </Li>
             <Li>
               <strong className="text-ink">Des courses efficaces.</strong> Une
