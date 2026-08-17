@@ -23,6 +23,9 @@ const HIDDEN_PREFIXES = [
   "/tarifs",
   "/mentions-legales",
   "/guide",
+  "/planning-repas",
+  "/liste-de-courses",
+  "/batch-cooking",
 ];
 
 export function NavBar() {

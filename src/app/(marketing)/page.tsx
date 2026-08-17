@@ -53,24 +53,28 @@ const FEATURES = [
     accent: "text-green",
     title: "Un planning en deux clics",
     text: "Organise les déjeuners et dîners de la semaine — ou des mois à l’avance. L’app remplit les trous toute seule en respectant vos goûts, allergies et interdits.",
+    href: "/planning-repas",
   },
   {
     emoji: "📖",
     accent: "text-gold",
     title: "Vos recettes, pas un catalogue imposé",
     text: "Dis-nous les plats que ta famille aime : l’app en crée les recettes, que tu valides. Ton carnet, à ton image.",
+    href: undefined,
   },
   {
     emoji: "🛒",
     accent: "text-brick",
     title: "La liste de courses, automatique",
     text: "Générée depuis tes repas, rangée par rayon, doublons fusionnés. Tu ajoutes tes articles du quotidien, et hop, prêt pour le magasin.",
+    href: "/liste-de-courses",
   },
   {
     emoji: "🍱",
     accent: "text-blue",
     title: "Le batch cooking, enfin simple",
     text: "Prépare plusieurs repas d’un coup : mise en place groupée et cuisine guidée pas à pas, avec minuteurs — même quand on débute.",
+    href: "/batch-cooking",
   },
 ];
 
@@ -125,13 +129,25 @@ export default async function Home() {
           De l’idée de repas jusqu’à l’assiette.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
-          {FEATURES.map((f) => (
-            <Card key={f.title} className="p-6">
-              <div className={`mb-2 text-3xl ${f.accent}`}>{f.emoji}</div>
-              <h3 className="mb-1 font-display text-xl text-ink">{f.title}</h3>
-              <p className="text-sm text-ink-soft">{f.text}</p>
-            </Card>
-          ))}
+          {FEATURES.map((f) => {
+            const inner = (
+              <Card className="h-full p-6">
+                <div className={`mb-2 text-3xl ${f.accent}`}>{f.emoji}</div>
+                <h3 className="mb-1 font-display text-xl text-ink">{f.title}</h3>
+                <p className="text-sm text-ink-soft">{f.text}</p>
+                {f.href && (
+                  <p className="mt-3 text-sm font-medium text-ink">En savoir plus →</p>
+                )}
+              </Card>
+            );
+            return f.href ? (
+              <Link key={f.title} href={f.href} className="block transition-transform hover:-translate-y-0.5">
+                {inner}
+              </Link>
+            ) : (
+              <div key={f.title}>{inner}</div>
+            );
+          })}
         </div>
       </section>
 
