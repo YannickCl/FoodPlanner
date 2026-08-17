@@ -356,6 +356,16 @@ export default function GuideBatchCookingPage() {
               l&rsquo;assemblage, pas du nombre de recettes.
             </p>
           </Card>
+          <p className="mt-4">
+            Envie d&rsquo;un plan tout prêt&nbsp;?{" "}
+            <Link
+              href="/guide/menu-batch-cooking-semaine"
+              className="font-medium text-ink underline decoration-gold underline-offset-2 hover:text-gold"
+            >
+              Voir notre menu batch cooking d&rsquo;une semaine
+            </Link>{" "}
+            — 7 dîners et la liste de courses par rayon, à imprimer.
+          </p>
         </section>
 
         {/* CTA produit — intégré naturellement */}
