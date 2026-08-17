@@ -1,5 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Card } from "@/components/ui";
+
+export const metadata: Metadata = {
+  title: "Tarifs & abonnement",
+  description:
+    "Gratuit jusqu'à 30 recettes, ou Premium dès 2,50 €/mois (annuel) : assistant IA, planning automatique et batch cooking. Essai gratuit de 7 jours.",
+  alternates: { canonical: "/tarifs" },
+  openGraph: {
+    url: "/tarifs",
+    title: "Tarifs & abonnement",
+    description:
+      "Gratuit pour commencer, Premium dès 2,50 €/mois (annuel). Essai gratuit de 7 jours.",
+  },
+};
 
 const ROWS: { label: string; free: string | boolean; premium: string | boolean }[] = [
   { label: "Carnet de recettes", free: "30 recettes", premium: "Illimité" },

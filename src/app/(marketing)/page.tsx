@@ -1,9 +1,51 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Card } from "@/components/ui";
+import { APP_NAME } from "@/lib/brand";
+import { SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Planning des repas de la famille & liste de courses",
+  description:
+    "Organisez les repas de la semaine, générez la liste de courses automatiquement et lancez-vous dans le batch cooking. En finir avec le « on mange quoi ce soir ? ».",
+  alternates: { canonical: "/" },
+  openGraph: {
+    url: "/",
+    title: `${APP_NAME} — le planning des repas de la famille`,
+    description:
+      "Organisez les repas de la semaine, la liste de courses et le batch cooking, sans prise de tête.",
+  },
+};
+
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: APP_NAME,
+      url: SITE_URL,
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: APP_NAME,
+      applicationCategory: "LifestyleApplication",
+      operatingSystem: "Web, iOS, Android (PWA)",
+      url: SITE_URL,
+      description:
+        "Application de planning des repas de la famille : menus de la semaine, liste de courses automatique, mode cuisine et batch cooking guidé.",
+      offers: [
+        { "@type": "Offer", name: "Gratuit", price: "0", priceCurrency: "EUR" },
+        { "@type": "Offer", name: "Premium mensuel", price: "3.99", priceCurrency: "EUR" },
+        { "@type": "Offer", name: "Premium annuel", price: "29.99", priceCurrency: "EUR" },
+      ],
+    },
+  ],
+};
 
 const FEATURES = [
   {
@@ -41,6 +83,10 @@ export default async function Home() {
 
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
       {/* Hero */}
       <section className="rounded-3xl bg-gradient-to-b from-gold-soft/50 to-parchment-card px-6 py-14 text-center shadow-[0_2px_24px_rgba(30,43,35,0.06)] sm:px-10 sm:py-20">
         <p className="eyebrow mb-3">Les repas de la famille, sans prise de tête</p>

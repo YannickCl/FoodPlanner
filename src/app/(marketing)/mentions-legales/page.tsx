@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { Card } from "@/components/ui";
 import { APP_NAME } from "@/lib/brand";
+
+export const metadata: Metadata = {
+  title: "Mentions légales",
+  description: `Informations légales et politique de confidentialité de ${APP_NAME}.`,
+  alternates: { canonical: "/mentions-legales" },
+};
 
 export default function MentionsLegalesPage() {
   return (

@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { publicRobots } from "@/lib/seo";
+
+// La vitrine est la seule partie indexable : ce `robots` prend le pas sur le
+// noindex global défini dans le layout racine, mais reste noindex tant que
+// NEXT_PUBLIC_SEO_INDEX n'est pas "true".
+export const metadata: Metadata = {
+  robots: publicRobots,
+};
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (

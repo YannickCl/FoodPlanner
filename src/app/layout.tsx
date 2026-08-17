@@ -5,6 +5,7 @@ import { NavBar } from "@/components/NavBar";
 import { getSettings } from "@/lib/queries";
 import { buildThemeCss } from "@/lib/theme";
 import { APP_NAME } from "@/lib/brand";
+import { SITE_URL } from "@/lib/seo";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -23,9 +24,18 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const APP_DESCRIPTION =
+  "Organisez les repas de la semaine, la liste de courses et le batch cooking, sans prise de tête.";
+
 export const metadata: Metadata = {
-  title: APP_NAME,
-  description: "Planification des repas de la famille",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: APP_NAME,
+    template: `%s — ${APP_NAME}`,
+  },
+  description: APP_DESCRIPTION,
+  // Privé par défaut : seul le groupe (marketing) réactive l'indexation,
+  // et uniquement quand NEXT_PUBLIC_SEO_INDEX=true (voir src/lib/seo.ts).
   robots: { index: false, follow: false },
   manifest: "/manifest.webmanifest",
   applicationName: APP_NAME,
@@ -37,6 +47,18 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon-192.png",
     apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    siteName: APP_NAME,
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
   },
 };
 
