@@ -31,6 +31,7 @@ const DATA: FeatureLandingData = {
     { title: "Passez à table", text: "La liste de courses est prête, et le mode cuisine vous guide le jour J." },
   ],
   related: [
+    { href: "/guide/menu-de-la-semaine", label: "Le guide du menu de la semaine" },
     { href: "/liste-de-courses", label: "La liste de courses automatique" },
     { href: "/batch-cooking", label: "Le batch cooking guidé" },
     { href: "/guide/menu-batch-cooking-semaine", label: "Un menu d'une semaine, prêt à suivre" },
