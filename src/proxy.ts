@@ -55,8 +55,11 @@ export async function proxy(req: NextRequest) {
 
   // Déjà connecté sur une page d'entrée d'auth -> vers l'app.
   // (On exclut /reset/update : on y arrive AVEC une session de récupération.)
+  // ⚠️ Uniquement sur une navigation GET : sinon on redirige aussi les Server
+  // Actions (POST) déclenchées depuis /signup — ex. joinHousehold juste après
+  // signUp — ce qui casse l'action ("unexpected response from the server").
   const isAuthEntry = ["/login", "/signup", "/reset"].includes(path);
-  if (user && isAuthEntry) {
+  if (user && isAuthEntry && req.method === "GET") {
     const url = req.nextUrl.clone();
     url.pathname = "/calendrier";
     url.search = "";
