@@ -59,6 +59,7 @@ model Recipe {
   dayType        DayType       @default(BOTH) // SEMAINE | WEEKEND | BOTH
   minGapDays     Int           @default(14) // espacement minimum avant réapparition
   servingsBase   Int           @default(6)
+  isFavorite     Boolean       @default(false) // ★ favori, choisi par l'utilisateur (jamais par l'IA)
   steps          String[] // une étape par élément
   ingredients    Ingredient[]
   plannedMeals   PlannedMeal[]

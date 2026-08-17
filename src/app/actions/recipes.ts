@@ -9,6 +9,7 @@ import { getCurrentHouseholdId } from "@/lib/tenant";
 import { getRecipeQuota, FREE_RECIPE_LIMIT } from "@/lib/quota";
 import { generateRecipeFromName, proposeRecipes, type AIRecipe } from "@/lib/ai";
 import { guessAisle } from "@/lib/aisle";
+import type { Category } from "@/generated/prisma/enums";
 
 export interface ActionResult {
   ok: boolean;
@@ -186,6 +187,18 @@ export async function regenerateRecipe(
   return { ok: true };
 }
 
+/** Ajoute/retire une recette des favoris (choix de l'utilisateur). */
+export async function toggleFavorite(id: string, value: boolean) {
+  const householdId = await getCurrentHouseholdId();
+  await prisma.recipe.updateMany({
+    where: { id, householdId },
+    data: { isFavorite: value },
+  });
+  revalidatePath(`/recettes/${id}`);
+  revalidatePath("/recettes");
+  return { ok: true };
+}
+
 export async function deleteRecipe(id: string): Promise<ActionResult> {
   // PlannedMeal.recipeId passe à null (onDelete: SetNull) — pas de plantage.
   // deleteMany scopé au foyer : impossible de supprimer la recette d'un autre foyer.
@@ -231,6 +244,7 @@ export async function generateRecipeAI(
 /** Propose plusieurs recettes via l'IA (pour l'écran "Propose-moi..."). */
 export async function proposeRecipesAI(
   count = 5,
+  type?: Category,
 ): Promise<{ ok: boolean; recipes?: AIRecipeWithAisle[]; error?: string }> {
   try {
     const householdId = await getCurrentHouseholdId();
@@ -241,6 +255,7 @@ export async function proposeRecipesAI(
     });
     const recipes = await proposeRecipes({
       count,
+      type,
       allergies: settings.allergies,
       forbidden: settings.forbidden,
       existingNames: existing.map((e) => e.name),

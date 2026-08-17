@@ -14,6 +14,7 @@ export default async function RecettesPage() {
     prepTime: r.prepTime,
     containsStarch: r.containsStarch,
     season: r.season,
+    isFavorite: r.isFavorite,
     ingredientCount: r._count.ingredients,
   }));
 

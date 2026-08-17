@@ -15,6 +15,7 @@ import {
 import { CategoryBadge, StarchBadge, Card } from "@/components/ui";
 import { DeleteRecipeButton } from "./DeleteRecipeButton";
 import { RegenerateButton } from "./RegenerateButton";
+import { FavoriteToggle } from "./FavoriteToggle";
 import { classifyStep, EQUIPMENT_LABEL, TYPE_LABEL } from "@/lib/steps";
 import { prisma } from "@/lib/db";
 import { getCurrentHouseholdId } from "@/lib/tenant";
@@ -76,6 +77,7 @@ export default async function RecipeDetailPage({
               🍳 Lancer la recette
             </Link>
           )}
+          <FavoriteToggle recipeId={recipe.id} initial={recipe.isFavorite} />
           {premium && <RegenerateButton recipeId={recipe.id} />}
           <Link
             href={`/recettes/${recipe.id}/edit`}

@@ -11,7 +11,7 @@ import {
 // Libellés français pour l'affichage. Les clés sont les valeurs d'enum Prisma.
 
 export const CATEGORY_LABELS: Record<Category, string> = {
-  FAVORI: "Favori",
+  FAVORI: "Plat",
   RAPIDE: "Rapide",
   HEALTHY: "Healthy",
   SALADE_ETE: "Salade d'été",

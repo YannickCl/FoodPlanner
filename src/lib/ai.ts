@@ -149,14 +149,19 @@ export async function proposeRecipes(opts: {
   allergies?: string[];
   forbidden?: string[];
   existingNames?: string[];
+  type?: Category;
 }): Promise<AIRecipe[]> {
   const count = opts.count ?? 5;
   const avoid = opts.existingNames?.length
     ? `\n\nÉvite de proposer des recettes déjà présentes : ${opts.existingNames.slice(0, 120).join(", ")}.`
     : "";
+  const typeLine = opts.type
+    ? `\n\nToutes les recettes proposées doivent être de la catégorie ${opts.type}.`
+    : "";
   const prompt =
     `Propose ${count} nouvelles idées de recettes familiales variées (équilibre entre viande, poisson, végétarien ; midis et soirs). Donne chaque recette complète.` +
     restrictionLine(opts.allergies ?? [], opts.forbidden ?? []) +
+    typeLine +
     avoid;
 
   const schema = {

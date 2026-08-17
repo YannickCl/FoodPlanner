@@ -16,6 +16,7 @@ interface RecipeRow {
   prepTime: string;
   containsStarch: boolean;
   season: Season;
+  isFavorite: boolean;
   ingredientCount: number;
 }
 
@@ -24,15 +25,17 @@ const CATEGORIES = Object.keys(CATEGORY_LABELS) as Category[];
 export function RecipesBrowser({ recipes }: { recipes: RecipeRow[] }) {
   const [search, setSearch] = useState("");
   const [cat, setCat] = useState<Category | null>(null);
+  const [favOnly, setFavOnly] = useState(false);
 
   const filtered = useMemo(() => {
     const q = stripAccents(search);
     return recipes.filter((r) => {
+      if (favOnly && !r.isFavorite) return false;
       if (cat && r.category !== cat) return false;
       if (q && !stripAccents(r.name).includes(q)) return false;
       return true;
     });
-  }, [recipes, search, cat]);
+  }, [recipes, search, cat, favOnly]);
 
   return (
     <div>
@@ -44,11 +47,21 @@ export function RecipesBrowser({ recipes }: { recipes: RecipeRow[] }) {
           className="w-full rounded-lg border border-line bg-parchment-card px-4 py-2.5 text-ink outline-none focus:border-gold focus:ring-2 focus:ring-gold/30"
         />
         <div className="flex flex-wrap gap-2">
-          <Chip active={cat === null} onClick={() => setCat(null)}>
+          <Chip active={cat === null && !favOnly} onClick={() => { setCat(null); setFavOnly(false); }}>
             Toutes
           </Chip>
+          <Chip active={favOnly} onClick={() => { setFavOnly((v) => !v); setCat(null); }}>
+            ★ Favoris
+          </Chip>
           {CATEGORIES.map((c) => (
-            <Chip key={c} active={cat === c} onClick={() => setCat(c)}>
+            <Chip
+              key={c}
+              active={cat === c}
+              onClick={() => {
+                setCat(c);
+                setFavOnly(false);
+              }}
+            >
               {CATEGORY_LABELS[c]}
             </Chip>
           ))}
@@ -76,6 +89,11 @@ export function RecipesBrowser({ recipes }: { recipes: RecipeRow[] }) {
                   <h3 className="flex-1 text-lg leading-tight text-ink">
                     {r.name}
                   </h3>
+                  {r.isFavorite && (
+                    <span className="text-gold" title="Favori" aria-label="Favori">
+                      ★
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   <CategoryBadge category={r.category} />

@@ -10,7 +10,7 @@ export const CATEGORY_STYLE: Record<
     badge: "bg-gold-soft text-ink border-gold/40",
     accent: "border-l-gold",
     tint: "bg-gold-soft/50",
-    emoji: "⭐️",
+    emoji: "🥘",
   },
   RAPIDE: {
     badge: "bg-blue-soft text-blue border-blue/30",
