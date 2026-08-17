@@ -22,6 +22,7 @@ const HIDDEN_PREFIXES = [
   "/",
   "/tarifs",
   "/mentions-legales",
+  "/guide",
 ];
 
 export function NavBar() {
