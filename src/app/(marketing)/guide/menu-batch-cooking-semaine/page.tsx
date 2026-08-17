@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui";
 import { APP_NAME } from "@/lib/brand";
 import { SITE_URL } from "@/lib/seo";
-import { PrintButton } from "./PrintButton";
+import { PrintButton } from "../../_components/PrintButton";
 
 const TITLE = "Menu batch cooking d'une semaine (avec liste de courses)";
 const DESCRIPTION =

@@ -13,7 +13,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/menu-de-la-semaine", priority: 0.9 },
     { path: "/guide/charge-mentale-repas", priority: 0.9 },
     { path: "/guide/batch-cooking", priority: 0.9 },
-    { path: "/guide/menu-batch-cooking-semaine", priority: 0.9 },
+    { path: "/guide/menu-batch-cooking-semaine", priority: 0.8 },
+    { path: "/guide/semainier-a-imprimer", priority: 0.8 },
+    { path: "/guide/idees-repas-semaine", priority: 0.8 },
+    { path: "/guide/recettes-qui-se-congelent", priority: 0.8 },
     { path: "/tarifs", priority: 0.8 },
     { path: "/mentions-legales", priority: 0.3 },
   ];

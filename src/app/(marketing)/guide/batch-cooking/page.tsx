@@ -296,6 +296,17 @@ export default function GuideBatchCookingPage() {
               déjà décongelé.
             </Li>
           </ul>
+          <p className="mt-4">
+            Tous les plats ne se congèlent pas aussi bien&nbsp;: voyez notre liste
+            des{" "}
+            <Link
+              href="/guide/recettes-qui-se-congelent"
+              className="font-medium text-ink underline decoration-gold underline-offset-2 hover:text-gold"
+            >
+              recettes qui se congèlent (et celles à éviter)
+            </Link>
+            .
+          </p>
         </section>
 
         <section id="erreurs">

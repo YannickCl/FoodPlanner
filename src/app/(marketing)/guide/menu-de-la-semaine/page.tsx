@@ -243,7 +243,15 @@ export default function GuideMenuSemainePage() {
           </Card>
           <p className="mt-3 text-sm">
             Adaptez les thèmes à vos habitudes. L&rsquo;idée n&rsquo;est pas de
-            s&rsquo;enfermer, mais de réduire le nombre de décisions.
+            s&rsquo;enfermer, mais de réduire le nombre de décisions. Envie de le
+            faire sur papier&nbsp;? Imprimez notre{" "}
+            <Link
+              href="/guide/semainier-a-imprimer"
+              className="underline decoration-gold underline-offset-2 hover:text-gold"
+            >
+              semainier vierge
+            </Link>
+            .
           </p>
         </section>
 
@@ -253,7 +261,15 @@ export default function GuideMenuSemainePage() {
             <Li>
               <strong className="text-ink">Une banque de repas.</strong> Notez
               vos plats favoris une bonne fois&nbsp;; piochez dedans chaque
-              semaine plutôt que de chercher l&rsquo;inspiration à zéro.
+              semaine plutôt que de chercher l&rsquo;inspiration à zéro. Besoin
+              d&rsquo;inspiration&nbsp;? Voyez nos{" "}
+              <Link
+                href="/guide/idees-repas-semaine"
+                className="underline decoration-gold underline-offset-2 hover:text-gold"
+              >
+                idées de repas pour la semaine
+              </Link>
+              .
             </Li>
             <Li>
               <strong className="text-ink">La rotation.</strong> Évitez de
