@@ -31,10 +31,13 @@ export function AuthForm({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+  // Compte créé mais l'adhésion au foyer a échoué (code invalide/expiré).
+  const [joinFailed, setJoinFailed] = useState<string | null>(null);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setJoinFailed(null);
     setPending(true);
     const supabase = createSupabaseBrowserClient();
     try {
@@ -47,7 +50,14 @@ export function AuthForm({
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
         if (invite) {
-          await joinHousehold(invite);
+          const res = await joinHousehold(invite);
+          if (!res.ok) {
+            // Le compte est créé, mais le lien d'invitation n'est pas valide :
+            // on informe et on oriente vers la configuration d'un foyer.
+            setJoinFailed(res.error ?? "Ce lien d’invitation est invalide ou expiré.");
+            setPending(false);
+            return;
+          }
           router.replace("/calendrier");
         } else {
           router.replace("/onboarding");
@@ -79,7 +89,25 @@ export function AuthForm({
       </div>
 
       <Card className="p-6">
-        {sent ? (
+        {joinFailed ? (
+          <div className="space-y-3 text-sm">
+            <p className="text-ink">✅ Ton compte a bien été créé.</p>
+            <p className="text-brick">{joinFailed}</p>
+            <p className="text-ink-soft">
+              Aucun souci : tu peux configurer ton propre foyer, ou redemander un
+              lien d’invitation à la personne qui t’a invité·e.
+            </p>
+            <button
+              onClick={() => {
+                router.replace("/onboarding");
+                router.refresh();
+              }}
+              className="w-full rounded-lg bg-ink px-4 py-2 font-medium text-parchment transition-opacity hover:opacity-90"
+            >
+              Configurer mon foyer
+            </button>
+          </div>
+        ) : sent ? (
           <p className="text-sm text-ink">
             📧 Si un compte existe pour <strong>{email}</strong>, un lien de
             réinitialisation vient d’être envoyé. Pense à vérifier tes spams.
