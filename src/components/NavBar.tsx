@@ -26,6 +26,7 @@ const HIDDEN_PREFIXES = [
   "/planning-repas",
   "/liste-de-courses",
   "/batch-cooking",
+  "/comparatif",
 ];
 
 export function NavBar() {

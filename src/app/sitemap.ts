@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/semainier-a-imprimer", priority: 0.8 },
     { path: "/guide/idees-repas-semaine", priority: 0.8 },
     { path: "/guide/recettes-qui-se-congelent", priority: 0.8 },
+    { path: "/comparatif/jow", priority: 0.7 },
     { path: "/tarifs", priority: 0.8 },
     { path: "/mentions-legales", priority: 0.3 },
   ];

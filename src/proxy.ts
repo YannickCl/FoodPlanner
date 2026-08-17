@@ -15,6 +15,7 @@ const PUBLIC_PREFIXES = [
   "/planning-repas",
   "/liste-de-courses",
   "/batch-cooking",
+  "/comparatif",
 ];
 
 // Protège l'app derrière la session Supabase et rafraîchit les cookies de session.
