@@ -6,29 +6,34 @@
    Polices : Fraunces (display), Inter (texte), IBM Plex Mono (chiffres).
 --------------------------------------------------------------------------- */
 @theme {
-  --color-parchment: #f3efe4;
-  --color-parchment-deep: #e9e3d3;
-  --color-parchment-card: #faf7ef;
-  --color-ink: #1e2b23;
-  --color-ink-soft: #4a5852;
-  --color-gold: #c9a227;
-  --color-gold-soft: #e7d9a6;
-  --color-brick: #b4502a;
-  --color-green: #4f6f52;
-  --color-blue: #3f6f94;
-  --color-blue-soft: #dce8f2;
-  --color-teal: #3f8a80;
-  --color-teal-soft: #d8ece8;
-  --color-line: #d8d0bd;
+  /* Charte "pastel" : fond très clair, cartes blanches, accents doux. */
+  --color-parchment: #faf6f3;
+  --color-parchment-deep: #f0e9e4;
+  --color-parchment-card: #ffffff;
+  --color-ink: #433c48;
+  --color-ink-soft: #756d79;
+  --color-gold: #c1913f;
+  --color-gold-soft: #f5e9d3;
+  --color-brick: #cf7f5f;
+  --color-green: #6d9a76;
+  --color-green-soft: #e2efe2;
+  --color-blue: #6f95bd;
+  --color-blue-soft: #e8eff8;
+  --color-teal: #62a89e;
+  --color-teal-soft: #e2f1ee;
+  --color-pink: #d08aa6;
+  --color-pink-soft: #f7e6ee;
+  --color-line: #ece3db;
 
-  --radius-card: 14px;
+  --radius-card: 18px;
 }
 
 /* Les polices next/font exposent --font-fraunces / --font-inter / --font-plex-mono
    sur <body>. `@theme inline` inline ces valeurs dans les utilitaires
    (font-display / font-sans / font-mono) au lieu d'émettre une variable vide. */
 @theme inline {
-  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-display: var(--font-script), "Segoe Script", cursive;
+  --font-serif: Fraunces, Georgia, serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
@@ -44,11 +49,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Titres en Fraunces par défaut */
+/* Titres en écriture cursive (Dancing Script) */
 h1, h2, h3, h4 {
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-family: var(--font-script), "Segoe Script", cursive;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.15;
 }
 
 /* Chiffres (quantités, dates, compteurs) en Plex Mono */

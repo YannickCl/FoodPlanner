@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Dancing_Script, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/NavBar";
 import { getSettings } from "@/lib/queries";
@@ -7,9 +7,10 @@ import { buildThemeCss } from "@/lib/theme";
 import { APP_NAME } from "@/lib/brand";
 import { SITE_URL } from "@/lib/seo";
 
-const fraunces = Fraunces({
+const dancingScript = Dancing_Script({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  weight: ["500", "600", "700"],
+  variable: "--font-script",
   display: "swap",
 });
 const inter = Inter({
@@ -80,7 +81,7 @@ export default async function RootLayout({
   return (
     <html lang="fr">
       <body
-        className={`${fraunces.variable} ${inter.variable} ${plexMono.variable} paper-grain min-h-screen`}
+        className={`${dancingScript.variable} ${inter.variable} ${plexMono.variable} paper-grain min-h-screen`}
       >
         {themeCss && <style dangerouslySetInnerHTML={{ __html: themeCss }} />}
         <NavBar />
