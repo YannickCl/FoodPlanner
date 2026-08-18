@@ -60,13 +60,20 @@
 
 ---
 
-## 2. Nettoyage & données
+## 2. Sécurité & données
+- [x] **Audit d'isolation multi-foyers** (queries + actions + API) ✅
+- [x] RLS activée sur toutes les tables ✅
+- [x] Droits API `public` **révoqués** pour `anon`/`authenticated` (tables/séquences/défaut) → API REST publique = 401 ✅
+- [x] `/api/push/test` sécurisé (auth + scope foyer) ✅
+- [x] `setMeal` vérifie l'appartenance de la recette ✅
+- [x] En-têtes de sécurité (X-Frame-Options, nosniff, HSTS, Referrer-Policy, Permissions-Policy) ✅
+- [ ] 🤝 **CSP (Content-Security-Policy)** — à poser au lancement, une fois GTM/GA4 branchés
+      (doit lister googletagmanager.com / google-analytics.com + Supabase + 'self')
 - [ ] 🔒 Supprimer les **comptes auth de test** dans Supabase :
       `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`
       (leurs lignes applicatives sont déjà nettoyées)
-- [x] RLS activée ✅
-- [ ] 🤝 (optionnel, défense en profondeur) `revoke` des droits API `public` pour `anon`/`authenticated`
 - [x] Foyer fondateur intact (94 recettes, 1 membre) ✅
+- [ ] 🤝 **GTM + GA4** avec **Consent Mode v2** + **bandeau cookies** (GA4 pose des cookies → RGPD)
 
 ---
 
