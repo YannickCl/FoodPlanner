@@ -19,17 +19,17 @@ interface Initial {
   dinnerEnabled: boolean;
 }
 
-// Thèmes prédéfinis (fond / cartes / accent).
+// Thèmes prédéfinis pastel (fond / cartes / accent).
 const PRESETS: { name: string; bg: string; card: string; accent: string }[] = [
-  { name: "Parchemin", bg: "#f3efe4", card: "#faf7ef", accent: "#c9a227" },
-  { name: "Menthe", bg: "#eaf2ec", card: "#f7fbf7", accent: "#4f6f52" },
-  { name: "Ciel", bg: "#e9eff4", card: "#f6f9fc", accent: "#3f6f94" },
-  { name: "Rosé", bg: "#f7ece9", card: "#fdf6f4", accent: "#b4502a" },
-  { name: "Lavande", bg: "#efecf5", card: "#f9f7fc", accent: "#6b5b95" },
-  { name: "Nuit", bg: "#26302c", card: "#33403a", accent: "#e7d9a6" },
+  { name: "Pastel", bg: "#faf6f3", card: "#ffffff", accent: "#c1913f" },
+  { name: "Sauge", bg: "#eef4ef", card: "#ffffff", accent: "#6d9a76" },
+  { name: "Ciel", bg: "#eef3f8", card: "#ffffff", accent: "#6f95bd" },
+  { name: "Rosé", bg: "#faf0f4", card: "#ffffff", accent: "#d08aa6" },
+  { name: "Terracotta", bg: "#faf1ec", card: "#ffffff", accent: "#cf7f5f" },
+  { name: "Nuit", bg: "#2b2630", card: "#372f3a", accent: "#e7cf9a" },
 ];
 
-const DEFAULTS = { bg: "#f3efe4", card: "#faf7ef", accent: "#c9a227" };
+const DEFAULTS = { bg: "#faf6f3", card: "#ffffff", accent: "#c1913f" };
 
 export function SettingsForm({ initial }: { initial: Initial }) {
   const router = useRouter();
