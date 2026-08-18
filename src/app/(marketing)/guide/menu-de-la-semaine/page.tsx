@@ -307,6 +307,16 @@ export default function GuideMenuSemainePage() {
               repas.
             </Li>
           </ul>
+          <p className="mt-4">
+            Pour un exemple concret, voyez notre{" "}
+            <Link
+              href="/guide/menu-equilibre-semaine"
+              className="font-medium text-ink underline decoration-gold underline-offset-2 hover:text-gold"
+            >
+              menu de la semaine équilibré
+            </Link>
+            .
+          </p>
         </section>
 
         <section id="budget">
@@ -320,6 +330,16 @@ export default function GuideMenuSemainePage() {
             <Li>Cuisinez de plus grandes quantités et réutilisez les bases.</Li>
             <Li>Multipliez les repas végétariens et les produits de saison.</Li>
           </ul>
+          <p className="mt-4">
+            Notre{" "}
+            <Link
+              href="/guide/menu-semaine-pas-cher"
+              className="font-medium text-ink underline decoration-gold underline-offset-2 hover:text-gold"
+            >
+              menu de la semaine pas cher
+            </Link>{" "}
+            détaille un exemple à petit budget.
+          </p>
           <p className="mt-4">
             Le prolongement naturel, c&rsquo;est le{" "}
             <Link
