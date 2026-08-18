@@ -29,6 +29,14 @@ export async function setMeal(input: unknown) {
       where: { householdId, date, mealTime: data.mealTime },
     });
   } else {
+    // Isolation : la recette doit appartenir au foyer courant (sinon on pourrait
+    // lier — et lire via les jointures calendrier/courses — la recette d'un autre foyer).
+    const owned = await prisma.recipe.findFirst({
+      where: { id: data.recipeId, householdId },
+      select: { id: true },
+    });
+    if (!owned) return { ok: false, error: "Recette introuvable." };
+
     await prisma.plannedMeal.upsert({
       where: {
         householdId_date_mealTime: { householdId, date, mealTime: data.mealTime },

@@ -23,15 +23,23 @@ function mix(hex: string, target: string, amt: number): string {
 
 /** CSS à injecter (chaîne vide si aucune couleur personnalisée). */
 export function buildThemeCss(t: ThemeColors): string {
+  // On re-valide chaque couleur en hex #RRGGBB avant injection dans le <style>
+  // (défense en profondeur contre une éventuelle injection CSS via ces champs).
+  const hex = (v?: string | null): string | null =>
+    v && /^#[0-9a-fA-F]{6}$/.test(v) ? v : null;
+
   const lines: string[] = [];
-  if (t.bgColor) {
-    lines.push(`--color-parchment:${t.bgColor}`);
-    lines.push(`--color-parchment-deep:${mix(t.bgColor, "#000000", 0.07)}`);
+  const bg = hex(t.bgColor);
+  const card = hex(t.cardColor);
+  const accent = hex(t.accentColor);
+  if (bg) {
+    lines.push(`--color-parchment:${bg}`);
+    lines.push(`--color-parchment-deep:${mix(bg, "#000000", 0.07)}`);
   }
-  if (t.cardColor) lines.push(`--color-parchment-card:${t.cardColor}`);
-  if (t.accentColor) {
-    lines.push(`--color-gold:${t.accentColor}`);
-    lines.push(`--color-gold-soft:${mix(t.accentColor, "#ffffff", 0.72)}`);
+  if (card) lines.push(`--color-parchment-card:${card}`);
+  if (accent) {
+    lines.push(`--color-gold:${accent}`);
+    lines.push(`--color-gold-soft:${mix(accent, "#ffffff", 0.72)}`);
   }
   return lines.length ? `:root{${lines.join(";")}}` : "";
 }

@@ -7,6 +7,10 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { stripe } from "@/lib/stripe";
 
 async function baseUrl(): Promise<string> {
+  // Priorité au domaine configuré (fiable) plutôt qu'à l'en-tête Host (spoofable)
+  // pour les URLs de retour Stripe.
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (configured) return configured;
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
   const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
