@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -80,12 +81,15 @@ export function AuthForm({
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-sm flex-col justify-center px-4">
       <div className="mb-8 text-center">
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gold text-3xl shadow-sm">
-          🍽️
-        </div>
-        <p className="eyebrow mb-1">Repas de la famille</p>
-        <h1 className="font-display text-5xl text-ink">{APP_NAME}</h1>
-        <p className="mt-2 text-sm text-ink-soft">{COPY[mode].title}</p>
+        <Image
+          src="/logo.png"
+          alt={APP_NAME}
+          width={220}
+          height={220}
+          priority
+          className="mx-auto mb-1 h-44 w-44 object-contain"
+        />
+        <p className="text-sm text-ink-soft">{COPY[mode].title}</p>
       </div>
 
       <Card className="p-6">
