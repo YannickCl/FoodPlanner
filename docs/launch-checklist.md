@@ -1,4 +1,4 @@
-# Check-list de mise en ligne — Food Planner (futur nom : Tablino ?)
+# Check-list de mise en ligne — Chillmeals
 
 > Légende : `[ ]` à faire · `[x]` fait · 🔒 **toi seulement** (domaine, paiement,
 > légal, comptes) · 🤝 **je peux le faire / t'aider**.
@@ -19,11 +19,11 @@
 
 ## 1. BLOQUANTS avant ouverture au public
 
-### A. Nom & marque
-- [ ] 🔒 Recherche d'antériorité **INPI** sur le nom retenu (classes **9 / 42 / 43**), idéalement via un conseil en PI
-- [ ] 🔒 Acheter le **domaine** (ex. `tablino.fr` ; `.com` premium en option)
-- [ ] 🔒 **Déposer la marque** à l'INPI
-- [ ] 🤝 Mettre à jour `APP_NAME` + `APP_TAGLINE` dans `src/lib/brand.ts` (1 ligne — swap immédiat partout)
+### A. Nom & marque — NOM RETENU : **Chillmeals**
+- [x] Recherche INPI **exacte** (bases FR/EU/WO, marques en vigueur) : **aucun résultat** → rien ne bloque
+- [x] 🤝 `APP_NAME` = "Chillmeals" dans `src/lib/brand.ts` (swap fait partout)
+- [ ] 🔒 Acheter le **domaine `chillmeals.fr`** (le `.com` est pris par un traiteur US « Chill Meals »)
+- [ ] 🔒 Avant dépôt : **recherche approfondie** (CPI, similarités phonétiques) puis **déposer la marque** (classes 9/42/43)
 
 ### B. Domaine & infrastructure
 - [ ] 🔒 Attacher le domaine à **Vercel** (DNS)
