@@ -49,7 +49,7 @@
 - [ ] 🔒 **CGU + Politique de confidentialité + Mentions légales** rédigées/validées
       par un professionnel (la page `/mentions-legales` est un **placeholder**)
 - [ ] 🤝 Vérifier le **disclaimer allergènes** permanent (règle produit déjà prévue)
-- [ ] 🔒/🤝 Bandeau **cookies/consentement** si des analytics non exemptés sont ajoutés
+- [x] 🤝 Bandeau **cookies/consentement** (Consent Mode v2 « denied » par défaut ; « refuser » = « accepter ») — fait
 
 ### F. SEO — ouvrir l'indexation (le jour J)
 - [ ] 🔒 Vercel → `NEXT_PUBLIC_SEO_INDEX=true` (⚠️ **rebuild**) → ouvre la vitrine,
@@ -73,12 +73,14 @@
       `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`
       (leurs lignes applicatives sont déjà nettoyées)
 - [x] Foyer fondateur intact (94 recettes, 1 membre) ✅
-- [ ] 🤝 **GTM + GA4** avec **Consent Mode v2** + **bandeau cookies** (GA4 pose des cookies → RGPD)
+- [x] 🤝 **GTM + GA4** avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL — **code prêt & dormant** ;
+      activer en posant `NEXT_PUBLIC_GTM_ID` sur Vercel (+ créer la propriété GA4 dans GTM)
 
 ---
 
 ## 3. Mesure & suivi
-- [ ] 🤝 **Analytics RGPD-friendly** (Plausible ou Umami) — indispensable pour piloter le canal SEO
+- [x] 🤝 **Analytics = GTM + GA4** (code prêt, cf. section 2) — reste 🔒 : créer le conteneur GTM
+      + la propriété GA4, puis poser `NEXT_PUBLIC_GTM_ID` sur Vercel
 - [ ] 🔒 Vérifier que **cron-job.org** (rappels push) pointe le bon domaine
 - [ ] 🤝 (bonus) Suivi d'erreurs (Sentry)
 
