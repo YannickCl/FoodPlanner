@@ -1,11 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Dancing_Script, Inter, IBM_Plex_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { NavBar } from "@/components/NavBar";
+import { ConsentBanner } from "@/components/ConsentBanner";
 import { getSettings } from "@/lib/queries";
 import { buildThemeCss } from "@/lib/theme";
 import { APP_NAME } from "@/lib/brand";
 import { SITE_URL } from "@/lib/seo";
+import { GTM_ID } from "@/lib/analytics";
 
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
@@ -83,11 +86,25 @@ export default async function RootLayout({
       <body
         className={`${dancingScript.variable} ${inter.variable} ${plexMono.variable} paper-grain min-h-screen`}
       >
+        {/* Mesure d'audience (GTM/GA4) — chargée seulement si NEXT_PUBLIC_GTM_ID
+            est défini, et Consent Mode v2 par défaut sur "denied" (aucun cookie
+            avant accord). */}
+        {GTM_ID && (
+          <>
+            <Script id="consent-default" strategy="beforeInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});try{if(localStorage.getItem('cm-consent')==='granted'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}`}
+            </Script>
+            <Script id="gtm-loader" strategy="afterInteractive">
+              {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
+            </Script>
+          </>
+        )}
         {themeCss && <style dangerouslySetInnerHTML={{ __html: themeCss }} />}
         <NavBar />
         <main className="mx-auto max-w-6xl px-4 pb-16 pt-6 sm:px-6">
           {children}
         </main>
+        {GTM_ID && <ConsentBanner />}
       </body>
     </html>
   );
