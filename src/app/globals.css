@@ -111,14 +111,14 @@ button:active {
   }
 }
 
-/* Petit grain de papier discret sur le fond */
+/* Fond coloré "à la Matisse" : formes découpées vives, cadrant la page.
+   Fixe + cover : les motifs restent aux bords, le centre (crème) reste lisible. */
 .paper-grain {
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    rgba(30, 43, 35, 0.035) 1px,
-    transparent 0
-  );
-  background-size: 22px 22px;
+  background-image: url("/matisse-bg.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 /* ---- Ticket de caisse (liste de courses) ---- */

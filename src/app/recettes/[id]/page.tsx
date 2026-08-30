@@ -135,6 +135,12 @@ export default async function RecipeDetailPage({
                 </div>
               ))}
             </div>
+            <p className="mt-4 border-t border-line/60 pt-3 text-[11px] leading-snug text-ink-soft">
+              ⚠️ <strong className="font-semibold">Allergènes</strong> : informations
+              données à titre indicatif. En cas d&rsquo;allergie, vérifiez toujours
+              la liste des ingrédients et les étiquettes des produits avant
+              consommation.
+            </p>
           </Card>
 
           <Card className="p-4">

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+  <!-- Formes découpées "à la Matisse" : blobs, feuilles/algues et étoiles à 4 branches.
+       Concentrées sur les bords/coins pour laisser le centre lisible.
+       Motifs normalisés (unité) réutilisés via transform. -->
+  <defs>
+    <path id="blob" d="M -1,0.05 C -1.05,-0.6 -0.5,-1.05 0.1,-1 C 0.6,-0.95 1.05,-0.5 1,0.1 C 0.98,0.65 0.55,1.05 -0.05,1 C -0.6,0.96 -1.02,0.55 -1,0.05 Z"/>
+    <path id="star" d="M 0,-1 C 0.18,-0.28 0.28,-0.18 1,0 C 0.28,0.18 0.18,0.28 0,1 C -0.18,0.28 -0.28,0.18 -1,0 C -0.28,-0.18 -0.18,-0.28 0,-1 Z"/>
+    <path id="leaf" d="M 0,-1 C 0.5,-0.4 0.5,0.4 0,1 C -0.5,0.4 -0.5,-0.4 0,-1 Z"/>
+  </defs>
+
+  <g opacity="0.92">
+    <!-- Coin haut-gauche -->
+    <use href="#blob" transform="translate(120 120) scale(130)" fill="#E2683F"/>
+    <use href="#leaf" transform="translate(60 380) rotate(28) scale(70 150)" fill="#2F6690"/>
+    <use href="#blob" transform="translate(18 250) scale(42)" fill="#E9B949"/>
+    <use href="#star" transform="translate(360 90) rotate(15) scale(34)" fill="#CF6A92"/>
+
+    <!-- Coin haut-droite -->
+    <use href="#star" transform="translate(1300 140) rotate(10) scale(76)" fill="#E9B949"/>
+    <use href="#leaf" transform="translate(1380 360) rotate(-24) scale(70 150)" fill="#5A9367"/>
+    <use href="#blob" transform="translate(1210 70) scale(46)" fill="#3F9A8F"/>
+    <use href="#star" transform="translate(1425 470) rotate(20) scale(30)" fill="#E2683F"/>
+
+    <!-- Coin bas-gauche -->
+    <use href="#blob" transform="translate(140 760) scale(120)" fill="#CF6A92"/>
+    <use href="#leaf" transform="translate(30 560) rotate(-18) scale(60 130)" fill="#3F9A8F"/>
+    <use href="#star" transform="translate(300 840) rotate(12) scale(34)" fill="#E9B949"/>
+    <use href="#blob" transform="translate(430 900) scale(70)" fill="#5A9367"/>
+
+    <!-- Coin bas-droite -->
+    <use href="#leaf" transform="translate(1360 800) rotate(35) scale(80 165)" fill="#E2683F"/>
+    <use href="#star" transform="translate(1290 650) rotate(-8) scale(66)" fill="#2F6690"/>
+    <use href="#blob" transform="translate(1130 880) scale(64)" fill="#E9B949"/>
+    <use href="#star" transform="translate(980 900) rotate(18) scale(30)" fill="#CF6A92"/>
+  </g>
+</svg>

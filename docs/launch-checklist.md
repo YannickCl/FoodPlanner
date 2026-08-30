@@ -48,7 +48,8 @@
 ### E. Légal (RGPD & responsabilité)
 - [ ] 🔒 **CGU + Politique de confidentialité + Mentions légales** rédigées/validées
       par un professionnel (la page `/mentions-legales` est un **placeholder**)
-- [ ] 🤝 Vérifier le **disclaimer allergènes** permanent (règle produit déjà prévue)
+- [x] 🤝 **Disclaimer allergènes** permanent ajouté (fiche recette, sous les ingrédients)
+      + déjà présent dans /mentions-legales et à l'onboarding — wording final à valider par le juriste
 - [x] 🤝 Bandeau **cookies/consentement** (Consent Mode v2 « denied » par défaut ; « refuser » = « accepter ») — fait
 
 ### F. SEO — ouvrir l'indexation (le jour J)

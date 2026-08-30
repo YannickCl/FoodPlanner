@@ -45,7 +45,7 @@ export function NavBar() {
     <header className="no-print sticky top-0 z-30 border-b border-line/80 bg-parchment/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         <Link href="/calendrier" className="flex items-baseline gap-2">
-          <span className="font-display text-xl font-semibold text-ink">
+          <span className="font-display text-2xl font-bold leading-none text-ink sm:text-3xl">
             {APP_NAME}
           </span>
           <span className="hidden text-xs uppercase tracking-widest text-ink-soft sm:inline">

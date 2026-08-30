@@ -15,8 +15,10 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
     <div>
       <header className="no-print mb-10 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-baseline gap-2">
-          <span className="font-display text-xl font-semibold text-ink">{APP_NAME}</span>
-          <span className="hidden text-xs uppercase tracking-widest text-ink-soft sm:inline">
+          <span className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl">
+            {APP_NAME}
+          </span>
+          <span className="hidden text-xs uppercase tracking-widest text-ink-soft md:inline">
             · {APP_TAGLINE}
           </span>
         </Link>
