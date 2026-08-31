@@ -81,8 +81,9 @@
       'unsafe-eval') — **vérifiée sans violation** : vitrine, login, app, réglages ✅
 - [ ] 🔒 Supprimer les **comptes auth de test** dans Supabase :
       `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`,
-      `stripe-live-check@example.com` (+ son foyer « Test Stripe Live » — créé pour vérifier
-      le tunnel Stripe live le 2026-08-31, aucun paiement effectué)
+      `stripe-live-check@example.com` + `invite-test@example.com` (+ leur foyer « Test Stripe
+      Live » — créés pour vérifier le tunnel Stripe live et l'invitation le 2026-08-31,
+      aucun paiement effectué)
       (leurs lignes applicatives sont déjà nettoyées)
 - [x] Foyer fondateur intact (94 recettes, 1 membre) ✅
 - [x] 🤝 **GTM + GA4** live avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL ✅
@@ -101,7 +102,9 @@
 ## 4. Vérifs finales avant annonce
 - [x] 🤝 Parcours prod partiel : signup → onboarding → app **vérifié** (compte de test) ;
       reste l'**upgrade Stripe live** (🔒, carte réelle)
-- [ ] 🤝 **Invitation d'un membre** via lien de partage (corrigé récemment) — à re-tester
+- [x] 🤝 **Invitation d'un membre** via lien de partage — **testé OK en prod** (lien → page
+      d'invitation au bon foyer → inscription `/signup?invite=` → rattachement même foyer,
+      rôles Propriétaire/Membre corrects). Bug « unexpected response » confirmé corrigé.
 - [x] 🤝 **Mobile / PWA** vérifié : manifeste valide, icônes 200 (192/512 any+maskable,
       apple-touch, favicon), rendu responsive OK — **1 bug corrigé** (header vitrine qui
       débordait à 375 px)
