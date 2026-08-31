@@ -42,11 +42,16 @@
 - [ ] 🤝 Tester **inscription + reset mot de passe** de bout en bout
 
 ### D. Paiement — passer Stripe en LIVE
-- [ ] 🔒 Créer les **prix live** (**5,99 €/mois**, **60 €/an**, essai 7 j) — récurrents, devise EUR
-- [ ] 🔒 Vercel → clés **live** : `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
-      `STRIPE_PRICE_MONTHLY` (= id du prix 5,99 €), `STRIPE_PRICE_ANNUAL` (= id du prix 60 €)
-- [ ] 🔒 Enregistrer le **webhook live** → `https://chillmeals.fr/api/stripe/webhook`
-- [ ] 🤝 Vérifier le tunnel complet en live (checkout → webhook → PREMIUM → portail)
+- [x] 🔒 Créer les **prix live** (**5,99 €/mois**, **60 €/an**, essai 7 j) — récurrents, devise EUR
+      (`STRIPE_PRICE_MONTHLY=price_1UAaZ0…dbv1bJrM`, `STRIPE_PRICE_ANNUAL=price_1UAaZF…s4wCzixs`)
+- [x] 🔒 Vercel → clés **live** posées + redeploy
+- [x] 🔒 Enregistrer le **webhook live** → `https://chillmeals.fr/api/stripe/webhook`
+- [~] 🤝 Tunnel live **partiellement vérifié** : session checkout live OK, price ID OK,
+      essai 7 j OK, base EUR OK. **Reste à finir** (🔒, carte réelle) : aller au bout d'un
+      checkout pendant l'essai → vérifier passage **PREMIUM** + **portail**, puis **annuler**
+      pendant l'essai (aucun débit). Webhook non exercé tant qu'un abonnement n'est pas créé.
+- [ ] 🤝 Décider **Adaptive Pricing** (conversion auto en devise locale) : ON (clients hors €
+      paient en devise locale) ou OFF (tout le monde en EUR — plus simple pour compta/TVA)
 - [ ] 🔒 **Structure juridique + TVA + compte bancaire** pour encaisser (auto-entrepreneur/société)
 
 ### E. Légal (RGPD & responsabilité)
@@ -75,7 +80,9 @@
 - [ ] 🤝 **CSP (Content-Security-Policy)** — à poser au lancement, une fois GTM/GA4 branchés
       (doit lister googletagmanager.com / google-analytics.com + Supabase + 'self')
 - [ ] 🔒 Supprimer les **comptes auth de test** dans Supabase :
-      `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`
+      `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`,
+      `stripe-live-check@example.com` (+ son foyer « Test Stripe Live » — créé pour vérifier
+      le tunnel Stripe live le 2026-08-31, aucun paiement effectué)
       (leurs lignes applicatives sont déjà nettoyées)
 - [x] Foyer fondateur intact (94 recettes, 1 membre) ✅
 - [x] 🤝 **GTM + GA4** avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL — **code prêt & vérifié** ;
