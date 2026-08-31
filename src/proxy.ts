@@ -7,6 +7,7 @@ const PUBLIC_PREFIXES = [
   "/signup",
   "/reset",
   "/rejoindre",
+  "/auth/callback",
   // Vitrine (accessible sans compte)
   "/",
   "/tarifs",
