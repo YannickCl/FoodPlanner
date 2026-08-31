@@ -70,9 +70,10 @@
 - [ ] 🔒 **Structure juridique + TVA + compte bancaire** pour encaisser (auto-entrepreneur/société)
 
 ### E. Légal (RGPD & responsabilité)
-- [x] 🤝 **CGU/CGV + Politique de confidentialité + Mentions légales** — **premier jet rédigé**
-      (`/mentions-legales`, `/confidentialite`, `/cgu`). Reste 🔒 : compléter SIRET, adresse,
-      médiateur de la consommation, créer `contact@chillmeals.fr`, puis **faire relire par un pro**.
+- [x] 🤝 **CGU/CGV + Politique de confidentialité + Mentions légales** rédigées et renseignées
+      (`/mentions-legales`, `/confidentialite`, `/cgu`) : SIRET, adresse éditeur, médiateur MCP.
+      Reste 🔒 : **adhérer réellement au médiateur MCP** (convention payante — obligatoire pour
+      le citer), créer `contact@chillmeals.fr`, confirmer le régime TVA, puis **relire par un pro**.
 - [x] 🤝 **Disclaimer allergènes** permanent ajouté (fiche recette, sous les ingrédients)
       + déjà présent dans /mentions-legales et à l'onboarding — wording final à valider par le juriste
 - [x] 🤝 Bandeau **cookies/consentement** (Consent Mode v2 « denied » par défaut ; « refuser » = « accepter ») — fait
