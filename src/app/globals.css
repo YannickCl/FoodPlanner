@@ -112,13 +112,21 @@ button:active {
 }
 
 /* Fond coloré "à la Matisse" : formes découpées vives, cadrant la page.
-   Fixe + cover : les motifs restent aux bords, le centre (crème) reste lisible. */
-.paper-grain {
+   Calque fixe en ::before (au lieu de background-attachment: fixed, ignoré par
+   les navigateurs mobiles) : les motifs restent ancrés au viewport sur tous les
+   appareils, et le centre (crème) reste lisible. */
+.paper-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background-image: url("/matisse-bg.svg");
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: cover;
-  background-attachment: fixed;
+  /* 100% 100% + le SVG en preserveAspectRatio="none" : les formes cadrent le
+     viewport sur tous les ratios (portrait mobile compris), sans recadrage. */
+  background-size: 100% 100%;
+  pointer-events: none;
 }
 
 /* ---- Ticket de caisse (liste de courses) ---- */
