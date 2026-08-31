@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { joinHousehold } from "@/app/actions/household";
 import { Card } from "@/components/ui";
@@ -31,6 +31,7 @@ export function AuthForm({
   invite?: string;
 }) {
   const router = useRouter();
+  const oauthFailed = useSearchParams().get("error") === "oauth";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
@@ -138,6 +139,11 @@ export function AuthForm({
       </div>
 
       <Card className="p-6">
+        {oauthFailed && (
+          <p className="mb-4 rounded-lg border border-brick/30 bg-brick/10 px-3 py-2 text-sm text-brick">
+            La connexion Google a échoué. Réessaie, ou utilise ton e-mail et ton mot de passe.
+          </p>
+        )}
         {confirmSent ? (
           <div className="space-y-2 text-sm">
             <p className="text-ink">
