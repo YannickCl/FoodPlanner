@@ -26,8 +26,12 @@
 - [ ] 🔒 Avant dépôt : **recherche approfondie** (CPI, similarités phonétiques) puis **déposer la marque** (classes 9/42/43)
 
 ### B. Domaine & infrastructure
-- [ ] 🔒 Attacher le domaine à **Vercel** (DNS)
-- [ ] 🔒 Vercel → variable `NEXT_PUBLIC_SITE_URL=https://<domaine>` (⚠️ **rebuild** requis)
+> **Décision** : **un seul domaine `chillmeals.fr`** (vitrine + app, tout sur l'apex).
+> Registrar = **OVH**. Domaine **acheté** ✅.
+- [ ] 🔒 OVH → Zone DNS : apex **A** → `76.76.21.21` (supprimer l'AAAA existant),
+      **CNAME** `www` → `cname.vercel-dns.com.`
+- [ ] 🔒 Vercel → **Domains** : ajouter `chillmeals.fr` + `www.chillmeals.fr` (HTTPS auto)
+- [ ] 🔒 Vercel → variable `NEXT_PUBLIC_SITE_URL=https://chillmeals.fr` (⚠️ **rebuild** requis)
 - [ ] 🔒 Supabase → **Site URL** + **Redirect URLs** = domaine prod
       (callbacks auth : `/reset/update`, `/rejoindre`, retour Stripe)
 
@@ -74,8 +78,9 @@
       `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`
       (leurs lignes applicatives sont déjà nettoyées)
 - [x] Foyer fondateur intact (94 recettes, 1 membre) ✅
-- [x] 🤝 **GTM + GA4** avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL — **code prêt & dormant** ;
-      activer en posant `NEXT_PUBLIC_GTM_ID` sur Vercel (+ créer la propriété GA4 dans GTM)
+- [x] 🤝 **GTM + GA4** avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL — **code prêt & vérifié** ;
+      conteneur créé, **ID = `GTM-5MW8CHQ9`** → reste 🔒 : poser `NEXT_PUBLIC_GTM_ID=GTM-5MW8CHQ9`
+      sur Vercel (Production) + **redeploy** ; vérifier la propriété GA4 dans GTM
 
 ---
 
