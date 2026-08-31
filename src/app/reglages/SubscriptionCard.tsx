@@ -69,14 +69,14 @@ export function SubscriptionCard({
               disabled={pending}
               className="rounded-full bg-gold px-4 py-2 text-sm font-semibold text-ink shadow-sm hover:opacity-90 disabled:opacity-60"
             >
-              Annuel — 29,99 €/an
+              Annuel — 60 €/an
             </button>
             <button
               onClick={() => checkout("monthly")}
               disabled={pending}
               className="rounded-full border border-line px-4 py-2 text-sm font-medium text-ink hover:bg-parchment-deep disabled:opacity-60"
             >
-              Mensuel — 3,99 €/mois
+              Mensuel — 5,99 €/mois
             </button>
           </div>
           <p className="mt-2 text-xs text-ink-soft">Sans engagement, résiliable à tout moment.</p>

@@ -5,13 +5,13 @@ import { Card } from "@/components/ui";
 export const metadata: Metadata = {
   title: "Tarifs & abonnement",
   description:
-    "Gratuit jusqu'à 30 recettes, ou Premium dès 2,50 €/mois (annuel) : assistant IA, planning automatique et batch cooking. Essai gratuit de 7 jours.",
+    "Gratuit jusqu'à 30 recettes, ou Premium dès 5 €/mois (annuel) : assistant IA, planning automatique et batch cooking. Essai gratuit de 7 jours.",
   alternates: { canonical: "/tarifs" },
   openGraph: {
     url: "/tarifs",
     title: "Tarifs & abonnement",
     description:
-      "Gratuit pour commencer, Premium dès 2,50 €/mois (annuel). Essai gratuit de 7 jours.",
+      "Gratuit pour commencer, Premium dès 5 €/mois (annuel). Essai gratuit de 7 jours.",
   },
 };
 
@@ -63,11 +63,11 @@ export default function TarifsPage() {
             </span>
           </div>
           <p className="mt-1 flex items-baseline gap-2">
-            <span className="num text-3xl font-semibold text-ink">3,99 €</span>
+            <span className="num text-3xl font-semibold text-ink">5,99 €</span>
             <span className="text-sm text-ink-soft">/ mois</span>
           </p>
           <p className="mb-4 text-sm text-ink-soft">
-            ou <span className="num font-medium text-ink">29,99 €/an</span> — 2 mois offerts.
+            ou <span className="num font-medium text-ink">60 €/an</span> — 2 mois offerts.
           </p>
           <Link
             href="/signup"

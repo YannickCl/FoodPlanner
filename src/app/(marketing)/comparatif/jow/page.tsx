@@ -24,7 +24,7 @@ const ROWS: { critere: string; jow: string; nous: string }[] = [
   { critere: "Batch cooking", jow: "Axé recettes et courses", nous: "Session guidée pas à pas, avec mise en place groupée et minuteurs" },
   { critere: "Partage du foyer", jow: "Compte individuel", nous: "Un foyer partagé entre plusieurs comptes" },
   { critere: "Modèle économique", jow: "Gratuit, financé par des partenariats avec des enseignes", nous: "Abonnement clair, sans publicité" },
-  { critere: "Prix", jow: "Gratuit", nous: "Gratuit jusqu'à 30 recettes, puis Premium dès 2,50 €/mois (annuel)" },
+  { critere: "Prix", jow: "Gratuit", nous: "Gratuit jusqu'à 30 recettes, puis Premium dès 5 €/mois (annuel)" },
 ];
 
 const FAQ = [

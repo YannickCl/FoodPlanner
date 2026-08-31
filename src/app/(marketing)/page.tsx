@@ -40,8 +40,8 @@ const JSON_LD = {
         "Application de planning des repas de la famille : menus de la semaine, liste de courses automatique, mode cuisine et batch cooking guidé.",
       offers: [
         { "@type": "Offer", name: "Gratuit", price: "0", priceCurrency: "EUR" },
-        { "@type": "Offer", name: "Premium mensuel", price: "3.99", priceCurrency: "EUR" },
-        { "@type": "Offer", name: "Premium annuel", price: "29.99", priceCurrency: "EUR" },
+        { "@type": "Offer", name: "Premium mensuel", price: "5.99", priceCurrency: "EUR" },
+        { "@type": "Offer", name: "Premium annuel", price: "60.00", priceCurrency: "EUR" },
       ],
     },
   ],
@@ -168,7 +168,7 @@ export default async function Home() {
         <h2 className="mb-2 font-display text-3xl text-ink">Simple et accessible</h2>
         <p className="mb-6 text-sm text-ink-soft">
           Gratuit pour commencer. Premium à partir de{" "}
-          <span className="num font-semibold text-ink">2,50 €/mois</span> (annuel).
+          <span className="num font-semibold text-ink">5 €/mois</span> (annuel).
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link

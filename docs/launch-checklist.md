@@ -42,10 +42,10 @@
 - [ ] 🤝 Tester **inscription + reset mot de passe** de bout en bout
 
 ### D. Paiement — passer Stripe en LIVE
-- [ ] 🔒 Créer les **prix live** (3,99 €/mois, 29,99 €/an, essai 7 j)
+- [ ] 🔒 Créer les **prix live** (**5,99 €/mois**, **60 €/an**, essai 7 j) — récurrents, devise EUR
 - [ ] 🔒 Vercel → clés **live** : `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
-      `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_ANNUAL`
-- [ ] 🔒 Enregistrer le **webhook live** → `https://<domaine>/api/stripe/webhook`
+      `STRIPE_PRICE_MONTHLY` (= id du prix 5,99 €), `STRIPE_PRICE_ANNUAL` (= id du prix 60 €)
+- [ ] 🔒 Enregistrer le **webhook live** → `https://chillmeals.fr/api/stripe/webhook`
 - [ ] 🤝 Vérifier le tunnel complet en live (checkout → webhook → PREMIUM → portail)
 - [ ] 🔒 **Structure juridique + TVA + compte bancaire** pour encaisser (auto-entrepreneur/société)
 
