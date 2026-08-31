@@ -22,18 +22,18 @@
 ### A. Nom & marque — NOM RETENU : **Chillmeals**
 - [x] Recherche INPI **exacte** (bases FR/EU/WO, marques en vigueur) : **aucun résultat** → rien ne bloque
 - [x] 🤝 `APP_NAME` = "Chillmeals" dans `src/lib/brand.ts` (swap fait partout)
-- [ ] 🔒 Acheter le **domaine `chillmeals.fr`** (le `.com` est pris par un traiteur US « Chill Meals »)
+- [x] 🔒 Acheter le **domaine `chillmeals.fr`** (le `.com` est pris par un traiteur US « Chill Meals »)
 - [ ] 🔒 Avant dépôt : **recherche approfondie** (CPI, similarités phonétiques) puis **déposer la marque** (classes 9/42/43)
 
 ### B. Domaine & infrastructure
 > **Décision** : **un seul domaine `chillmeals.fr`** (vitrine + app, tout sur l'apex).
 > Registrar = **OVH**. Domaine **acheté** ✅.
-- [ ] 🔒 OVH → Zone DNS : apex **A** → `76.76.21.21` (supprimer l'AAAA existant),
-      **CNAME** `www` → `cname.vercel-dns.com.`
-- [ ] 🔒 Vercel → **Domains** : ajouter `chillmeals.fr` + `www.chillmeals.fr` (HTTPS auto)
-- [ ] 🔒 Vercel → variable `NEXT_PUBLIC_SITE_URL=https://chillmeals.fr` (⚠️ **rebuild** requis)
-- [ ] 🔒 Supabase → **Site URL** + **Redirect URLs** = domaine prod
-      (callbacks auth : `/reset/update`, `/rejoindre`, retour Stripe)
+- [x] 🔒 OVH → Zone DNS : apex **A** → `216.198.79.1`, **CNAME** `www` → cible Vercel du projet
+      (vérifié : résolution + HTTPS OK sur les deux domaines)
+- [x] 🔒 Vercel → **Domains** : `chillmeals.fr` (primaire) + `www` → 308 vers l'apex
+- [x] 🔒 Vercel → `NEXT_PUBLIC_SITE_URL=https://chillmeals.fr` (vérifié : sitemap en URLs absolues)
+- [ ] 🔒 Supabase → **Site URL** + **Redirect URLs** = `https://chillmeals.fr`
+      (callbacks auth : `/reset/update`, `/rejoindre`, retour Stripe) — **à confirmer**
 
 ### C. Authentification e-mail (actuellement OFF pour le dev)
 - [ ] 🔒 Supabase → **réactiver « Confirm email »**
@@ -50,8 +50,7 @@
       essai 7 j OK, base EUR OK. **Reste à finir** (🔒, carte réelle) : aller au bout d'un
       checkout pendant l'essai → vérifier passage **PREMIUM** + **portail**, puis **annuler**
       pendant l'essai (aucun débit). Webhook non exercé tant qu'un abonnement n'est pas créé.
-- [ ] 🤝 Décider **Adaptive Pricing** (conversion auto en devise locale) : ON (clients hors €
-      paient en devise locale) ou OFF (tout le monde en EUR — plus simple pour compta/TVA)
+- [x] 🤝 **Adaptive Pricing désactivé** → tout le monde paie en EUR (choix confirmé)
 - [ ] 🔒 **Structure juridique + TVA + compte bancaire** pour encaisser (auto-entrepreneur/société)
 
 ### E. Légal (RGPD & responsabilité)
@@ -77,23 +76,23 @@
 - [x] `/api/push/test` sécurisé (auth + scope foyer) ✅
 - [x] `setMeal` vérifie l'appartenance de la recette ✅
 - [x] En-têtes de sécurité (X-Frame-Options, nosniff, HSTS, Referrer-Policy, Permissions-Policy) ✅
-- [ ] 🤝 **CSP (Content-Security-Policy)** — à poser au lancement, une fois GTM/GA4 branchés
-      (doit lister googletagmanager.com / google-analytics.com + Supabase + 'self')
+- [x] 🤝 **CSP (Content-Security-Policy)** posée dans `next.config.ts` (GTM/GA + Supabase https/wss
+      + 'self' ; object-src none, frame-ancestors self, upgrade-insecure-requests ; prod sans
+      'unsafe-eval') — **vérifiée sans violation** : vitrine, login, app, réglages ✅
 - [ ] 🔒 Supprimer les **comptes auth de test** dans Supabase :
       `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`,
       `stripe-live-check@example.com` (+ son foyer « Test Stripe Live » — créé pour vérifier
       le tunnel Stripe live le 2026-08-31, aucun paiement effectué)
       (leurs lignes applicatives sont déjà nettoyées)
 - [x] Foyer fondateur intact (94 recettes, 1 membre) ✅
-- [x] 🤝 **GTM + GA4** avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL — **code prêt & vérifié** ;
-      conteneur créé, **ID = `GTM-5MW8CHQ9`** → reste 🔒 : poser `NEXT_PUBLIC_GTM_ID=GTM-5MW8CHQ9`
-      sur Vercel (Production) + **redeploy** ; vérifier la propriété GA4 dans GTM
+- [x] 🤝 **GTM + GA4** live avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL ✅
+      `NEXT_PUBLIC_GTM_ID=GTM-5MW8CHQ9` posé sur Vercel ; balise **Google G-48H5WKJZQX** publiée
+      dans GTM ; vérifié en prod (conteneur chargé, consentement denied par défaut)
 
 ---
 
 ## 3. Mesure & suivi
-- [x] 🤝 **Analytics = GTM + GA4** (code prêt, cf. section 2) — reste 🔒 : créer le conteneur GTM
-      + la propriété GA4, puis poser `NEXT_PUBLIC_GTM_ID` sur Vercel
+- [x] 🤝 **Analytics = GTM + GA4** live et vérifié (cf. section 2) ✅
 - [ ] 🔒 Vérifier que **cron-job.org** (rappels push) pointe le bon domaine
 - [ ] 🤝 (bonus) Suivi d'erreurs (Sentry)
 
