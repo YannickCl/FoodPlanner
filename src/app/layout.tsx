@@ -90,6 +90,17 @@ export default async function RootLayout({
             est défini, et Consent Mode v2 par défaut sur "denied" (aucun cookie
             avant accord). */}
         {GTM_ID && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+              title="gtm"
+            />
+          </noscript>
+        )}
+        {GTM_ID && (
           <>
             <Script id="consent-default" strategy="beforeInteractive">
               {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});try{if(localStorage.getItem('cm-consent')==='granted'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}`}
