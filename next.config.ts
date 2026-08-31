@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 // Origine Supabase dérivée de l'env (REST/Auth en https, realtime en wss).
 const supabaseOrigin = (() => {
@@ -41,6 +42,7 @@ const csp = [
     supabaseWs,
     GTM,
     GA,
+    "https://*.sentry.io", // suivi d'erreurs Sentry (ingestion)
     isDev ? "ws://localhost:* http://localhost:*" : "",
   ]
     .filter(Boolean)
@@ -77,4 +79,12 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Sentry : instrumentation runtime toujours active (dormante sans DSN) ; l'upload
+// des source maps ne se fait que si SENTRY_ORG/PROJECT/AUTH_TOKEN sont fournis.
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: true,
+  widenClientFileUpload: true,
+  disableLogger: true,
+});
