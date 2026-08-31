@@ -22,10 +22,10 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             width={96}
             height={96}
             priority
-            className="h-11 w-11 shrink-0 sm:h-12 sm:w-12"
+            className="h-9 w-9 shrink-0 sm:h-12 sm:w-12"
           />
           <span className="flex items-baseline gap-2">
-            <span className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl">
+            <span className="font-display text-2xl font-bold leading-none text-ink sm:text-4xl">
               {APP_NAME}
             </span>
             <span className="hidden text-xs uppercase tracking-widest text-ink-soft md:inline">
@@ -33,7 +33,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             </span>
           </span>
         </Link>
-        <nav className="flex items-center gap-2 text-sm">
+        <nav className="flex items-center gap-1.5 text-sm">
           <Link
             href="/guide/batch-cooking"
             className="hidden px-2 py-1.5 text-ink-soft hover:text-ink sm:inline"
