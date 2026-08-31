@@ -167,8 +167,7 @@ export default function ConfidentialitePage() {
 
       <Section title="Contact">
         <p>
-          Responsable des données : Yannick Clément, 53 rue Saint-Martin, 33720
-          Landiras, France —{" "}
+          Responsable des données : Yannick Clément, 33720 Landiras, France —{" "}
           <a className="underline" href={`mailto:${CONTACT}`}>
             {CONTACT}
           </a>

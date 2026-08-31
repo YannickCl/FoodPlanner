@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { APP_NAME } from "@/lib/brand";
 import { SITE_URL } from "@/lib/seo";
-import { LegalPage, Section, Todo } from "../_components/legal-ui";
+import { LegalPage, Section } from "../_components/legal-ui";
 
 export const metadata: Metadata = {
   title: "Mentions légales",
@@ -26,8 +26,7 @@ export default function MentionsLegalesPage() {
           (micro-entreprise).
         </p>
         <p>
-          SIRET : 890 501 315 00034 — Adresse : 53 rue Saint-Martin, 33720 Landiras,
-          France — Contact :{" "}
+          SIRET : 890 501 315 00034 — 33720 Landiras, France — Contact :{" "}
           <a className="underline" href={`mailto:${CONTACT}`}>
             {CONTACT}
           </a>
@@ -35,7 +34,7 @@ export default function MentionsLegalesPage() {
         </p>
         <p>
           TVA : non applicable, article 293 B du Code général des impôts (franchise en
-          base de TVA) — <Todo>à confirmer selon votre régime</Todo>.
+          base de TVA).
         </p>
       </Section>
 

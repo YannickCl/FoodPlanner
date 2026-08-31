@@ -1,6 +1,35 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Card } from "@/components/ui";
+import { APP_NAME } from "@/lib/brand";
+import { SITE_URL } from "@/lib/seo";
+
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: `${APP_NAME} Premium`,
+  description:
+    "Assistant IA de recettes, planning automatique de la semaine et batch cooking guidé pour les repas de la famille.",
+  brand: { "@type": "Brand", name: APP_NAME },
+  offers: [
+    {
+      "@type": "Offer",
+      name: "Premium mensuel",
+      price: "5.99",
+      priceCurrency: "EUR",
+      url: `${SITE_URL}/tarifs`,
+      availability: "https://schema.org/InStock",
+    },
+    {
+      "@type": "Offer",
+      name: "Premium annuel",
+      price: "60.00",
+      priceCurrency: "EUR",
+      url: `${SITE_URL}/tarifs`,
+      availability: "https://schema.org/InStock",
+    },
+  ],
+};
 
 export const metadata: Metadata = {
   title: "Tarifs & abonnement",
@@ -34,6 +63,10 @@ function Mark({ v }: { v: string | boolean }) {
 export default function TarifsPage() {
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
       <div className="mb-8 text-center">
         <p className="eyebrow mb-1">Nos offres</p>
         <h1 className="font-display text-4xl text-ink">Simple et accessible</h1>
