@@ -47,12 +47,13 @@
       `docs/email-templates.md`, à coller dans Supabase → Auth → Email Templates
 - [ ] 🔒 Supabase → **réactiver « Confirm email »** (le fix signup est déjà en place)
 - [ ] 🤝 Tester **inscription avec confirmation** de bout en bout (reset déjà OK)
-- [x] 🤝 **Connexion Google (OAuth)** : bouton + route `/auth/callback` (routage
-      onboarding/app/invitation) — **code prêt & gaté** par `NEXT_PUBLIC_GOOGLE_AUTH`
-- [ ] 🔒 **Google Cloud** : écran de consentement (scopes `openid`+`userinfo.email`+
-      `userinfo.profile`) + ID client OAuth (redirect `…supabase.co/auth/v1/callback`)
-- [ ] 🔒 **Supabase → Providers → Google** : activer + Client ID/Secret
-- [ ] 🔒 Vercel → `NEXT_PUBLIC_GOOGLE_AUTH=true` (+ redeploy) pour afficher le bouton
+- [x] 🤝 **Connexion Google (OAuth)** live : bouton + route `/auth/callback` (routage
+      onboarding/app/invitation). **Vérifié en prod** : clic → écran Google OAuth.
+- [x] 🔒 Google Cloud (scopes openid/email/profile + client OAuth) + Supabase provider Google
+      + `NEXT_PUBLIC_GOOGLE_AUTH=true` sur Vercel ✅
+- [ ] 🤝 Test final Google (🔒, ton vrai compte) : connexion → onboarding/app + cas invitation
+- [ ] 🔒 (cosmétique) Google Cloud → Branding → **App name = Chill Meals** (l'écran OAuth affiche
+      sinon l'URL `…supabase.co`)
 
 ### D. Paiement — passer Stripe en LIVE
 - [x] 🔒 Créer les **prix live** (**5,99 €/mois**, **60 €/an**, essai 7 j) — récurrents, devise EUR
