@@ -99,12 +99,16 @@
 ---
 
 ## 4. Vérifs finales avant annonce
-- [ ] 🤝 Parcours complet en prod : signup (+ confirm email) → onboarding → planning →
-      liste → cuisine → batch → **upgrade Stripe live**
-- [ ] 🤝 **Invitation d'un membre** via lien de partage (corrigé récemment)
-- [ ] 🤝 Test **mobile / PWA** (ajout à l'écran d'accueil), icônes au **nouveau nom**
-- [ ] 🤝 **Lighthouse** (perf / SEO / accessibilité) sur la vitrine
-- [ ] 🤝 Relire la vitrine avec le **nom final** (logo, `<title>`, manifeste)
+- [x] 🤝 Parcours prod partiel : signup → onboarding → app **vérifié** (compte de test) ;
+      reste l'**upgrade Stripe live** (🔒, carte réelle)
+- [ ] 🤝 **Invitation d'un membre** via lien de partage (corrigé récemment) — à re-tester
+- [x] 🤝 **Mobile / PWA** vérifié : manifeste valide, icônes 200 (192/512 any+maskable,
+      apple-touch, favicon), rendu responsive OK — **1 bug corrigé** (header vitrine qui
+      débordait à 375 px)
+- [x] 🤝 **Audit SEO/contenu** vitrine : titres uniques, meta-descriptions, canonical absolus,
+      1 H1/page, JSON-LD, **aucun reste « Food Planner »** ; console **sans erreur** (Lighthouse
+      complet possible plus tard si besoin)
+- [x] 🤝 Vitrine relue avec le **nom final** (logo, `<title>`, manifeste) ✅
 
 ---
 
