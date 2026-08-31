@@ -73,6 +73,12 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             <Link href="/mentions-legales" className="hover:text-ink">
               Mentions légales
             </Link>
+            <Link href="/confidentialite" className="hover:text-ink">
+              Confidentialité
+            </Link>
+            <Link href="/cgu" className="hover:text-ink">
+              CGU
+            </Link>
             <Link href="/login" className="hover:text-ink">
               Connexion
             </Link>

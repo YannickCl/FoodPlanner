@@ -1,68 +1,103 @@
 import type { Metadata } from "next";
-import { Card } from "@/components/ui";
+import Link from "next/link";
 import { APP_NAME } from "@/lib/brand";
+import { SITE_URL } from "@/lib/seo";
+import { LegalPage, Section, Todo } from "../_components/legal-ui";
 
 export const metadata: Metadata = {
   title: "Mentions légales",
-  description: `Informations légales et politique de confidentialité de ${APP_NAME}.`,
+  description: `Mentions légales de ${APP_NAME} : éditeur, hébergement et responsabilité.`,
   alternates: { canonical: "/mentions-legales" },
 };
 
+const CONTACT = "contact@chillmeals.fr";
+
 export default function MentionsLegalesPage() {
   return (
-    <div className="mx-auto max-w-2xl">
-      <h1 className="mb-1 font-display text-4xl text-ink">Mentions légales</h1>
-      <p className="mb-6 text-sm text-ink-soft">
-        Informations légales et politique de confidentialité de {APP_NAME}.
-      </p>
+    <LegalPage
+      title="Mentions légales"
+      subtitle={`Informations légales relatives au site et au service ${APP_NAME}.`}
+      updated="31 août 2026"
+    >
+      <Section title="Éditeur">
+        <p>
+          Le site {APP_NAME} (accessible à l’adresse {SITE_URL.replace(/^https?:\/\//, "")})
+          est édité par <strong>Yannick Clément</strong>, entrepreneur individuel
+          (micro-entreprise).
+        </p>
+        <p>
+          SIRET : <Todo>À COMPLÉTER</Todo> — Adresse : <Todo>À COMPLÉTER</Todo> —
+          Contact : <a className="underline" href={`mailto:${CONTACT}`}>{CONTACT}</a>.
+        </p>
+        <p>
+          TVA : non applicable, article 293 B du Code général des impôts (franchise en
+          base de TVA) — <Todo>à confirmer selon votre régime</Todo>.
+        </p>
+      </Section>
 
-      <div className="mb-6 rounded-xl border border-brick/30 bg-brick/10 px-4 py-3 text-sm text-brick">
-        ⚠️ Document provisoire — à faire valider par un professionnel du droit avant
-        l’ouverture au public (RGPD, CGU, responsabilité).
-      </div>
+      <Section title="Directeur de la publication">
+        <p>Yannick Clément.</p>
+      </Section>
 
-      <Card className="space-y-6 p-6 text-sm leading-relaxed text-ink">
-        <section>
-          <h2 className="mb-1 font-display text-lg text-ink">Éditeur</h2>
-          <p className="text-ink-soft">
-            {APP_NAME} — [Raison sociale / nom], [adresse], [SIREN]. Contact :
-            [email]. Directeur de la publication : [nom].
-          </p>
-        </section>
+      <Section title="Hébergement">
+        <p>
+          Le site et l’application sont hébergés par <strong>Vercel Inc.</strong>, 340 S
+          Lemon Ave #4133, Walnut, CA 91789, États-Unis (vercel.com).
+        </p>
+        <p>
+          Les données applicatives (comptes, contenus) sont hébergées et gérées via{" "}
+          <strong>Supabase Inc.</strong> Voir la{" "}
+          <Link className="underline" href="/confidentialite">
+            politique de confidentialité
+          </Link>{" "}
+          pour la liste des sous-traitants.
+        </p>
+      </Section>
 
-        <section>
-          <h2 className="mb-1 font-display text-lg text-ink">Hébergement</h2>
-          <p className="text-ink-soft">
-            Application hébergée par Vercel Inc. Base de données hébergée par Supabase
-            (région Europe).
-          </p>
-        </section>
+      <Section title="Propriété intellectuelle">
+        <p>
+          La marque {APP_NAME}, le logo, la charte graphique, les textes et les éléments
+          du site sont protégés. Toute reproduction ou réutilisation sans autorisation
+          est interdite. Les recettes et contenus que vous créez restent votre propriété.
+        </p>
+      </Section>
 
-        <section>
-          <h2 className="mb-1 font-display text-lg text-ink">Données personnelles (RGPD)</h2>
-          <p className="text-ink-soft">
-            {APP_NAME} collecte l’adresse e-mail (compte) et les données que tu saisis
-            (recettes, planning, réglages) pour fournir le service. Tu peux demander
-            l’accès, la rectification ou la suppression de tes données à [email].
-            [Détails à compléter : durée de conservation, sous-traitants, base légale.]
-          </p>
-        </section>
+      <Section title="Responsabilité & avertissement">
+        <p>
+          {APP_NAME} est un outil d’organisation des repas. Les informations sur les{" "}
+          <strong>allergènes</strong> et les recettes (y compris celles générées par
+          intelligence artificielle) sont fournies <strong>à titre indicatif</strong> et
+          ne constituent pas un avis médical ou nutritionnel. En cas d’allergie ou de
+          régime spécifique, vérifiez toujours vous-même les ingrédients et les étiquettes
+          des produits avant consommation.
+        </p>
+        <p>
+          L’éditeur ne saurait être tenu responsable des conséquences liées à l’usage des
+          informations fournies, ni des interruptions ou erreurs du service.
+        </p>
+      </Section>
 
-        <section>
-          <h2 className="mb-1 font-display text-lg text-ink">Allergènes — avertissement</h2>
-          <p className="text-ink-soft">
-            Les informations sur les allergènes sont fournies à titre indicatif. Malgré
-            nos vérifications, {APP_NAME} ne peut garantir l’exhaustivité ou l’exactitude
-            des informations des recettes. En cas d’allergie, vérifie toujours les
-            ingrédients toi-même.
-          </p>
-        </section>
+      <Section title="Liens utiles">
+        <p>
+          <Link className="underline" href="/confidentialite">
+            Politique de confidentialité
+          </Link>{" "}
+          ·{" "}
+          <Link className="underline" href="/cgu">
+            Conditions générales d’utilisation et de vente
+          </Link>
+        </p>
+      </Section>
 
-        <section>
-          <h2 className="mb-1 font-display text-lg text-ink">Conditions d’utilisation</h2>
-          <p className="text-ink-soft">[CGU à compléter.]</p>
-        </section>
-      </Card>
-    </div>
+      <Section title="Contact">
+        <p>
+          Pour toute question :{" "}
+          <a className="underline" href={`mailto:${CONTACT}`}>
+            {CONTACT}
+          </a>
+          .
+        </p>
+      </Section>
+    </LegalPage>
   );
 }

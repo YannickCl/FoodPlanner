@@ -12,6 +12,8 @@ const PUBLIC_PREFIXES = [
   "/",
   "/tarifs",
   "/mentions-legales",
+  "/confidentialite",
+  "/cgu",
   "/guide",
   "/planning-repas",
   "/liste-de-courses",

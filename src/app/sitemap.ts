@@ -22,6 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/comparatif/jow", priority: 0.7 },
     { path: "/tarifs", priority: 0.8 },
     { path: "/mentions-legales", priority: 0.3 },
+    { path: "/confidentialite", priority: 0.3 },
+    { path: "/cgu", priority: 0.3 },
   ];
   return routes.map(({ path, priority }) => ({
     url: `${SITE_URL}${path}`,
