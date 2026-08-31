@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { APP_NAME } from "@/lib/brand";
-import { LegalPage, Section, Li, Todo } from "../_components/legal-ui";
+import { LegalPage, Section, Li } from "../_components/legal-ui";
 
 export const metadata: Metadata = {
   title: "Politique de confidentialité",
@@ -167,11 +167,12 @@ export default function ConfidentialitePage() {
 
       <Section title="Contact">
         <p>
-          Délégué / responsable des données :{" "}
+          Responsable des données : Yannick Clément, 53 rue Saint-Martin, 33720
+          Landiras, France —{" "}
           <a className="underline" href={`mailto:${CONTACT}`}>
             {CONTACT}
-          </a>{" "}
-          — <Todo>adresse postale à compléter</Todo>.
+          </a>
+          .
         </p>
       </Section>
     </LegalPage>

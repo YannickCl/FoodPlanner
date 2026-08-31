@@ -26,8 +26,12 @@ export default function MentionsLegalesPage() {
           (micro-entreprise).
         </p>
         <p>
-          SIRET : <Todo>À COMPLÉTER</Todo> — Adresse : <Todo>À COMPLÉTER</Todo> —
-          Contact : <a className="underline" href={`mailto:${CONTACT}`}>{CONTACT}</a>.
+          SIRET : 890 501 315 00034 — Adresse : 53 rue Saint-Martin, 33720 Landiras,
+          France — Contact :{" "}
+          <a className="underline" href={`mailto:${CONTACT}`}>
+            {CONTACT}
+          </a>
+          .
         </p>
         <p>
           TVA : non applicable, article 293 B du Code général des impôts (franchise en

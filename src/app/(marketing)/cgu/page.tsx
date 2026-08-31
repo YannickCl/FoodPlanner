@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { APP_NAME } from "@/lib/brand";
-import { LegalPage, Section, Li, Todo } from "../_components/legal-ui";
+import { LegalPage, Section, Li } from "../_components/legal-ui";
 
 export const metadata: Metadata = {
   title: "Conditions générales",
@@ -146,13 +146,43 @@ export default function CguPage() {
         </p>
       </Section>
 
-      <Section title="13. Droit applicable et litiges">
+      <Section title="13. Droit applicable, réclamation et médiation">
+        <p>Les présentes conditions sont soumises au droit français.</p>
         <p>
-          Les présentes conditions sont soumises au droit français. En cas de litige, vous
-          pouvez recourir gratuitement à un médiateur de la consommation :{" "}
-          <Todo>médiateur à désigner</Todo>. À défaut d’accord amiable, les tribunaux
-          français sont compétents. Plateforme européenne de règlement des litiges :
-          ec.europa.eu/consumers/odr.
+          En cas de litige, le Client adresse d’abord une{" "}
+          <strong>réclamation écrite</strong> au service client, par e-mail à{" "}
+          <a className="underline" href={`mailto:${CONTACT}`}>
+            {CONTACT}
+          </a>{" "}
+          ou par courrier à l’adresse de l’éditeur, afin de rechercher une solution
+          amiable.
+        </p>
+        <p>
+          Si aucune solution n’est trouvée dans un délai d’un an à compter de cette
+          réclamation, le Client consommateur peut recourir gratuitement, conformément aux
+          articles L.612-1 et suivants du Code de la consommation, au médiateur de la
+          consommation dont relève l’éditeur :
+        </p>
+        <ul className="space-y-1">
+          <Li>
+            <strong>Médiation de la Consommation &amp; Patrimoine (MCP)</strong>
+          </Li>
+          <Li>12 Square Desnouettes, 75015 Paris</Li>
+          <Li>
+            <a
+              className="underline"
+              href="https://www.mcpmediation.org"
+              target="_blank"
+              rel="noreferrer"
+            >
+              www.mcpmediation.org
+            </a>
+          </Li>
+        </ul>
+        <p>
+          Le Client peut aussi utiliser la plateforme européenne de règlement en ligne des
+          litiges : ec.europa.eu/consumers/odr. À défaut d’accord amiable, les tribunaux
+          français sont compétents.
         </p>
       </Section>
 
