@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
 import { publicRobots } from "@/lib/seo";
@@ -14,12 +15,22 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
   return (
     <div>
       <header className="no-print mb-10 flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-baseline gap-2">
-          <span className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl">
-            {APP_NAME}
-          </span>
-          <span className="hidden text-xs uppercase tracking-widest text-ink-soft md:inline">
-            · {APP_TAGLINE}
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/logo-mark.png"
+            alt=""
+            width={96}
+            height={96}
+            priority
+            className="h-11 w-11 shrink-0 sm:h-12 sm:w-12"
+          />
+          <span className="flex items-baseline gap-2">
+            <span className="font-display text-3xl font-bold leading-none text-ink sm:text-4xl">
+              {APP_NAME}
+            </span>
+            <span className="hidden text-xs uppercase tracking-widest text-ink-soft md:inline">
+              · {APP_TAGLINE}
+            </span>
           </span>
         </Link>
         <nav className="flex items-center gap-2 text-sm">
