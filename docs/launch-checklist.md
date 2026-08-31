@@ -51,9 +51,11 @@
       onboarding/app/invitation). **Vérifié en prod** : clic → écran Google OAuth.
 - [x] 🔒 Google Cloud (scopes openid/email/profile + client OAuth) + Supabase provider Google
       + `NEXT_PUBLIC_GOOGLE_AUTH=true` sur Vercel ✅
+- [x] 🔒 App OAuth **publiée (En production)** + Branding rempli + domaine vérifié en GSC.
+      Scopes non sensibles → **aucune validation Google requise** (bandeau « à valider » ignorable).
 - [ ] 🤝 Test final Google (🔒, ton vrai compte) : connexion → onboarding/app + cas invitation
-- [ ] 🔒 (cosmétique) Google Cloud → Branding → **App name = Chill Meals** (l'écran OAuth affiche
-      sinon l'URL `…supabase.co`)
+- [ ] (cosmétique, optionnel) 1er écran Google affiche `…supabase.co` : pour montrer
+      `chillmeals.fr`, il faudrait un **domaine d'auth personnalisé Supabase** (payant) — non requis
 
 ### D. Paiement — passer Stripe en LIVE
 - [x] 🔒 Créer les **prix live** (**5,99 €/mois**, **60 €/an**, essai 7 j) — récurrents, devise EUR
