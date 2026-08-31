@@ -7,10 +7,18 @@ import { SettingsForm } from "./SettingsForm";
 import { RemindersCard } from "./RemindersCard";
 import { MembersCard } from "./MembersCard";
 import { SubscriptionCard } from "./SubscriptionCard";
+import { SubscriptionBanner } from "./SubscriptionBanner";
 
 export const dynamic = "force-dynamic";
 
-export default async function ReglagesPage() {
+export default async function ReglagesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ abonnement?: string }>;
+}) {
+  const { abonnement } = await searchParams;
+  const paymentStatus =
+    abonnement === "ok" ? "ok" : abonnement === "annule" ? "annule" : null;
   const settings = await getSettings();
   const householdId = await getCurrentHouseholdId();
   const [household, members] = await Promise.all([
@@ -20,6 +28,7 @@ export default async function ReglagesPage() {
     }),
     getHouseholdMembers(),
   ]);
+  const premium = household?.plan === "PREMIUM";
   const {
     data: { user },
   } = await (await createSupabaseServerClient()).auth.getUser();
@@ -31,6 +40,7 @@ export default async function ReglagesPage() {
         Ces réglages s’appliquent partout : génération du planning, liste de
         courses et suggestions de l’IA.
       </p>
+      <SubscriptionBanner status={paymentStatus} premium={premium} />
       <SettingsForm
         initial={{
           servings: settings.servings,
@@ -55,7 +65,7 @@ export default async function ReglagesPage() {
       </div>
       <div className="mt-4">
         <SubscriptionCard
-          premium={household?.plan === "PREMIUM"}
+          premium={premium}
           hasStripeCustomer={!!household?.stripeCustomerId}
         />
       </div>
