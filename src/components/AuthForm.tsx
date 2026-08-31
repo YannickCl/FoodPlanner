@@ -34,11 +34,14 @@ export function AuthForm({
   const [sent, setSent] = useState(false);
   // Compte créé mais l'adhésion au foyer a échoué (code invalide/expiré).
   const [joinFailed, setJoinFailed] = useState<string | null>(null);
+  // Compte créé mais e-mail à confirmer (« Confirm email » activé côté Supabase).
+  const [confirmSent, setConfirmSent] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setJoinFailed(null);
+    setConfirmSent(false);
     setPending(true);
     const supabase = createSupabaseBrowserClient();
     try {
@@ -48,8 +51,26 @@ export function AuthForm({
         router.replace(next);
         router.refresh();
       } else if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({ email, password });
+        // Après confirmation d'e-mail, Supabase renvoie sur cette URL (déjà
+        // connecté) : la page d'invitation propose alors de rejoindre le foyer,
+        // sinon on démarre l'onboarding.
+        const emailRedirectTo = invite
+          ? `${window.location.origin}/rejoindre?code=${encodeURIComponent(invite)}`
+          : `${window.location.origin}/onboarding`;
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo },
+        });
         if (error) throw error;
+        if (!data.session) {
+          // « Confirm email » activé : aucun accès tant que l'e-mail n'est pas
+          // validé. On informe au lieu de rediriger (sinon rebond vers /login).
+          setConfirmSent(true);
+          setPending(false);
+          return;
+        }
+        // Session immédiate (« Confirm email » désactivé) : flux direct.
         if (invite) {
           const res = await joinHousehold(invite);
           if (!res.ok) {
@@ -93,7 +114,18 @@ export function AuthForm({
       </div>
 
       <Card className="p-6">
-        {joinFailed ? (
+        {confirmSent ? (
+          <div className="space-y-2 text-sm">
+            <p className="text-ink">
+              📧 <strong>Compte créé !</strong> Un e-mail de confirmation vient
+              d’être envoyé à <strong>{email}</strong>.
+            </p>
+            <p className="text-ink-soft">
+              Clique sur le lien pour activer ton compte
+              {invite ? " et rejoindre le foyer" : ""}. Pense à vérifier tes spams.
+            </p>
+          </div>
+        ) : joinFailed ? (
           <div className="space-y-3 text-sm">
             <p className="text-ink">✅ Ton compte a bien été créé.</p>
             <p className="text-brick">{joinFailed}</p>

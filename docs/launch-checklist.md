@@ -36,10 +36,15 @@
       (callbacks auth : `/reset/update`, `/rejoindre`, retour Stripe) — **à confirmer**
 
 ### C. Authentification e-mail (actuellement OFF pour le dev)
-- [ ] 🔒 Supabase → **réactiver « Confirm email »**
-- [ ] 🔒 Supabase → configurer un **SMTP** (sinon délivrabilité faible + rate limit
-      sur les e-mails d'inscription et de réinitialisation)
-- [ ] 🤝 Tester **inscription + reset mot de passe** de bout en bout
+- [x] 🤝 **Flux signup adapté à Confirm email** : `emailRedirectTo` (invite → `/rejoindre`,
+      sinon `/onboarding`) + message « vérifie ta boîte mail » si pas de session.
+      Vérifié : aucune régression avec Confirm email OFF (signup → onboarding).
+- [ ] 🔒 Supabase → **URL Configuration** : Site URL `https://chillmeals.fr`
+      + Redirect URLs `https://chillmeals.fr/**`
+- [ ] 🔒 **SMTP = Brevo** : compte + vérif domaine (SPF/DKIM chez OVH) + réglages SMTP Supabase
+      (host, port 587, user, pass, sender `noreply@chillmeals.fr`, name « Chill Meals »)
+- [ ] 🔒 Supabase → **réactiver « Confirm email »** (après SMTP + le fix signup ci-dessus)
+- [ ] 🤝 Tester **inscription (avec confirmation) + reset mot de passe** de bout en bout
 
 ### D. Paiement — passer Stripe en LIVE
 - [x] 🔒 Créer les **prix live** (**5,99 €/mois**, **60 €/an**, essai 7 j) — récurrents, devise EUR
@@ -81,9 +86,9 @@
       'unsafe-eval') — **vérifiée sans violation** : vitrine, login, app, réglages ✅
 - [ ] 🔒 Supprimer les **comptes auth de test** dans Supabase :
       `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`,
-      `stripe-live-check@example.com` + `invite-test@example.com` (+ leur foyer « Test Stripe
-      Live » — créés pour vérifier le tunnel Stripe live et l'invitation le 2026-08-31,
-      aucun paiement effectué)
+      `stripe-live-check@example.com` + `invite-test@example.com` + `confirm-fix-test@example.com`
+      (+ leur foyer « Test Stripe Live » — créés pour vérifier tunnel Stripe live, invitation
+      et flux signup le 2026-08-31, aucun paiement effectué)
       (leurs lignes applicatives sont déjà nettoyées)
 - [x] Foyer fondateur intact (94 recettes, 1 membre) ✅
 - [x] 🤝 **GTM + GA4** live avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL ✅
