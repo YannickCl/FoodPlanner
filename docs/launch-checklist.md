@@ -89,8 +89,9 @@
 - [ ] 🔒 Supprimer les **comptes auth de test** dans Supabase :
       `testphase01@example.com`, `stripe-prod-test@example.com`, `yannickclement01+diag…`,
       `stripe-live-check@example.com` + `invite-test@example.com` + `confirm-fix-test@example.com`
-      (+ leur foyer « Test Stripe Live » — créés pour vérifier tunnel Stripe live, invitation
-      et flux signup le 2026-08-31, aucun paiement effectué)
+      + `confirm-email-test@example.com` (non confirmé) (+ leur foyer « Test Stripe Live » —
+      créés pour vérifier tunnel Stripe live, invitation, signup et Confirm email le 2026-08-31,
+      aucun paiement effectué)
       (leurs lignes applicatives sont déjà nettoyées)
 - [x] Foyer fondateur intact (94 recettes, 1 membre) ✅
 - [x] 🤝 **GTM + GA4** live avec **Consent Mode v2** + **bandeau cookies** RGPD/CNIL ✅
