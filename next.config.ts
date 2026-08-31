@@ -1,10 +1,63 @@
 import type { NextConfig } from "next";
 
+// Origine Supabase dérivée de l'env (REST/Auth en https, realtime en wss).
+const supabaseOrigin = (() => {
+  try {
+    return new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").origin;
+  } catch {
+    return "";
+  }
+})();
+const supabaseWs = supabaseOrigin.replace(/^https/, "wss");
+
+const isDev = process.env.NODE_ENV !== "production";
+
+// Domaines Google Tag Manager / Analytics (mesure d'audience).
+const GTM = "https://www.googletagmanager.com https://*.googletagmanager.com";
+const GA =
+  "https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com";
+
+// Content-Security-Policy. En prod : pas de 'unsafe-eval'. En dev on l'ajoute
+// (React Refresh / HMR en ont besoin) ainsi que le websocket local du HMR.
+// 'unsafe-inline' est requis pour les scripts inline de Next et notre snippet
+// Consent Mode (pas de nonce ici) ; il bloque quand même tout script tiers non
+// listé, qui est le principal vecteur d'injection.
+const csp = [
+  "default-src 'self'",
+  [
+    "script-src 'self' 'unsafe-inline'",
+    isDev ? "'unsafe-eval'" : "",
+    GTM,
+    GA,
+  ]
+    .filter(Boolean)
+    .join(" "),
+  "style-src 'self' 'unsafe-inline'",
+  `img-src 'self' data: blob: ${GTM} ${GA}`,
+  "font-src 'self' data:",
+  [
+    "connect-src 'self'",
+    supabaseOrigin,
+    supabaseWs,
+    GTM,
+    GA,
+    isDev ? "ws://localhost:* http://localhost:*" : "",
+  ]
+    .filter(Boolean)
+    .join(" "),
+  `frame-src 'self' ${GTM}`,
+  "worker-src 'self'",
+  "manifest-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 // En-têtes de sécurité appliqués à toutes les routes.
-// NB : la Content-Security-Policy n'est PAS posée ici — elle sera ajoutée au
-// lancement, une fois GTM/GA4 branchés (elle doit lister leurs domaines), pour
-// éviter de casser le site avec une CSP incomplète.
 const securityHeaders = [
+  { key: "Content-Security-Policy", value: csp },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
