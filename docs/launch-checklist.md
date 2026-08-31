@@ -39,12 +39,14 @@
 - [x] 🤝 **Flux signup adapté à Confirm email** : `emailRedirectTo` (invite → `/rejoindre`,
       sinon `/onboarding`) + message « vérifie ta boîte mail » si pas de session.
       Vérifié : aucune régression avec Confirm email OFF (signup → onboarding).
-- [ ] 🔒 Supabase → **URL Configuration** : Site URL `https://chillmeals.fr`
-      + Redirect URLs `https://chillmeals.fr/**`
-- [ ] 🔒 **SMTP = Brevo** : compte + vérif domaine (SPF/DKIM chez OVH) + réglages SMTP Supabase
-      (host, port 587, user, pass, sender `noreply@chillmeals.fr`, name « Chill Meals »)
-- [ ] 🔒 Supabase → **réactiver « Confirm email »** (après SMTP + le fix signup ci-dessus)
-- [ ] 🤝 Tester **inscription (avec confirmation) + reset mot de passe** de bout en bout
+- [x] 🔒 Supabase → **URL Configuration** : Site URL + Redirect URLs `https://chillmeals.fr/**` ✅
+- [x] 🔒 **SMTP = Brevo** configuré (domaine authentifié : DKIM brevo1/brevo2 + code + DMARC ;
+      SPF inchangé = normal, Brevo aligne via DKIM). **Reset testé : e-mail reçu en boîte de
+      réception**, expéditeur `noreply@chillmeals.fr` ✅
+- [ ] 🤝 **Franciser les templates e-mail** (Confirm signup + Reset) — prêts dans
+      `docs/email-templates.md`, à coller dans Supabase → Auth → Email Templates
+- [ ] 🔒 Supabase → **réactiver « Confirm email »** (le fix signup est déjà en place)
+- [ ] 🤝 Tester **inscription avec confirmation** de bout en bout (reset déjà OK)
 
 ### D. Paiement — passer Stripe en LIVE
 - [x] 🔒 Créer les **prix live** (**5,99 €/mois**, **60 €/an**, essai 7 j) — récurrents, devise EUR
