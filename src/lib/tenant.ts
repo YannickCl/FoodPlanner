@@ -35,12 +35,30 @@ export async function getCurrentHouseholdId(): Promise<string> {
       return household.id;
     });
   } catch {
-    // Course possible (double 1ʳᵉ requête) : l'utilisateur a été créé entre-temps.
-    const u = await prisma.user.findUnique({
+    // 1) Course possible (double 1ʳᵉ requête) : l'utilisateur a été créé entre-temps.
+    const byId = await prisma.user.findUnique({
       where: { id: user.id },
       select: { householdId: true },
     });
-    if (u) return u.householdId;
+    if (byId) return byId.householdId;
+
+    // 2) Conflit d'e-mail (email @unique) : un compte existe déjà avec cet e-mail
+    //    sous un autre identifiant d'auth — typiquement compte e-mail/mot de passe
+    //    PUIS connexion Google (même adresse). C'est la même personne : on rattache
+    //    ce compte à la session courante (mise à jour de l'id) plutôt que planter.
+    if (user.email) {
+      const byEmail = await prisma.user.findUnique({
+        where: { email: user.email },
+        select: { householdId: true },
+      });
+      if (byEmail) {
+        await prisma.user.update({
+          where: { email: user.email },
+          data: { id: user.id },
+        });
+        return byEmail.householdId;
+      }
+    }
     throw new Error("Impossible de créer le foyer.");
   }
 }

@@ -73,9 +73,20 @@ export async function joinHousehold(
       }
     }
   } else {
-    await prisma.user.create({
-      data: { id: user.id, email: user.email ?? "", householdId: target.id, role: "member" },
-    });
+    try {
+      await prisma.user.create({
+        data: { id: user.id, email: user.email ?? "", householdId: target.id, role: "member" },
+      });
+    } catch {
+      // Conflit d'e-mail (email @unique) : compte existant sous un autre id d'auth
+      // (ex. e-mail/mot de passe puis Google). On rattache ce compte à la session
+      // courante et au foyer cible.
+      if (!user.email) return { ok: false, error: "Impossible de rejoindre le foyer." };
+      await prisma.user.update({
+        where: { email: user.email },
+        data: { id: user.id, householdId: target.id, role: "member" },
+      });
+    }
   }
 
   revalidatePath("/calendrier");
