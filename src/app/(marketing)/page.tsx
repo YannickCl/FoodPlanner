@@ -163,6 +163,45 @@ export default async function Home() {
         </p>
       </section>
 
+      {/* Guides */}
+      <section className="mt-16">
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <p className="eyebrow mb-1">Guides &amp; conseils</p>
+            <h2 className="font-display text-2xl text-ink sm:text-3xl">
+              Pour s&rsquo;organiser sans prise de tête
+            </h2>
+          </div>
+          <Link
+            href="/guide"
+            className="shrink-0 text-sm font-semibold text-gold hover:underline"
+          >
+            Tous les guides →
+          </Link>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[
+            { href: "/guide/que-manger-ce-soir", emoji: "⚡", title: "Que manger ce soir ?", teaser: "30 idées classées par situation." },
+            { href: "/guide/menu-de-la-semaine", emoji: "🗓️", title: "Le menu de la semaine", teaser: "Planifier une semaine en quinze minutes." },
+            { href: "/guide/batch-cooking", emoji: "🍲", title: "Le batch cooking", teaser: "Cuisiner toute la semaine en une session." },
+          ].map((g) => (
+            <Link
+              key={g.href}
+              href={g.href}
+              className="group flex flex-col rounded-2xl border border-line bg-parchment-card p-5 transition-all hover:-translate-y-0.5 hover:border-gold hover:shadow-md"
+            >
+              <span className="mb-2 text-2xl" aria-hidden>{g.emoji}</span>
+              <h3 className="font-display text-lg text-ink">{g.title}</h3>
+              <p className="mt-1 flex-1 text-sm text-ink-soft">{g.teaser}</p>
+              <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-gold">
+                Lire
+                <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Tarifs teaser */}
       <section className="mt-16 text-center">
         <h2 className="mb-2 font-display text-3xl text-ink">Simple et accessible</h2>

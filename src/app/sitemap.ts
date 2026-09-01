@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const routes: { path: string; priority: number }[] = [
     { path: "", priority: 1 },
+    { path: "/guide", priority: 0.8 },
     { path: "/planning-repas", priority: 0.9 },
     { path: "/liste-de-courses", priority: 0.9 },
     { path: "/batch-cooking", priority: 0.9 },
@@ -20,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/menu-equilibre-semaine", priority: 0.8 },
     { path: "/guide/menu-semaine-pas-cher", priority: 0.8 },
     { path: "/guide/organisation-repas-rentree", priority: 0.8 },
+    { path: "/guide/que-manger-ce-soir", priority: 0.8 },
     { path: "/comparatif/jow", priority: 0.7 },
     { path: "/tarifs", priority: 0.8 },
     { path: "/mentions-legales", priority: 0.3 },

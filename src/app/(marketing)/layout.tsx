@@ -35,10 +35,10 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         </Link>
         <nav className="flex items-center gap-1.5 text-sm">
           <Link
-            href="/guide/batch-cooking"
+            href="/guide"
             className="hidden px-2 py-1.5 text-ink-soft hover:text-ink sm:inline"
           >
-            Guide
+            Guides
           </Link>
           <Link href="/tarifs" className="px-2 py-1.5 text-ink-soft hover:text-ink">
             Tarifs
@@ -64,8 +64,8 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span>© {APP_NAME} · {APP_TAGLINE}</span>
           <div className="flex gap-4">
-            <Link href="/guide/batch-cooking" className="hover:text-ink">
-              Guide du batch cooking
+            <Link href="/guide" className="hover:text-ink">
+              Guides
             </Link>
             <Link href="/tarifs" className="hover:text-ink">
               Tarifs
