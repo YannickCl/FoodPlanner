@@ -17,17 +17,25 @@ export function SubscriptionCard({
   function checkout(interval: "monthly" | "annual") {
     setError(null);
     startTransition(async () => {
-      const r = await createCheckoutSession(interval);
-      if (r.ok && r.url) window.location.href = r.url;
-      else setError(r.error ?? "Erreur");
+      try {
+        const r = await createCheckoutSession(interval);
+        if (r.ok && r.url) window.location.href = r.url;
+        else setError(r.error ?? "Une erreur est survenue. Réessaie.");
+      } catch {
+        setError("Le paiement est momentanément indisponible. Réessaie dans un instant.");
+      }
     });
   }
   function portal() {
     setError(null);
     startTransition(async () => {
-      const r = await createPortalSession();
-      if (r.ok && r.url) window.location.href = r.url;
-      else setError(r.error ?? "Erreur");
+      try {
+        const r = await createPortalSession();
+        if (r.ok && r.url) window.location.href = r.url;
+        else setError(r.error ?? "Une erreur est survenue. Réessaie.");
+      } catch {
+        setError("Le portail est momentanément indisponible. Réessaie dans un instant.");
+      }
     });
   }
 

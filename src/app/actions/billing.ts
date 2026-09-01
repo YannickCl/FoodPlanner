@@ -1,6 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/db";
 import { getCurrentHouseholdId } from "@/lib/tenant";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -39,30 +40,40 @@ export async function createCheckoutSession(
     select: { stripeCustomerId: true },
   });
 
-  let customerId = household?.stripeCustomerId ?? undefined;
-  if (!customerId) {
-    const customer = await stripe.customers.create({
-      email: user.email ?? undefined,
-      metadata: { householdId },
-    });
-    customerId = customer.id;
-    await prisma.household.update({
-      where: { id: householdId },
-      data: { stripeCustomerId: customerId },
-    });
-  }
+  try {
+    let customerId = household?.stripeCustomerId ?? undefined;
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: user.email ?? undefined,
+        metadata: { householdId },
+      });
+      customerId = customer.id;
+      await prisma.household.update({
+        where: { id: householdId },
+        data: { stripeCustomerId: customerId },
+      });
+    }
 
-  const url = await baseUrl();
-  const session = await stripe.checkout.sessions.create({
-    mode: "subscription",
-    customer: customerId,
-    line_items: [{ price, quantity: 1 }],
-    subscription_data: { trial_period_days: 7, metadata: { householdId } },
-    allow_promotion_codes: true,
-    success_url: `${url}/reglages?abonnement=ok`,
-    cancel_url: `${url}/reglages?abonnement=annule`,
-  });
-  return { ok: true, url: session.url ?? undefined };
+    const url = await baseUrl();
+    const session = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      customer: customerId,
+      line_items: [{ price, quantity: 1 }],
+      subscription_data: { trial_period_days: 7, metadata: { householdId } },
+      allow_promotion_codes: true,
+      success_url: `${url}/reglages?abonnement=ok`,
+      cancel_url: `${url}/reglages?abonnement=annule`,
+    });
+    return { ok: true, url: session.url ?? undefined };
+  } catch (e) {
+    // Ex. prix Stripe invalide/mal configuré : on renvoie une erreur propre
+    // (au lieu de planter la page) et on la trace dans Sentry.
+    Sentry.captureException(e);
+    return {
+      ok: false,
+      error: "Le paiement est momentanément indisponible. Réessaie dans un instant.",
+    };
+  }
 }
 
 /** Ouvre le portail Stripe pour gérer / résilier l'abonnement. */
