@@ -17,6 +17,7 @@ export const SITE_URL = (
  * À passer à "true" via NEXT_PUBLIC_SEO_INDEX le jour du lancement public,
  * quand le nom définitif, le domaine et les mentions légales sont prêts.
  */
+// (rebuild forcé au lancement : ouverture de l'indexation le 2026-09-01)
 export const SEO_INDEXABLE = process.env.NEXT_PUBLIC_SEO_INDEX === "true";
 
 /** Métadonnée `robots` appliquée aux pages PUBLIQUES (groupe (marketing)). */
