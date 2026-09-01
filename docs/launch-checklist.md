@@ -45,7 +45,8 @@
       réception**, expéditeur `noreply@chillmeals.fr` ✅
 - [ ] 🤝 **Franciser les templates e-mail** (Confirm signup + Reset) — prêts dans
       `docs/email-templates.md`, à coller dans Supabase → Auth → Email Templates
-- [ ] 🔒 Supabase → **réactiver « Confirm email »** (le fix signup est déjà en place)
+- [x] 🔒 Supabase → **« Confirm email » réactivé** ; flux signup vérifié en prod
+      (écran « vérifie ta boîte mail »)
 - [ ] 🤝 Tester **inscription avec confirmation** de bout en bout (reset déjà OK)
 - [x] 🤝 **Connexion Google (OAuth)** live : bouton + route `/auth/callback` (routage
       onboarding/app/invitation). **Vérifié en prod** : clic → écran Google OAuth.
@@ -53,7 +54,8 @@
       + `NEXT_PUBLIC_GOOGLE_AUTH=true` sur Vercel ✅
 - [x] 🔒 App OAuth **publiée (En production)** + Branding rempli + domaine vérifié en GSC.
       Scopes non sensibles → **aucune validation Google requise** (bandeau « à valider » ignorable).
-- [ ] 🤝 Test final Google (🔒, ton vrai compte) : connexion → onboarding/app + cas invitation
+- [x] 🤝 **Connexion Google testée en prod** (vrai compte) : login → onboarding OK
+      (bug de conflit d'e-mail corrigé au passage)
 - [ ] (cosmétique, optionnel) 1er écran Google affiche `…supabase.co` : pour montrer
       `chillmeals.fr`, il faudrait un **domaine d'auth personnalisé Supabase** (payant) — non requis
 
@@ -62,10 +64,10 @@
       (`STRIPE_PRICE_MONTHLY=price_1UAaZ0…dbv1bJrM`, `STRIPE_PRICE_ANNUAL=price_1UAaZF…s4wCzixs`)
 - [x] 🔒 Vercel → clés **live** posées + redeploy
 - [x] 🔒 Enregistrer le **webhook live** → `https://chillmeals.fr/api/stripe/webhook`
-- [~] 🤝 Tunnel live **partiellement vérifié** : session checkout live OK, price ID OK,
-      essai 7 j OK, base EUR OK. **Reste à finir** (🔒, carte réelle) : aller au bout d'un
-      checkout pendant l'essai → vérifier passage **PREMIUM** + **portail**, puis **annuler**
-      pendant l'essai (aucun débit). Webhook non exercé tant qu'un abonnement n'est pas créé.
+- [x] 🤝 **Tunnel live vérifié de bout en bout** (carte réelle) : checkout → webhook →
+      foyer **PREMIUM/trialing** (`cus_…`) → **portail** → **annulation** (aucun débit).
+      Les **deux prix** (5,99 €/mois et 60 €/an) redirigent vers Stripe aux bons montants ✅.
+      (Bug corrigé au passage : checkout ne plante plus si un prix est mal configuré.)
 - [x] 🤝 **Adaptive Pricing désactivé** → tout le monde paie en EUR (choix confirmé)
 - [ ] 🔒 **Structure juridique + TVA + compte bancaire** pour encaisser (auto-entrepreneur/société)
 
