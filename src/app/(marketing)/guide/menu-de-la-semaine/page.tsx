@@ -358,6 +358,17 @@ export default function GuideMenuSemainePage() {
             </Link>
             .
           </p>
+          <p className="mt-4">
+            À la rentrée, quand les agendas se remplissent, cette méthode fait toute
+            la différence&nbsp;: voyez notre guide pour{" "}
+            <Link
+              href="/guide/organisation-repas-rentree"
+              className="font-medium text-ink underline decoration-gold underline-offset-2 hover:text-gold"
+            >
+              organiser les repas de la rentrée
+            </Link>
+            .
+          </p>
         </section>
 
         <section>

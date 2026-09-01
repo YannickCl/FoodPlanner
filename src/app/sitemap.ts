@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/recettes-qui-se-congelent", priority: 0.8 },
     { path: "/guide/menu-equilibre-semaine", priority: 0.8 },
     { path: "/guide/menu-semaine-pas-cher", priority: 0.8 },
+    { path: "/guide/organisation-repas-rentree", priority: 0.8 },
     { path: "/comparatif/jow", priority: 0.7 },
     { path: "/tarifs", priority: 0.8 },
     { path: "/mentions-legales", priority: 0.3 },
