@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { APP_NAME } from "@/lib/brand";
-import { CONSENT_KEY } from "@/lib/analytics";
+import { CONSENT_EVENT, CONSENT_KEY } from "@/lib/analytics";
 
 /**
  * Bandeau de consentement cookies (RGPD/CNIL).
@@ -29,6 +29,13 @@ function updateConsent(granted: boolean) {
   } else {
     w.dataLayer = w.dataLayer || [];
     w.dataLayer.push(["consent", "update", payload]);
+  }
+  // Prévient les traceurs déjà montés (ex. Pinterest) du changement de choix,
+  // pour qu'ils se chargent dès l'acceptation sans rechargement.
+  try {
+    window.dispatchEvent(new Event(CONSENT_EVENT));
+  } catch {
+    /* environnement sans window : ignoré */
   }
 }
 
@@ -59,8 +66,10 @@ export function ConsentBanner() {
       <div className="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-ink-soft">
           {APP_NAME} utilise des cookies de <strong className="text-ink">mesure
-          d&rsquo;audience</strong> (Google Analytics) pour s&rsquo;améliorer. Tu
-          peux refuser sans aucun impact sur ton utilisation.{" "}
+          d&rsquo;audience</strong> (Google Analytics) et de{" "}
+          <strong className="text-ink">suivi publicitaire</strong> (Pinterest)
+          pour s&rsquo;améliorer. Tu peux refuser sans aucun impact sur ton
+          utilisation.{" "}
           <Link href="/mentions-legales" className="underline hover:text-ink">
             En savoir plus
           </Link>

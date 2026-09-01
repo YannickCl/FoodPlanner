@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { NavBar } from "@/components/NavBar";
 import { ConsentBanner } from "@/components/ConsentBanner";
+import { PinterestTag } from "@/components/PinterestTag";
 import { getSettings } from "@/lib/queries";
 import { buildThemeCss } from "@/lib/theme";
 import { APP_NAME } from "@/lib/brand";
@@ -116,6 +117,8 @@ export default async function RootLayout({
           {children}
         </main>
         {GTM_ID && <ConsentBanner />}
+        {/* Tag Pinterest : self-gaté sur le consentement (ne charge rien avant accord). */}
+        <PinterestTag />
       </body>
     </html>
   );

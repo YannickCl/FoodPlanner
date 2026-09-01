@@ -18,6 +18,11 @@ const GTM = "https://www.googletagmanager.com https://*.googletagmanager.com";
 const GA =
   "https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com";
 
+// Domaines Pinterest Tag : core.js (s.pinimg.com) + endpoint de conversion
+// (ct.pinterest.com). Chargés uniquement après consentement côté client.
+const PINTEREST_SCRIPT = "https://s.pinimg.com";
+const PINTEREST_CT = "https://ct.pinterest.com";
+
 // Content-Security-Policy. En prod : pas de 'unsafe-eval'. En dev on l'ajoute
 // (React Refresh / HMR en ont besoin) ainsi que le websocket local du HMR.
 // 'unsafe-inline' est requis pour les scripts inline de Next et notre snippet
@@ -30,11 +35,12 @@ const csp = [
     isDev ? "'unsafe-eval'" : "",
     GTM,
     GA,
+    PINTEREST_SCRIPT,
   ]
     .filter(Boolean)
     .join(" "),
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob: ${GTM} ${GA}`,
+  `img-src 'self' data: blob: ${GTM} ${GA} ${PINTEREST_SCRIPT} ${PINTEREST_CT}`,
   "font-src 'self' data:",
   [
     "connect-src 'self'",
@@ -42,6 +48,7 @@ const csp = [
     supabaseWs,
     GTM,
     GA,
+    PINTEREST_CT, // Pinterest Tag : envoi des conversions
     "https://*.sentry.io", // suivi d'erreurs Sentry (ingestion)
     isDev ? "ws://localhost:* http://localhost:*" : "",
   ]
