@@ -92,6 +92,21 @@ export const PIN_MANIFEST: PinSpec[] = [
     cta: "Voir les idées",
   },
   {
+    slug: "menu-semaine-automne",
+    board: "Menus de la semaine",
+    path: "/guide/menu-semaine-automne",
+    pinTitle: "Menu de la semaine d'automne (7 dîners de saison)",
+    description:
+      "7 dîners de saison pour la famille : courge, champignons, poireaux, légumes racines… Réconfortant, économique, avec la liste de courses à imprimer. 🍂",
+    accent: "#cf7f5f",
+    soft: "#f5e9d3",
+    emoji: "🍂",
+    kicker: "MENU D'AUTOMNE",
+    titleHtml: "Menu de la<br>semaine d'automne",
+    subHtml: "7 dîners de saison<br>+ liste de courses à imprimer",
+    cta: "Voir le menu",
+  },
+  {
     slug: "menu-de-la-semaine",
     board: "Menus de la semaine",
     path: "/guide/menu-de-la-semaine",

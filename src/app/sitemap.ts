@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/organisation-repas-rentree", priority: 0.8 },
     { path: "/guide/que-manger-ce-soir", priority: 0.8 },
     { path: "/guide/menu-vegetarien-semaine", priority: 0.8 },
+    { path: "/guide/menu-semaine-automne", priority: 0.8 },
     { path: "/comparatif/jow", priority: 0.7 },
     { path: "/tarifs", priority: 0.8 },
     { path: "/mentions-legales", priority: 0.3 },
