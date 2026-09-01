@@ -114,9 +114,9 @@
 ## 3. Mesure & suivi
 - [x] 🤝 **Analytics = GTM + GA4** live et vérifié (cf. section 2) ✅
 - [ ] 🔒 Vérifier que **cron-job.org** (rappels push) pointe le bon domaine
-- [x] 🤝 **Suivi d'erreurs Sentry** intégré (client + serveur + edge, global-error, CSP) —
-      **code prêt & dormant** ; activer en posant `NEXT_PUBLIC_SENTRY_DSN` sur Vercel
-      (+ optionnel `SENTRY_ORG`/`SENTRY_PROJECT`/`SENTRY_AUTH_TOKEN` pour des stack traces lisibles)
+- [x] 🤝 **Suivi d'erreurs Sentry** live & vérifié (projet `javascript-nextjs`, org `chill-meals`,
+      région DE) — DSN public gravé, actif en production, ingestion confirmée (CSP OK).
+      Optionnel 🔒 : `SENTRY_ORG`/`SENTRY_PROJECT`/`SENTRY_AUTH_TOKEN` (Secret) pour les source maps.
 
 ---
 
