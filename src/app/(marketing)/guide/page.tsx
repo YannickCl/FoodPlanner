@@ -30,6 +30,7 @@ const SECTIONS: { heading: string; intro: string; items: Item[] }[] = [
     items: [
       { path: "/guide/que-manger-ce-soir", emoji: "⚡", title: "Que manger ce soir ?", teaser: "30 idées classées par situation : pressé·e, vide-frigo, réconfort…" },
       { path: "/guide/idees-repas-semaine", emoji: "💡", title: "Idées de repas pour la semaine", teaser: "Une banque d'idées par envie pour ne plus sécher devant le menu." },
+      { path: "/guide/menu-vegetarien-semaine", emoji: "🥦", title: "Menu végétarien de la semaine", teaser: "7 dîners sans viande + la liste de courses à imprimer." },
       { path: "/guide/organisation-repas-rentree", emoji: "🎒", title: "Organiser les repas de la rentrée", teaser: "Reprendre la main sur les repas de la famille dès la rentrée, sans stress." },
       { path: "/guide/menu-batch-cooking-semaine", emoji: "📋", title: "Menu batch cooking d'une semaine", teaser: "Un plan complet, session du dimanche et liste de courses incluses." },
       { path: "/guide/menu-equilibre-semaine", emoji: "🥗", title: "Menu de la semaine équilibré", teaser: "Composer des semaines variées et équilibrées, sans se compliquer." },
