@@ -79,6 +79,6 @@ export async function proxy(req: NextRequest) {
 export const config = {
   // Tout sauf : assets Next, favicon, PWA (manifeste + service worker), cron, images.
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|robots.txt|sitemap.xml|api/cron|api/stripe|.*\\.(?:svg|png|jpg|jpeg|ico)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|robots.txt|sitemap.xml|api/cron|api/stripe|api/pinterest|.*\\.(?:svg|png|jpg|jpeg|ico)$).*)",
   ],
 };
