@@ -31,6 +31,7 @@ const SECTIONS: { heading: string; intro: string; items: Item[] }[] = [
     items: [
       { path: "/guide/que-manger-ce-soir", emoji: "⚡", title: "Que manger ce soir ?", teaser: "30 idées classées par situation : pressé·e, vide-frigo, réconfort…" },
       { path: "/guide/idees-repas-semaine", emoji: "💡", title: "Idées de repas pour la semaine", teaser: "Une banque d'idées par envie pour ne plus sécher devant le menu." },
+      { path: "/guide/menu-semaine-express", emoji: "⏱️", title: "Menu de la semaine express", teaser: "7 dîners en moins de 30 minutes + liste de courses." },
       { path: "/guide/idees-petit-dejeuner-semaine", emoji: "🥐", title: "Petits-déjeuners de la semaine", teaser: "7 idées + des listes par envie (express, la veille, enfants)." },
       { path: "/guide/menu-vegetarien-semaine", emoji: "🥦", title: "Menu végétarien de la semaine", teaser: "7 dîners sans viande + la liste de courses à imprimer." },
       { path: "/guide/menu-semaine-automne", emoji: "🍂", title: "Menu de la semaine d'automne", teaser: "7 dîners de saison (courge, champignons…) + liste de courses." },
@@ -47,6 +48,7 @@ const SECTIONS: { heading: string; intro: string; items: Item[] }[] = [
     intro: "Pour choisir l'outil qui vous convient.",
     items: [
       { path: "/comparatif/jow", emoji: "⚖️", title: "Alternative à Jow", teaser: "Vos recettes, sans supermarché imposé : le comparatif honnête." },
+      { path: "/comparatif/frigo-magic", emoji: "🧊", title: "Alternative à Frigo Magic", teaser: "Planifier la semaine, pas seulement vider le frigo." },
     ],
   },
 ];

@@ -122,6 +122,21 @@ export const PIN_MANIFEST: PinSpec[] = [
     cta: "Lire le guide",
   },
   {
+    slug: "menu-semaine-express",
+    board: "Menus de la semaine",
+    path: "/guide/menu-semaine-express",
+    pinTitle: "Menu de la semaine express : 7 dîners en moins de 30 minutes",
+    description:
+      "7 dîners prêts en moins de 30 minutes pour toute la famille, avec la liste de courses par rayon à imprimer. Pour les soirs pressés, sans sacrifier l'équilibre. ⏱️",
+    accent: "#6d9a76",
+    soft: "#e2efe2",
+    emoji: "⏱️",
+    kicker: "EN 30 MINUTES",
+    titleHtml: "Menu express<br>de la semaine",
+    subHtml: "7 dîners en moins<br>de 30 minutes",
+    cta: "Voir le menu",
+  },
+  {
     slug: "menu-de-la-semaine",
     board: "Menus de la semaine",
     path: "/guide/menu-de-la-semaine",
