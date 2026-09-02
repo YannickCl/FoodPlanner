@@ -21,6 +21,7 @@ const SECTIONS: { heading: string; intro: string; items: Item[] }[] = [
     items: [
       { path: "/guide/menu-de-la-semaine", emoji: "🗓️", title: "Le menu de la semaine", teaser: "La méthode complète pour planifier une semaine de repas en quinze minutes." },
       { path: "/guide/batch-cooking", emoji: "🍲", title: "Le batch cooking", teaser: "Cuisiner plusieurs repas en une seule session : le guide pour débuter." },
+      { path: "/guide/meal-prep-debutant", emoji: "🥡", title: "Le meal prep pour débuter", teaser: "Préparer ses repas de la semaine à l'avance, méthode en 5 étapes." },
       { path: "/guide/charge-mentale-repas", emoji: "🧠", title: "La charge mentale des repas", teaser: "Pourquoi « on mange quoi ce soir ? » épuise, et comment s'en libérer." },
     ],
   },

@@ -107,6 +107,21 @@ export const PIN_MANIFEST: PinSpec[] = [
     cta: "Voir le menu",
   },
   {
+    slug: "meal-prep-debutant",
+    board: "Batch cooking & meal prep",
+    path: "/guide/meal-prep-debutant",
+    pinTitle: "Le meal prep pour débuter : méthode en 5 étapes",
+    description:
+      "Préparer ses repas de la semaine à l'avance quand on part de zéro : la différence avec le batch cooking, la méthode en 5 étapes, quoi préparer et les erreurs à éviter. 🥡",
+    accent: "#62a89e",
+    soft: "#e2f1ee",
+    emoji: "🥡",
+    kicker: "MEAL PREP",
+    titleHtml: "Le meal prep<br>pour débuter",
+    subHtml: "Préparer ses repas de la semaine<br>quand on part de zéro",
+    cta: "Lire le guide",
+  },
+  {
     slug: "menu-de-la-semaine",
     board: "Menus de la semaine",
     path: "/guide/menu-de-la-semaine",
