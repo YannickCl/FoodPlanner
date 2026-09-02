@@ -25,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/menu-vegetarien-semaine", priority: 0.8 },
     { path: "/guide/menu-semaine-automne", priority: 0.8 },
     { path: "/guide/meal-prep-debutant", priority: 0.8 },
+    { path: "/guide/idees-petit-dejeuner-semaine", priority: 0.8 },
     { path: "/comparatif/jow", priority: 0.7 },
     { path: "/tarifs", priority: 0.8 },
     { path: "/mentions-legales", priority: 0.3 },

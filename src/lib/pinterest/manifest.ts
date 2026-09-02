@@ -137,6 +137,21 @@ export const PIN_MANIFEST: PinSpec[] = [
     cta: "La méthode",
   },
   {
+    slug: "idees-petit-dejeuner-semaine",
+    board: "Menus de la semaine",
+    path: "/guide/idees-petit-dejeuner-semaine",
+    pinTitle: "Idées de petits-déjeuners pour la semaine",
+    description:
+      "Un petit-déjeuner différent chaque jour : 7 idées pour la semaine + des listes par envie (express, à préparer la veille, salés, gourmands, pour les enfants). 🥐",
+    accent: "#d08aa6",
+    soft: "#f7e6ee",
+    emoji: "🥐",
+    kicker: "PETIT-DÉJ",
+    titleHtml: "Petits-déjeuners<br>de la semaine",
+    subHtml: "7 idées faciles<br>pour bien démarrer",
+    cta: "Voir les idées",
+  },
+  {
     slug: "semainier-a-imprimer",
     board: "Organisation des repas",
     path: "/guide/semainier-a-imprimer",
