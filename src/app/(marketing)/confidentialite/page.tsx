@@ -16,7 +16,7 @@ export default function ConfidentialitePage() {
     <LegalPage
       title="Politique de confidentialité"
       subtitle={`Protection de vos données personnelles chez ${APP_NAME} (RGPD).`}
-      updated="31 août 2026"
+      updated="5 septembre 2026"
     >
       <Section title="Responsable du traitement">
         <p>
@@ -59,6 +59,13 @@ export default function ConfidentialitePage() {
             Analytics, <strong>uniquement si vous y consentez</strong> via le bandeau
             cookies.
           </Li>
+          <Li>
+            <strong>Suivi d’erreurs</strong> : en cas de bug, un rapport technique et un
+            « rejeu de session » (via Sentry) sont enregistrés pour diagnostiquer
+            l’incident. Le texte, les saisies et les médias sont{" "}
+            <strong>masqués</strong> : aucune donnée personnelle n’y figure. L’enregistrement
+            ne se déclenche <strong>qu’en cas d’erreur</strong>, jamais en continu.
+          </Li>
         </ul>
       </Section>
 
@@ -73,7 +80,8 @@ export default function ConfidentialitePage() {
             passe) — <em>exécution du contrat</em>.
           </Li>
           <Li>
-            Sécurité, prévention des abus et bon fonctionnement — <em>intérêt légitime</em>.
+            Sécurité, prévention des abus, diagnostic technique (suivi d’erreurs) et bon
+            fonctionnement — <em>intérêt légitime</em>.
           </Li>
           <Li>
             Mesure d’audience et cookies non essentiels — <em>consentement</em>
@@ -103,6 +111,10 @@ export default function ConfidentialitePage() {
           <Li>
             <strong>Google</strong> — connexion Google (OAuth) et mesure d’audience
             (Google Analytics, soumise à consentement).
+          </Li>
+          <Li>
+            <strong>Sentry</strong> — suivi des erreurs et diagnostic technique
+            (rejeu de session masqué, déclenché uniquement en cas d’erreur).
           </Li>
           <Li>
             <strong>Anthropic</strong> — génération de recettes par intelligence

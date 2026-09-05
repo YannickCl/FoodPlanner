@@ -55,7 +55,7 @@ const csp = [
     .filter(Boolean)
     .join(" "),
   `frame-src 'self' ${GTM}`,
-  "worker-src 'self'",
+  "worker-src 'self' blob:", // Sentry Session Replay compresse via un worker (blob:)
   "manifest-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
