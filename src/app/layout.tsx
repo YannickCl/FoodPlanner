@@ -5,6 +5,7 @@ import "./globals.css";
 import { NavBar } from "@/components/NavBar";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { PinterestTag } from "@/components/PinterestTag";
+import { AppUpdateReloader } from "@/components/AppUpdateReloader";
 import { getSettings } from "@/lib/queries";
 import { buildThemeCss } from "@/lib/theme";
 import { APP_NAME } from "@/lib/brand";
@@ -121,6 +122,8 @@ export default async function RootLayout({
         {GTM_ID && <ConsentBanner />}
         {/* Tag Pinterest : self-gaté sur le consentement (ne charge rien avant accord). */}
         <PinterestTag />
+        {/* Bandeau « nouvelle version » si une Server Action périmée échoue. */}
+        <AppUpdateReloader />
       </body>
     </html>
   );

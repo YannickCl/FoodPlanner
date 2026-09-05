@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import { STALE_DEPLOY_RE } from "@/lib/stale-deploy";
 
 // Suivi d'erreurs côté navigateur. DSN public gravé, actif en production.
 Sentry.init({
@@ -21,6 +22,18 @@ Sentry.init({
   replaysSessionSampleRate: 0,
   replaysOnErrorSampleRate: 1.0,
   environment: process.env.NEXT_PUBLIC_VERCEL_ENV ?? "production",
+  // Ignore l'erreur bénigne « Server Action introuvable » : elle survient quand
+  // un onglet chargé avant un redéploiement appelle une ancienne action. Se
+  // soigne en rechargeant (voir AppUpdateReloader) — inutile de la remonter,
+  // et surtout de consommer un rejeu de session pour ça.
+  beforeSend(event, hint) {
+    const msg =
+      (hint?.originalException as { message?: string } | undefined)?.message ??
+      event.exception?.values?.[0]?.value ??
+      "";
+    if (STALE_DEPLOY_RE.test(msg)) return null;
+    return event;
+  },
 });
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

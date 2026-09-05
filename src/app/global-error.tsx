@@ -2,6 +2,7 @@
 
 import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
+import { isStaleDeployMessage } from "@/lib/stale-deploy";
 
 // Capture les erreurs qui remontent jusqu'à la racine (layout) vers Sentry,
 // et affiche un écran de secours minimal.
@@ -10,9 +11,13 @@ export default function GlobalError({
 }: {
   error: Error & { digest?: string };
 }) {
+  // Cas bénin « onglet périmé après un redéploiement » : message dédié, et on
+  // ne le remonte pas à Sentry (beforeSend le filtre aussi, ceinture+bretelles).
+  const staleDeploy = isStaleDeployMessage(error);
+
   useEffect(() => {
-    Sentry.captureException(error);
-  }, [error]);
+    if (!staleDeploy) Sentry.captureException(error);
+  }, [error, staleDeploy]);
 
   return (
     <html lang="fr">
@@ -30,9 +35,15 @@ export default function GlobalError({
         }}
       >
         <div>
-          <h1 style={{ fontSize: 20, marginBottom: 8 }}>Oups, une erreur est survenue</h1>
+          <h1 style={{ fontSize: 20, marginBottom: 8 }}>
+            {staleDeploy
+              ? "Une nouvelle version est disponible"
+              : "Oups, une erreur est survenue"}
+          </h1>
           <p style={{ color: "#8a8290", marginBottom: 16 }}>
-            Réessaie dans un instant — l’incident a été signalé.
+            {staleDeploy
+              ? "L’application a été mise à jour. Recharge la page pour continuer."
+              : "Réessaie dans un instant — l’incident a été signalé."}
           </p>
           <button
             onClick={() => window.location.reload()}
