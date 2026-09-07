@@ -25,7 +25,16 @@ export const publicRobots = SEO_INDEXABLE
   ? { index: true, follow: true }
   : { index: false, follow: false };
 
-/** Chemins privés (application + tunnels d'auth) à ne jamais indexer. */
+/**
+ * Chemins bloqués à l'exploration dans robots.txt : l'application (routes de
+ * données, non liées publiquement et qui redirigent vers /login) et l'API.
+ *
+ * ⚠️ On NE bloque PAS les pages d'auth (/login, /signup, /reset, /rejoindre) :
+ * elles sont liées publiquement (nav + pied de page) et portent déjà un
+ * `noindex` (layout racine). Les bloquer empêcherait Google de LIRE ce noindex
+ * → il les indexerait quand même via les liens (« indexée malgré le blocage »).
+ * En les laissant explorables, Google voit le noindex et les exclut proprement.
+ */
 export const PRIVATE_PATHS = [
   "/calendrier",
   "/courses",
@@ -33,9 +42,5 @@ export const PRIVATE_PATHS = [
   "/reglages",
   "/batch",
   "/onboarding",
-  "/login",
-  "/signup",
-  "/reset",
-  "/rejoindre",
   "/api",
 ];
