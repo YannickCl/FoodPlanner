@@ -6,6 +6,7 @@ import { NavBar } from "@/components/NavBar";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { PinterestTag } from "@/components/PinterestTag";
 import { AppUpdateReloader } from "@/components/AppUpdateReloader";
+import { InstallPwa } from "@/components/InstallPwa";
 import { getSettings } from "@/lib/queries";
 import { buildThemeCss } from "@/lib/theme";
 import { APP_NAME } from "@/lib/brand";
@@ -124,6 +125,8 @@ export default async function RootLayout({
         <PinterestTag />
         {/* Bandeau « nouvelle version » si une Server Action périmée échoue. */}
         <AppUpdateReloader />
+        {/* Installation PWA : bouton (Android) / instructions (iOS) + SW global. */}
+        <InstallPwa />
       </body>
     </html>
   );

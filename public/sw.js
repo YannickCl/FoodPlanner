@@ -3,6 +3,11 @@
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => e.waitUntil(self.clients.claim()));
 
+// Gestionnaire fetch minimal (passe-plat) : requis par Chrome pour rendre la
+// PWA installable. Ne modifie pas le comportement réseau — pas de cache offline
+// pour l'instant (à ajouter plus tard si besoin).
+self.addEventListener("fetch", () => {});
+
 self.addEventListener("push", (event) => {
   let data = {};
   try {
