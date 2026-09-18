@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import { STALE_DEPLOY_RE } from "@/lib/stale-deploy";
 
 // Suivi d'erreurs côté edge (middleware). DSN public gravé, actif en production.
 Sentry.init({
@@ -8,4 +9,14 @@ Sentry.init({
   enabled: process.env.NODE_ENV === "production",
   tracesSampleRate: 0.1,
   environment: process.env.VERCEL_ENV ?? "production",
+  // Ignore l'erreur bénigne « Server Action introuvable » (onglet chargé avant
+  // un redéploiement). Se soigne en rechargeant — inutile de la remonter.
+  beforeSend(event, hint) {
+    const msg =
+      (hint?.originalException as { message?: string } | undefined)?.message ??
+      event.exception?.values?.[0]?.value ??
+      "";
+    if (STALE_DEPLOY_RE.test(msg)) return null;
+    return event;
+  },
 });
