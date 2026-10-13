@@ -10,10 +10,15 @@ import {
 } from "@/generated/prisma/enums";
 
 // IA de génération de recettes via Claude (Anthropic).
-// Modèle : claude-opus-5, sortie structurée (JSON Schema), effort "low" pour
-// limiter le coût (~1-3 centimes par recette).
+// Sortie structurée (JSON Schema), effort "low", streaming. Deux modèles selon
+// le besoin (voir ci-dessous).
 
-const MODEL = "claude-opus-5";
+// Recette unique (depuis un nom / régénération) : Opus 5 pour la qualité
+// (~14 s, sous le timeout).
+const MODEL_SINGLE = "claude-opus-5";
+// Batch « Propose-moi » (5 recettes) : Sonnet 5 — 2-3× plus rapide et ~5× moins
+// cher, pour garder une marge confortable sous le timeout de fonction (60 s).
+const MODEL_BATCH = "claude-sonnet-5";
 
 export interface AIIngredient {
   name: string;
@@ -112,13 +117,14 @@ async function callStructured(
   userText: string,
   schema: JsonSchema,
   maxTokens: number,
+  model: string,
 ): Promise<unknown> {
   // Un seul appel : on streame (évite le timeout de lecture HTTP du SDK sur les
   // générations longues), puis on contrôle l'arrêt et le JSON.
   const once = async (): Promise<unknown> => {
     const res = await client()
       .messages.stream({
-        model: MODEL,
+        model,
         max_tokens: maxTokens,
         output_config: { effort: "low", format: { type: "json_schema", schema } },
         messages: [{ role: "user", content: userText }],
@@ -165,6 +171,7 @@ export async function generateRecipeFromName(
     prompt,
     recipeSchema(false),
     8000,
+    MODEL_SINGLE,
   )) as Omit<AIRecipe, "name">;
   return { ...data, name };
 }
@@ -196,7 +203,7 @@ export async function proposeRecipes(opts: {
     properties: { recipes: { type: "array", items: recipeSchema(true) } },
     required: ["recipes"],
   };
-  const data = (await callStructured(prompt, schema, 24000)) as {
+  const data = (await callStructured(prompt, schema, 24000, MODEL_BATCH)) as {
     recipes: AIRecipe[];
   };
   return data.recipes ?? [];
