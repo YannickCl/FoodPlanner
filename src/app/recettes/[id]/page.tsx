@@ -22,6 +22,8 @@ import { getCurrentHouseholdId } from "@/lib/tenant";
 import type { Aisle } from "@/generated/prisma/enums";
 
 export const dynamic = "force-dynamic";
+// Régénération IA d'une recette : évite le timeout de fonction Vercel.
+export const maxDuration = 60;
 
 export default async function RecipeDetailPage({
   params,

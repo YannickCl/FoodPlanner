@@ -4,6 +4,9 @@ import { RecipesBrowser } from "./RecipesBrowser";
 import { ProposeRecipes } from "./ProposeRecipes";
 
 export const dynamic = "force-dynamic";
+// Génération IA (proposer des recettes) : laisse le temps au modèle de finir
+// avant le timeout de fonction Vercel.
+export const maxDuration = 60;
 
 export default async function RecettesPage() {
   const recipes = await getRecipes();

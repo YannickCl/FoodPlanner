@@ -113,18 +113,44 @@ async function callStructured(
   schema: JsonSchema,
   maxTokens: number,
 ): Promise<unknown> {
-  const res = await client().messages.create({
-    model: MODEL,
-    max_tokens: maxTokens,
-    output_config: { effort: "low", format: { type: "json_schema", schema } },
-    messages: [{ role: "user", content: userText }],
-    system: SYSTEM,
-  });
-  const textBlock = res.content.find((b) => b.type === "text");
-  if (!textBlock || textBlock.type !== "text") {
-    throw new Error("Réponse IA vide");
+  // Un seul appel : on streame (évite le timeout de lecture HTTP du SDK sur les
+  // générations longues), puis on contrôle l'arrêt et le JSON.
+  const once = async (): Promise<unknown> => {
+    const res = await client()
+      .messages.stream({
+        model: MODEL,
+        max_tokens: maxTokens,
+        output_config: { effort: "low", format: { type: "json_schema", schema } },
+        messages: [{ role: "user", content: userText }],
+        system: SYSTEM,
+      })
+      .finalMessage();
+
+    if (res.stop_reason === "refusal") {
+      throw new Error("La génération a été refusée par l'IA.");
+    }
+    if (res.stop_reason === "max_tokens") {
+      // JSON forcément tronqué : inutile de tenter de le parser.
+      throw new Error("Réponse IA tronquée (limite de tokens atteinte).");
+    }
+    const textBlock = res.content.find((b) => b.type === "text");
+    if (!textBlock || textBlock.type !== "text") {
+      throw new Error("Réponse IA vide");
+    }
+    try {
+      return JSON.parse(textBlock.text);
+    } catch {
+      throw new Error("Réponse IA mal formée (JSON invalide).");
+    }
+  };
+
+  // Un seul nouvel essai : couvre les aléas transitoires (surcharge API,
+  // troncature/JSON ponctuels) sans doubler systématiquement le coût.
+  try {
+    return await once();
+  } catch {
+    return await once();
   }
-  return JSON.parse(textBlock.text);
 }
 
 /** Génère une recette complète à partir de son nom. */
@@ -138,7 +164,7 @@ export async function generateRecipeFromName(
   const data = (await callStructured(
     prompt,
     recipeSchema(false),
-    5000,
+    8000,
   )) as Omit<AIRecipe, "name">;
   return { ...data, name };
 }
@@ -170,7 +196,7 @@ export async function proposeRecipes(opts: {
     properties: { recipes: { type: "array", items: recipeSchema(true) } },
     required: ["recipes"],
   };
-  const data = (await callStructured(prompt, schema, 16000)) as {
+  const data = (await callStructured(prompt, schema, 24000)) as {
     recipes: AIRecipe[];
   };
   return data.recipes ?? [];

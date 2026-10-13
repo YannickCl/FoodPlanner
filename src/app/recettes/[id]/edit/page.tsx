@@ -5,6 +5,8 @@ import { updateRecipe } from "@/app/actions/recipes";
 import { RecipeForm, type RecipeFormInitial } from "../../RecipeForm";
 
 export const dynamic = "force-dynamic";
+// Génération IA (pré-remplir depuis un nom) : évite le timeout de fonction.
+export const maxDuration = 60;
 
 export default async function EditRecipePage({
   params,
