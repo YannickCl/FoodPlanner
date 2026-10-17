@@ -7,6 +7,7 @@ import { recipeSchema } from "@/lib/validation";
 import { getSettings } from "@/lib/queries";
 import { getCurrentHouseholdId } from "@/lib/tenant";
 import { getRecipeQuota, FREE_RECIPE_LIMIT } from "@/lib/quota";
+import { premiumActive } from "@/lib/plan";
 import { generateRecipeFromName, proposeRecipes, type AIRecipe } from "@/lib/ai";
 import { guessAisle } from "@/lib/aisle";
 import type { Category } from "@/generated/prisma/enums";
@@ -134,7 +135,7 @@ export async function regenerateRecipe(
     where: { id: householdId },
     select: { plan: true },
   });
-  if (household?.plan !== "PREMIUM") {
+  if (!premiumActive(household?.plan)) {
     return { ok: false, error: "La régénération par l'IA fait partie de l'offre premium." };
   }
   const existing = await prisma.recipe.findFirst({

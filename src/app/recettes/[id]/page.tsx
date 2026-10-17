@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getRecipe } from "@/lib/queries";
 import { deleteRecipe } from "@/app/actions/recipes";
+import { premiumActive } from "@/lib/plan";
 import {
   CATEGORY_LABELS,
   DAYTYPE_LABELS,
@@ -39,7 +40,7 @@ export default async function RecipeDetailPage({
     where: { id: householdId },
     select: { plan: true },
   });
-  const premium = household?.plan === "PREMIUM";
+  const premium = premiumActive(household?.plan);
 
   const byAisle = new Map<Aisle, typeof recipe.ingredients>();
   for (const ing of recipe.ingredients) {

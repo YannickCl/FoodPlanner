@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getBatchMeals } from "@/lib/queries";
 import { getCurrentHouseholdId } from "@/lib/tenant";
 import { prisma } from "@/lib/db";
+import { premiumActive } from "@/lib/plan";
 import {
   aggregateShoppingList,
   type PlannedRecipe,
@@ -41,7 +42,7 @@ export default async function BatchPage({
     where: { id: householdId },
     select: { plan: true },
   });
-  const premium = household?.plan === "PREMIUM";
+  const premium = premiumActive(household?.plan);
 
   const back = (
     <div className="mb-4">

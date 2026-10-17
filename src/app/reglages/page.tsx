@@ -3,6 +3,7 @@ import { getCurrentHouseholdId } from "@/lib/tenant";
 import { getHouseholdMembers } from "@/app/actions/household";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/db";
+import { premiumActive } from "@/lib/plan";
 import { SettingsForm } from "./SettingsForm";
 import { RemindersCard } from "./RemindersCard";
 import { MembersCard } from "./MembersCard";
@@ -28,7 +29,7 @@ export default async function ReglagesPage({
     }),
     getHouseholdMembers(),
   ]);
-  const premium = household?.plan === "PREMIUM";
+  const premium = premiumActive(household?.plan);
   const {
     data: { user },
   } = await (await createSupabaseServerClient()).auth.getUser();

@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "./db";
+import { premiumActive } from "./plan";
 
 export const FREE_RECIPE_LIMIT = 30;
 
@@ -16,7 +17,7 @@ export async function getRecipeQuota(householdId: string): Promise<RecipeQuota> 
     prisma.household.findUnique({ where: { id: householdId }, select: { plan: true } }),
     prisma.recipe.count({ where: { householdId } }),
   ]);
-  const premium = household?.plan === "PREMIUM";
+  const premium = premiumActive(household?.plan);
   return {
     premium,
     count,

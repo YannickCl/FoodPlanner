@@ -6,6 +6,7 @@ import {
 } from "@/lib/queries";
 import { prisma } from "@/lib/db";
 import { getCurrentHouseholdId } from "@/lib/tenant";
+import { premiumActive } from "@/lib/plan";
 import { buildMonthGrid, toISO } from "@/lib/dates";
 import { CalendarClient, type MealMap } from "./CalendarClient";
 
@@ -25,7 +26,7 @@ export default async function CalendrierPage({
     select: { onboardedAt: true, plan: true },
   });
   if (!household?.onboardedAt) redirect("/onboarding");
-  const premium = household.plan === "PREMIUM";
+  const premium = premiumActive(household.plan);
   const now = new Date();
   const todayISO = toISO(now);
   const year = sp.y ? parseInt(sp.y, 10) : now.getFullYear();
