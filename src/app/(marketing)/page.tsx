@@ -116,7 +116,7 @@ export default async function Home() {
           </Link>
         </div>
         <p className="mt-4 text-xs text-ink-soft">
-          Sans engagement · Gratuit jusqu’à 30 recettes
+          Sans carte bancaire · Gratuit à vie pour les membres fondateurs
         </p>
       </section>
 
@@ -202,25 +202,29 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Tarifs teaser */}
+      {/* Tarifs teaser — offre de lancement */}
       <section className="mt-16 text-center">
-        <h2 className="mb-2 font-display text-3xl text-ink">Simple et accessible</h2>
+        <p className="eyebrow mb-1">Offre de lancement</p>
+        <h2 className="mb-2 font-display text-3xl text-ink">
+          Gratuit pour les membres fondateurs
+        </h2>
         <p className="mb-6 text-sm text-ink-soft">
-          Gratuit pour commencer. Premium à partir de{" "}
-          <span className="num font-semibold text-ink">5 €/mois</span> (annuel).
+          {APP_NAME} est gratuit pendant le lancement. Les premiers inscrits gardent
+          l’accès complet{" "}
+          <span className="font-semibold text-ink">gratuit à vie</span>.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/signup"
             className="rounded-full bg-gold px-7 py-3 text-base font-semibold text-ink shadow-sm transition-opacity hover:opacity-90"
           >
-            Commencer gratuitement
+            Devenir membre fondateur
           </Link>
           <Link
             href="/tarifs"
             className="rounded-full border border-line px-6 py-3 text-base font-medium text-ink hover:bg-parchment-deep"
           >
-            Comparer les offres
+            En savoir plus
           </Link>
         </div>
       </section>

@@ -7,140 +7,104 @@ import { SITE_URL } from "@/lib/seo";
 const JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Product",
-  name: `${APP_NAME} Premium`,
+  name: APP_NAME,
   description:
-    "Assistant IA de recettes, planning automatique de la semaine et batch cooking guidé pour les repas de la famille.",
+    "Planification des repas de la famille : assistant IA de recettes, planning automatique de la semaine, liste de courses et batch cooking guidé. Gratuit pendant le lancement.",
   brand: { "@type": "Brand", name: APP_NAME },
-  offers: [
-    {
-      "@type": "Offer",
-      name: "Premium mensuel",
-      price: "5.99",
-      priceCurrency: "EUR",
-      url: `${SITE_URL}/tarifs`,
-      availability: "https://schema.org/InStock",
-    },
-    {
-      "@type": "Offer",
-      name: "Premium annuel",
-      price: "60.00",
-      priceCurrency: "EUR",
-      url: `${SITE_URL}/tarifs`,
-      availability: "https://schema.org/InStock",
-    },
-  ],
-};
-
-export const metadata: Metadata = {
-  title: "Tarifs & abonnement",
-  description:
-    "Gratuit jusqu'à 30 recettes, ou Premium dès 5 €/mois (annuel) : assistant IA, planning automatique et batch cooking. Essai gratuit de 7 jours.",
-  alternates: { canonical: "/tarifs" },
-  openGraph: {
-    url: "/tarifs",
-    title: "Tarifs & abonnement",
-    description:
-      "Gratuit pour commencer, Premium dès 5 €/mois (annuel). Essai gratuit de 7 jours.",
+  offers: {
+    "@type": "Offer",
+    name: "Membre fondateur — accès complet gratuit",
+    price: "0",
+    priceCurrency: "EUR",
+    url: `${SITE_URL}/tarifs`,
+    availability: "https://schema.org/InStock",
   },
 };
 
-const ROWS: { label: string; free: string | boolean; premium: string | boolean }[] = [
-  { label: "Carnet de recettes", free: "30 recettes", premium: "Illimité" },
-  { label: "Planning manuel", free: true, premium: true },
-  { label: "Liste de courses automatique", free: true, premium: true },
-  { label: "Mode cuisine pas à pas + minuteurs", free: true, premium: true },
-  { label: "Assistant IA (recettes sur mesure)", free: false, premium: true },
-  { label: "Planning automatique longue durée", free: false, premium: true },
-  { label: "Batch cooking + cuisine guidée", free: false, premium: true },
-];
+export const metadata: Metadata = {
+  title: "Gratuit pour les membres fondateurs",
+  description:
+    "Chill Meals est gratuit pendant le lancement : les premiers inscrits deviennent membres fondateurs et gardent l'accès complet (IA, planning, batch cooking) gratuit à vie.",
+  alternates: { canonical: "/tarifs" },
+  openGraph: {
+    url: "/tarifs",
+    title: "Gratuit pour les membres fondateurs",
+    description:
+      "Accès complet, gratuit à vie pour les premiers inscrits. Rejoignez les membres fondateurs de Chill Meals.",
+  },
+};
 
-function Mark({ v }: { v: string | boolean }) {
-  if (v === true) return <span className="text-green">✓</span>;
-  if (v === false) return <span className="text-ink-soft/50">—</span>;
-  return <span className="text-ink">{v}</span>;
-}
+const INCLUDED = [
+  "Carnet de recettes illimité",
+  "Assistant IA — des recettes sur mesure à partir de vos plats",
+  "Planning manuel et automatique (semaine ou mois)",
+  "Liste de courses automatique, rangée par rayon",
+  "Mode cuisine pas à pas + minuteurs",
+  "Batch cooking + cuisine guidée",
+  "Foyer partagé entre plusieurs comptes",
+];
 
 export default function TarifsPage() {
   return (
-    <div>
+    <div className="mx-auto max-w-2xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
+
       <div className="mb-8 text-center">
-        <p className="eyebrow mb-1">Nos offres</p>
-        <h1 className="font-display text-4xl text-ink">Simple et accessible</h1>
-        <p className="mt-2 text-sm text-ink-soft">
-          Commence gratuitement. Passe en premium quand tu veux, sans engagement.
+        <p className="eyebrow mb-1">Offre de lancement</p>
+        <h1 className="font-display text-4xl text-ink sm:text-5xl">
+          Gratuit pour les membres fondateurs
+        </h1>
+        <p className="mx-auto mt-3 max-w-xl text-ink-soft">
+          {APP_NAME} est <strong className="text-ink">100&nbsp;% gratuit</strong> pendant
+          le lancement. Les premiers inscrits deviennent{" "}
+          <strong className="text-ink">membres fondateurs</strong> et gardent l&rsquo;accès
+          complet — <strong className="text-ink">gratuit à vie</strong>.
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Card className="p-6">
-          <h2 className="font-display text-2xl text-ink">Gratuit</h2>
-          <p className="num mt-1 text-3xl font-semibold text-ink">0 €</p>
-          <p className="mb-4 text-sm text-ink-soft">Pour bien commencer.</p>
-          <Link
-            href="/signup"
-            className="block rounded-full border border-ink px-5 py-2.5 text-center text-sm font-medium text-ink hover:bg-ink hover:text-parchment"
-          >
-            Créer mon compte
-          </Link>
-        </Card>
-
-        <Card className="border-2 border-gold p-6">
-          <div className="mb-1 flex items-center gap-2">
-            <h2 className="font-display text-2xl text-ink">Premium</h2>
-            <span className="rounded-full bg-gold-soft px-2 py-0.5 text-[11px] font-semibold text-ink">
-              Essai 7 jours
-            </span>
-          </div>
-          <p className="mt-1 flex items-baseline gap-2">
-            <span className="num text-3xl font-semibold text-ink">5,99 €</span>
-            <span className="text-sm text-ink-soft">/ mois</span>
-          </p>
-          <p className="mb-4 text-sm text-ink-soft">
-            ou <span className="num font-medium text-ink">60 €/an</span> — 2 mois offerts.
-          </p>
-          <Link
-            href="/signup"
-            className="block rounded-full bg-gold px-5 py-2.5 text-center text-sm font-semibold text-ink shadow-sm hover:opacity-90"
-          >
-            Essayer le premium
-          </Link>
-        </Card>
-      </div>
-
-      {/* Comparatif */}
-      <Card className="mt-6 overflow-hidden p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-line text-left">
-                <th className="px-4 py-3 font-medium text-ink-soft">Fonctionnalité</th>
-                <th className="px-4 py-3 text-center font-medium text-ink-soft">Gratuit</th>
-                <th className="px-4 py-3 text-center font-medium text-gold">Premium</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ROWS.map((r) => (
-                <tr key={r.label} className="border-b border-line/60">
-                  <td className="px-4 py-3 text-ink">{r.label}</td>
-                  <td className="px-4 py-3 text-center">
-                    <Mark v={r.free} />
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <Mark v={r.premium} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <Card className="border-2 border-gold p-6 sm:p-8">
+        <div className="flex items-center justify-center">
+          <span className="rounded-full bg-gold-soft px-3 py-1 text-xs font-semibold text-ink">
+            ⭐ Membre fondateur
+          </span>
         </div>
+        <p className="mt-4 text-center">
+          <span className="num text-5xl font-semibold text-ink">0&nbsp;€</span>
+        </p>
+        <p className="mb-6 text-center text-sm text-ink-soft">
+          Tout inclus, à vie pour les fondateurs.
+        </p>
+
+        <ul className="mx-auto mb-6 max-w-md space-y-2">
+          {INCLUDED.map((f) => (
+            <li key={f} className="flex items-start gap-2 text-sm text-ink">
+              <span className="mt-0.5 text-green" aria-hidden>
+                ✓
+              </span>
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        <Link
+          href="/signup"
+          className="block rounded-full bg-gold px-6 py-3 text-center text-base font-semibold text-ink shadow-sm transition-opacity hover:opacity-90"
+        >
+          Devenir membre fondateur — gratuit
+        </Link>
+        <p className="mt-3 text-center text-xs text-ink-soft">
+          Sans carte bancaire. Inscription en 1 minute.
+        </p>
       </Card>
 
-      <p className="mt-6 text-center text-xs text-ink-soft">
-        Prix TTC. Sans engagement, résiliable à tout moment.
+      <p className="mx-auto mt-6 max-w-xl text-center text-xs text-ink-soft">
+        Après la phase de lancement, {APP_NAME} passera à{" "}
+        <span className="num">5,99&nbsp;€/mois</span> (ou{" "}
+        <span className="num">60&nbsp;€/an</span>). Les membres fondateurs, eux, ne
+        paieront jamais — c&rsquo;est notre merci aux premiers qui nous font confiance.
       </p>
     </div>
   );
